@@ -7,6 +7,15 @@ __pycache__/
 *.tar.gz
 *.ini
 
+
+# RAG data & artifacts
+data/
+medical_rag_ollama/
+*.json
+*.graphml
+checkpoint.json
+
+
 # Virtual Environment
 .venv/
 venv/
