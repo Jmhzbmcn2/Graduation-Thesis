@@ -9,7 +9,7 @@ __pycache__/
 
 
 # RAG data & artifacts
-data/
+# data/
 medical_rag_ollama/
 *.json
 *.graphml
@@ -86,3 +86,11 @@ memory-bank
 
 # Claude Code
 CLAUDE.md
+
+# Node.js
+node_modules/
+
+# Large folders (not needed for GitHub)
+lightrag_webui/node_modules/
+paper/
+data/

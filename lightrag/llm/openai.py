@@ -552,6 +552,12 @@ async def openai_complete_if_cache(
             else:
                 # Handle regular content responses
                 content = getattr(message, "content", None)
+                # Handle case where content is dict (e.g., from custom APIs like Cloudflare Workers)
+                if isinstance(content, dict):
+                    import json
+                    content = json.dumps(content, ensure_ascii=False)
+                elif content is not None and not isinstance(content, str):
+                    content = str(content)
                 reasoning_content = getattr(message, "reasoning_content", "")
 
                 # Handle COT logic for non-streaming responses (only if enabled)

@@ -496,7 +496,10 @@ def create_app(args):
             from lightrag.llm.openai import openai_complete_if_cache
 
             keyword_extraction = kwargs.pop("keyword_extraction", None)
-            if keyword_extraction:
+            # DISABLE_RESPONSE_FORMAT: Skip structured output for custom APIs (e.g., Cloudflare Workers)
+            # that don't support OpenAI's response_format parameter
+            disable_response_format = os.getenv("DISABLE_RESPONSE_FORMAT", "false").lower() == "true"
+            if keyword_extraction and not disable_response_format:
                 kwargs["response_format"] = GPTKeywordExtractionFormat
             if history_messages is None:
                 history_messages = []

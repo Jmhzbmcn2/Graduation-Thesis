@@ -1928,6 +1928,15 @@ async def update_chunk_cache_list(
 def remove_think_tags(text: str) -> str:
     """Remove <think>...</think> tags from the text
     Remove  orphon ...</think> tags from the text also"""
+    # Handle case where input is not a string (e.g., dict from structured output)
+    if text is None:
+        return ""
+    if isinstance(text, dict):
+        # Convert dict to JSON string for downstream processing
+        import json
+        text = json.dumps(text, ensure_ascii=False)
+    elif not isinstance(text, str):
+        text = str(text)
     return re.sub(
         r"^(<think>.*?</think>|.*</think>)", "", text, flags=re.DOTALL
     ).strip()
