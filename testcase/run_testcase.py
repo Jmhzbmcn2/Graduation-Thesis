@@ -1,5 +1,5 @@
 """
-Script to run test cases through LightRAG with naive and mix modes
+Script to run test cases through LightRAG with naive and hybrid modes
 Reads questions from test_case.xlsx and saves results to Excel file
 """
 import pandas as pd
@@ -9,11 +9,11 @@ from datetime import datetime
 
 # Configuration
 LIGHTRAG_URL = "http://localhost:9621"
-INPUT_FILE = "test_case.xlsx"
+INPUT_FILE = r"C:\Users\VUDUYLINH\PycharmProjects\KLTN\LightRAG\testcase\130_testcase.xlsx"
 OUTPUT_FILE = r"C:\Users\VUDUYLINH\PycharmProjects\KLTN\LightRAG\testcase\test_case.xlsx"
 
 # Number of test cases to run (set to None to run all)
-TEST_LIMIT = 130  # Start with 5 for testing
+TEST_LIMIT = 50  # Start with 5 for testing
 
 
 def query_lightrag(question: str, mode: str, retries: int = 3) -> str:
@@ -68,7 +68,7 @@ def main():
     
     # Prepare results columns
     naive_responses = []
-    mix_responses = []
+    hybrid_responses = []
     
     # Process each question
     print(f"\n🔄 Starting queries...")
@@ -79,7 +79,7 @@ def main():
         if not question or pd.isna(question):
             print(f"  [{idx+1}/{total}] ⚠️ Skipping empty question")
             naive_responses.append("")
-            mix_responses.append("")
+            hybrid_responses.append("")
             continue
         
         print(f"\n[{idx+1}/{total}] 📝 Question: {question[:80]}...")
@@ -92,20 +92,20 @@ def main():
         naive_responses.append(naive_result)
         print(f"     Done in {naive_time:.1f}s")
         
-        # Query mix mode
-        print(f"  🔹 Querying MIX mode...")
+        # Query hybrid mode
+        print(f"  🔹 Querying HYBRID mode...")
         start_time = time.time()
-        mix_result = query_lightrag(question, "mix")
-        mix_time = time.time() - start_time
-        mix_responses.append(mix_result)
-        print(f"     Done in {mix_time:.1f}s")
+        hybrid_result = query_lightrag(question, "hybrid")
+        hybrid_time = time.time() - start_time
+        hybrid_responses.append(hybrid_result)
+        print(f"     Done in {hybrid_time:.1f}s")
     
     # Add results to dataframe
     df['naive_response'] = naive_responses
-    df['mix_response'] = mix_responses
+    df['hybrid_response'] = hybrid_responses
     
     # Keep only required columns
-    columns_to_keep = ['question', 'answer', 'context', 'naive_response', 'mix_response', 'title', 'article_url']
+    columns_to_keep = ['question', 'answer', 'context', 'naive_response', 'hybrid_response', 'title', 'article_url']
     df = df[[col for col in columns_to_keep if col in df.columns]]
     
     # Save results

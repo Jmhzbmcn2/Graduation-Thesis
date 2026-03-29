@@ -1,0 +1,243 @@
+# Dàn ý Khóa luận Tốt nghiệp
+
+## Đề tài (gợi ý)
+
+**"Ứng dụng Retrieval-Augmented Generation kết hợp Knowledge Graph cho hệ thống Hỏi đáp Y tế Tiếng Việt"**
+
+*"Applying Retrieval-Augmented Generation with Knowledge Graph for Vietnamese Medical Question Answering System"*
+
+---
+
+## Chương 1: Giới thiệu (10-12 trang)
+
+### 1.1 Đặt vấn đề
+- Thực trạng tiếp cận thông tin y tế tại Việt Nam (thiếu nguồn tin đáng tin cậy, rào cản ngôn ngữ)
+- Hạn chế của LLM khi trả lời câu hỏi y tế (hallucination, thông tin cũ, không có nguồn)
+- Nhu cầu hệ thống Q&A y tế chính xác, có trích dẫn nguồn
+
+### 1.2 Mục tiêu nghiên cứu
+- Xây dựng hệ thống RAG kết hợp Knowledge Graph cho domain y tế tiếng Việt
+- Tùy biến entity types dựa trên các KG y tế chính thống (PrimeKG, Hetionet)
+- Đánh giá hiệu quả các chế độ truy vấn (naive vs hybrid/mix)
+
+### 1.3 Phạm vi nghiên cứu
+- Dữ liệu: ~166 bài viết y tế tiếng Việt (thuốc, bệnh, giải phẫu)
+- Framework: LightRAG
+- LLM: Gemini (hoặc model đang dùng)
+- Evaluation: 130 test cases
+
+### 1.4 Đóng góp của đề tài
+1. Hệ thống Medical RAG + KG cho tiếng Việt
+2. Bộ entity types tùy biến cho domain y tế, dựa trên các KG chính thống
+3. Đánh giá so sánh đa chiều (RAGAS + LLM-as-Judge)
+
+### 1.5 Bố cục khóa luận
+
+---
+
+## Chương 2: Cơ sở lý thuyết (15-20 trang)
+
+### 2.1 Large Language Models (LLMs)
+- Kiến trúc Transformer
+- Pre-training & Fine-tuning
+- Hạn chế: Hallucination, knowledge cutoff
+
+### 2.2 Retrieval-Augmented Generation (RAG)
+- 2.2.1 Khái niệm & kiến trúc RAG cơ bản
+  - Indexing → Retrieval → Generation
+- 2.2.2 Naive RAG vs Advanced RAG
+  - Vector similarity search (Naive)
+  - Chunking strategies
+- 2.2.3 Hạn chế của Naive RAG
+  - Thiếu khả năng suy luận quan hệ giữa các entities
+  - Recall thấp với câu hỏi phức tạp
+
+### 2.3 Knowledge Graph (KG)
+- 2.3.1 Định nghĩa & cấu trúc (Triplet: Head → Relation → Tail)
+- 2.3.2 Các KG y tế chính thống trên thế giới
+  - **UMLS Semantic Network** (Bodenreider, 2004) — 133 semantic types
+  - **PrimeKG** (Chandak et al., 2023) — 10 node types
+  - **Hetionet** (Himmelstein et al., 2017) — 11 metanodes
+  - **SPOKE** (Nelson et al., 2019) — 28 node types
+- 2.3.3 Entity Types cho domain y tế
+  - Bảng so sánh entity types giữa các KG
+  - Lựa chọn entity types cho hệ thống
+
+### 2.4 Graph-RAG: Kết hợp KG và RAG
+- 2.4.1 Kiến trúc GraphRAG
+- 2.4.2 LightRAG (Guo et al., 2024)
+  - Dual-level retrieval: Entity-level + Relation-level
+  - Các chế độ truy vấn: naive, local, global, hybrid, mix
+- 2.4.3 MedGraphRAG (Wu et al., 2024)
+  - So sánh approach với LightRAG
+
+### 2.5 Đánh giá hệ thống RAG
+- 2.5.1 RAGAS Framework (Shahul et al., 2023)
+  - Faithfulness, Answer Relevancy, Context Precision, Context Recall
+- 2.5.2 LLM-as-Judge (Zheng et al., 2023)
+  - Comprehensiveness, Diversity, Empowerment
+  - Xử lý bias: Label bias, Position bias
+
+---
+
+## Chương 3: Thiết kế hệ thống (12-15 trang)
+
+### 3.1 Tổng quan kiến trúc
+
+```
+Dữ liệu Y tế (txt) 
+    → Chunking & Embedding 
+        → LLM Entity Extraction (custom medical types)
+            → Knowledge Graph Construction
+                → Dual Storage (Vector DB + Graph DB)
+                    → Multi-mode Query Engine
+                        → LLM Response Generation
+```
+
+### 3.2 Thu thập & tiền xử lý dữ liệu
+- Nguồn dữ liệu: Bài viết y tế tiếng Việt
+- Phân loại: Thuốc, Bệnh, Giải phẫu, Kiến thức y khoa
+- Tiền xử lý: Cleaning, chunking
+
+### 3.3 Xây dựng Knowledge Graph
+- 3.3.1 Entity Extraction bằng LLM
+  - Prompt engineering cho medical entity extraction
+  - Custom entity types (dựa trên PrimeKG + MedGraphRAG)
+- 3.3.2 Relation Extraction
+  - Trích xuất quan hệ giữa các entities
+- 3.3.3 Graph Storage
+  - Cấu trúc lưu trữ (Neo4j / NetworkX)
+
+### 3.4 Retrieval Pipeline
+- 3.4.1 Naive mode: Vector similarity search
+- 3.4.2 Hybrid/Mix mode: KG traversal + Vector search
+- 3.4.3 So sánh pipeline giữa 2 modes
+
+### 3.5 Generation Pipeline
+- Prompt template cho medical Q&A
+- Context assembly từ retrieved chunks + KG entities
+
+### 3.6 API & Giao diện
+- FastAPI endpoints
+- LightRAG WebUI
+
+---
+
+## Chương 4: Triển khai (10-15 trang)
+
+### 4.1 Môi trường triển khai
+- Phần cứng, phần mềm
+- Các thư viện & framework sử dụng
+
+### 4.2 Cấu hình LightRAG
+- LLM & Embedding model
+- Custom entity types
+
+```python
+MEDICAL_ENTITY_TYPES = [
+    "Disease", "Drug", "Symptom", "Gene_Protein",
+    "Anatomy", "Pathway", "BiologicalProcess",
+    "Phenotype_SideEffect", "Treatment_Procedure",
+    "Exposure_RiskFactor",
+]
+```
+
+### 4.3 Xây dựng Knowledge Graph từ dữ liệu y tế
+- Quá trình indexing 166 documents
+- Thống kê KG: Số entities, relations, types
+- Ví dụ minh họa graph
+
+### 4.4 Xây dựng bộ Test Cases
+- 130 câu hỏi y tế (đa dạng chủ đề)
+- Ground truth annotation
+
+### 4.5 Triển khai API
+- Endpoints: `/query`, `/documents`
+- Demo hoạt động
+
+---
+
+## Chương 5: Đánh giá & Kết quả (15-20 trang)
+
+### 5.1 Thiết kế thí nghiệm
+- So sánh: Naive mode vs Hybrid/Mix mode
+- 130 test cases
+- 2 bộ metrics đánh giá
+
+### 5.2 Đánh giá bằng RAGAS
+- 5.2.1 Các metrics
+  - Faithfulness
+  - Answer Relevancy
+  - Context Precision
+  - Context Recall
+- 5.2.2 Kết quả
+  - Bảng so sánh Naive vs Hybrid
+  - Phân tích ưu/nhược từng mode
+
+### 5.3 Đánh giá bằng LLM-as-Judge
+- 5.3.1 Các metrics (theo LightRAG paper)
+  - Comprehensiveness
+  - Diversity
+  - Empowerment
+- 5.3.2 Xử lý bias
+  - Random position swapping
+  - Remove mode labels
+- 5.3.3 Kết quả
+  - Win/Tie/Lose cho từng metric
+  - Biểu đồ so sánh
+
+### 5.4 Phân tích Knowledge Graph
+- Thống kê entity types được trích xuất
+- Visualization graph
+- Case studies: Câu hỏi KG trả lời tốt hơn Naive
+
+### 5.5 Thảo luận
+- Khi nào Hybrid tốt hơn Naive? (và ngược lại)
+- Ảnh hưởng của entity types đến chất lượng KG
+- Hạn chế của hệ thống
+
+---
+
+## Chương 6: Kết luận & Hướng phát triển (3-5 trang)
+
+### 6.1 Kết luận
+- Tóm tắt đóng góp
+- Kết quả chính
+
+### 6.2 Hạn chế
+- Dữ liệu còn hạn chế (166 documents)
+- Entity types chưa được validate bởi chuyên gia y tế
+- Chưa so sánh với các hệ thống khác (GraphRAG, MedGraphRAG)
+
+### 6.3 Hướng phát triển
+- Mở rộng dữ liệu (thêm hướng dẫn điều trị, phác đồ lâm sàng)
+- Entity linking với UMLS
+- Fine-tune LLM cho tiếng Việt y tế
+- Tích hợp Agentic AI (tool use, planning)
+- Deploy production (Docker, K8s)
+
+---
+
+## Tài liệu Tham khảo (gợi ý chính)
+
+| # | Tham khảo | Dùng cho |
+|---|---|---|
+| 1 | Guo et al. (2024), *LightRAG: Simple and Fast RAG* | Framework chính |
+| 2 | Chandak et al. (2023), *PrimeKG*, Scientific Data | Entity types |
+| 3 | Himmelstein et al. (2017), *Hetionet*, eLife | Entity types |
+| 4 | Bodenreider (2004), *UMLS*, Nucleic Acids Research | Ontology y tế |
+| 5 | Wu et al. (2024), *MedGraphRAG*, arXiv | KG+RAG y tế |
+| 6 | Shahul et al. (2023), *RAGAS* | Evaluation framework |
+| 7 | Zheng et al. (2023), *Judging LLM-as-a-Judge* | LLM evaluation |
+| 8 | Nelson et al. (2019), *SPOKE*, Nature Comms | KG y tế |
+| 9 | Lewis et al. (2020), *RAG*, NeurIPS | Nền tảng RAG |
+
+---
+
+## Phụ lục (gợi ý)
+
+- **Phụ lục A:** Danh sách 130 câu hỏi test case
+- **Phụ lục B:** Entity types so sánh chi tiết giữa các KG
+- **Phụ lục C:** Prompt templates cho entity extraction & Q&A
+- **Phụ lục D:** Kết quả đánh giá chi tiết (RAGAS + LLM-as-Judge)
+- **Phụ lục E:** Screenshots hệ thống

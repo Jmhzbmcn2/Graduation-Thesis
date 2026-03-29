@@ -1,0 +1,40 @@
+============================================================
+  KG BUILD TIME ANALYSIS
+============================================================
+
+DOCUMENT STATS:
+  Total docs:        1932
+  Processed:         1005
+  Failed:            13
+  Remaining:         914
+  Progress:          52.0%
+  Total chunks:      2492
+  Avg chunks/doc:    2.5 (processed docs)
+
+PROCESSING WINDOW:
+  Start:             2026-03-27 17:38:26
+  End:               2026-03-28 21:19:58
+  Elapsed:           27h 41m 32s
+
+PER-DOC PROCESSING TIME:
+  Cumulative total:  128h 20m 22s
+  Average:           454s (7m 33s)
+  Median:            356s (5m 56s)
+  Min:               62s
+  Max:               2503s
+
+THROUGHPUT:
+  Parallelism:       4.63x
+  Docs/hour:         36.3
+
+ESTIMATE REMAINING:
+  Remaining docs:    914
+  Est. time left:    25h 11m 5s
+  Est. total time:   52h 52m 37s
+
+RPD ESTIMATE:
+  Est. LLM calls left: ~6799
+  RPD limit: 10,000/day
+  Can finish today:  YES
+
+============================================================
