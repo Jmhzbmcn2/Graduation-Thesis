@@ -308,6 +308,7 @@ def create_app(args):
         "azure_openai",
         "aws_bedrock",
         "gemini",
+        "cloudflare_worker",
     ]:
         raise Exception("llm binding not supported")
 
@@ -597,6 +598,33 @@ def create_app(args):
 
         return optimized_gemini_model_complete
 
+    def create_cloudflare_worker_llm_func(args, llm_timeout: int):
+        """Create Cloudflare Worker LLM function"""
+
+        async def cloudflare_worker_model_complete(
+            prompt,
+            system_prompt=None,
+            history_messages=None,
+            keyword_extraction=False,
+            **kwargs,
+        ) -> str:
+            from lightrag.llm.cloudflare_worker import cloudflare_worker_complete
+
+            if history_messages is None:
+                history_messages = []
+
+            return await cloudflare_worker_complete(
+                prompt,
+                system_prompt=system_prompt,
+                history_messages=history_messages,
+                base_url=args.llm_binding_host,
+                api_key=args.llm_binding_api_key,
+                timeout=llm_timeout,
+                **kwargs,
+            )
+
+        return cloudflare_worker_model_complete
+
     def create_llm_model_func(binding: str):
         """
         Create LLM model function based on binding type.
@@ -620,6 +648,8 @@ def create_app(args):
                 )
             elif binding == "gemini":
                 return create_optimized_gemini_llm_func(config_cache, args, llm_timeout)
+            elif binding == "cloudflare_worker":
+                return create_cloudflare_worker_llm_func(args, llm_timeout)
             else:  # openai and compatible
                 # Use optimized function with pre-processed configuration
                 return create_optimized_openai_llm_func(config_cache, args, llm_timeout)
