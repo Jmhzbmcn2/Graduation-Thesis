@@ -1,0 +1,168 @@
+======================================================================
+  PHÂN TÍCH CHI TIẾT ENTITY TYPE = 'OTHER'
+  Tổng: 15751 nodes / 64100 tổng
+======================================================================
+
+Category                                         Count        %
+───────────────────────────────────────────── ────────  ───────
+  Triệu chứng / Symptom                           7342    46.6%
+  Dược chất / Hợp chất hóa học                    1454     9.2%
+  Xét nghiệm / Chỉ số lâm sàng                     936     5.9%
+  Phương pháp điều trị / Treatment                 811     5.1%
+  Cơ quan / Bộ phận cơ thể                         654     4.2%
+  Liều lượng / Đơn vị đo                           622     3.9%
+  Thực phẩm / Dinh dưỡng                           396     2.5%
+  Đối tượng bệnh nhân / Population                 165     1.0%
+  (Không phân loại được)                          3371    21.4%
+
+======================================================================
+📋 VÍ DỤ CÁC ENTITY TIÊU BIỂU TRONG MỖI NHÓM
+======================================================================
+
+🔹 Triệu chứng / Symptom (7342 entities):
+     • Nam Giới
+     • Nữ Giới
+     • Tuổi Thơ Ấu
+     • Xét Nghiệm Máu
+     • Hình Ảnh Học
+     • CT
+     • Điện Não Đồ
+     • Liệu Pháp Hành Vi
+     • Tiếp Xúc Và Dự Phòng Đáp Ứng
+     • Gen
+
+🔹 Dược chất / Hợp chất hóa học (1454 entities):
+     • Dầu Đậu Tương
+     • Bột Vỏ Sò
+     • Acid Citric
+     • Fe3+
+     • Fe2+
+     • Sắt Nguyên Tố
+     • Phytat
+     • Chất Chuyển Hóa Của Desloratadin
+     • Alcol
+     • Liều Cao Vitamin C
+
+🔹 Xét nghiệm / Chỉ số lâm sàng (936 entities):
+     • Nồng Độ Fluphenazine Huyết Tương
+     • Bệnh Nhân Suy Thận
+     • Nồng Độ Kali Máu
+     • Bệnh Nhân Suy Thận Nhẹ
+     • Saccharose
+     • Thời Gian Prothrombin (PT)
+     • Phan Tiểu Long
+     • PH Dạ Dày
+     • Glucose Dự Trữ
+     • Phụ Nữ Có Khả Năng Mang Thai
+
+🔹 Phương pháp điều trị / Treatment (811 entities):
+     • Liệu Pháp Đảo Ngược Hành Vi
+     • Lợi Tiểu Thẩm Thấu
+     • Hướng Dẫn Sử Dụng Thuốc
+     • Bệnh Nhân Đái Tháo Đường
+     • Ngừng Uống Chất Gây Tăng Canxi Máu
+     • Truyền Tĩnh Mạch NaCl 0,9%
+     • Lợi Tiểu Bắt Buộc
+     • Phòng Khám
+     • Cách Dùng Của A.T Desloratadin
+     • Người Bệnh Đang Điều Trị Bằng Thuốc Chống Đông Chứa Coumarin
+
+🔹 Cơ quan / Bộ phận cơ thể (654 entities):
+     • Phụ Nữ Thời Kỳ Mang Thai
+     • Sau Mổ Và Sau Cấp Cứu
+     • Da Lừa Đen
+     • Con Lừa
+     • Phụ Nữ Mãn Kinh
+     • Thận Trọng Khi Dùng Thuốc
+     • William Beaumont
+     • Alexis St
+     • Đường Dự Trữ
+     • Tiếng Động Thức Ăn
+
+🔹 Liều lượng / Đơn vị đo (622 entities):
+     • Sucralose
+     • Hương Cam
+     • Hộp 30 Ống X 5 Ml
+     • Dạng Chai
+     • Liều Dùng Ambroxol
+     • Natri Benzoat
+     • Kháng Histamin và Chống Dị Ứng
+     • Ống Uống
+     • Gói 5 ml
+     • Ống Uống 10 ml
+
+🔹 Thực phẩm / Dinh dưỡng (396 entities):
+     • Tủ Lạnh
+     • Sữa Không Béo
+     • Dung Dịch Vệ Sinh Phụ Nữ
+     • Công Ty TNHH B. Braun Việt Nam
+     • Tập Đoàn B. Braun Của Đức
+     • Listeria
+     • Đọt Non Atiso Đỏ
+     • Lôi Công Bào Chích Luận
+     • Họ Bìm Bìm
+     • Stachyose
+
+🔹 Đối tượng bệnh nhân / Population (165 entities):
+     • Trẻ Em Trên 1 Tuổi
+     • Trẻ Em 1 – 3 Tuổi
+     • Trẻ Em 4 – 6 Tuổi
+     • Trẻ Em 7 – 9 Tuổi
+     • Trẻ Em Dưới 3 Tháng Tuổi
+     • Trẻ Em Dưới 5 Kg
+     • 3 Tháng Cuối Của Thai Kỳ
+     • Trẻ Em (Từ 2-6 Tuổi)
+     • Trẻ Em Và Thanh Thiếu Niên Dưới 18 Tuổi
+     • Người Bệnh Đã Từng Bị Hen
+
+🔹 Không phân loại được (3371 entities):
+     • Cyloartenol
+     • Nước Ta
+     • Nhiệt Độ Bảo Quản Thuốc
+     • Axit Linderic
+     • Aristolochia Sp
+     • Thời Xưa
+     • Lipid Huyết Thanh
+     • Vòi Nước Chảy
+     • Nước Rửa
+     • Công ty TNHH Đông Dược Bảo Long
+     • Demodex Folliculorum
+     • Cây Dầu Đắng
+     • Magnolola
+     • P.Cynen
+     • Rosamulin
+     • Chuột Bạch Tạng Cái
+     • Domesco
+     • Sử Dụng Trong 24 Giờ
+     • Kali Ion (K+)
+     • Nền Tảng Dịch Vụ Y Tế
+     • Thể Tích Dịch Ngoại Bào
+     • Vòng Tay Bồ Đề
+     • Môi Trường Ngoài
+     • Công Ty Cổ Phần Dongkoo Pharm
+     • Bác Sĩ Lữ Thị Hồng Vân
+     • Công Ty Cổ Phần Dược Phẩm Sanofi
+     • Giai Đoạn 2
+     • Mật nhân
+     • Sách Lôi Công Bào Chế Dược Tính Giải
+     • Magnolia
+     • Ấu Trụi
+     • Cục Quản lý Dược
+     • Axit Salvianolic
+     • Xanthatin
+     • Đồng Bằng Và Trung Du Bắc Bộ
+     • Răng Sắc Nhọn
+     • Trực Khuẩn Kỵ Khí
+     • Lòng Đỏ Trứng Gà Luộc Chín
+     • Hồ Chứa Nước
+     • Võ Đình Bảo Văn
+     • Anopheles Dirus
+     • Địa Điểm Cây Sinh Trưởng
+     • Flavonoids (Rễ)
+     • Vùng Nhiệt Đới Và Cận Nhiệt Đới Châu Mỹ
+     • Clo
+     • Dụng Cụ Trữ Nước Tiểu
+     • Đèn Ngủ
+     • Sambucyanin
+     • Dược sĩ Trần Việt Linh
+     • Zirconi (Zr)
