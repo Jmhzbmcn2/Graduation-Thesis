@@ -1,0 +1,22 @@
+
+ce4f2a6a|VUDUYLINH|update config 
+cloudflare
+087d0881|VUDUYLINH|update config 
+with gemini
+7f13ac0a|VUDUYLINH|Update 
+.gitignore and code changes
+251432d2|VUDUYLINH|fix conflict 
+readme
+119a4f6a|VUDUYLINH|Merge branch 
+'main' of https://github.com/Jmhz
+bmcn2/Graduation-Thesis
+bf283c12|VUDUYLINH|push proj 
+firstly
+0f020339|VUDUYLINH|Remove data 
+and RAG artifacts from repository
+316ff8f8|VUDUYLINH|add 
+finetuning ner model file
+c17e07d9|Vu Duy Linh|Initial 
+commit
+
+

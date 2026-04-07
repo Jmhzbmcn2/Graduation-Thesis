@@ -1,0 +1,8 @@
+ce4f2a6a|update config cloudflare|2026-04-02
+087d0881|update config with gemini|2026-03-29
+7f13ac0a|Update .gitignore and code changes|2026-02-05
+251432d2|fix conflict readme|2026-01-03
+119a4f6a|Merge branch 'main' of https://github.com/Jmhzbmcn2/Graduation-Thesis|2026-01-03
+bf283c12|push proj firstly|2026-01-03
+0f020339|Remove data and RAG artifacts from repository|2026-01-03
+316ff8f8|add finetuning ner model file|2025-12-13

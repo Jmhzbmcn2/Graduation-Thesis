@@ -1,0 +1,6 @@
+?? .git_authors_temp.txt
+?? .git_log_temp.txt
+?? .git_my_changes.txt
+?? .git_my_commits.txt
+?? .git_my_commits2.txt
+?? .git_status_temp.txt

@@ -1,0 +1,104 @@
+--- COMMIT: ce4f2a6a | update config cloudflare | 2026-04-02 ---
+
+ GoogleCloudSDKInstaller.exe       | Bin 0 -> 267008 bytes
+ evaluate_kg_quality.py            | 510 ++++++++++++++++++++++++++++++++++++++
+ lightrag/api/config.py            |   1 +
+ lightrag/api/lightrag_server.py   |  30 +++
+ lightrag/llm/cloudflare_worker.py | 139 +++++++++++
+ md.resolved                       |  10 +
+ tmp/test_result.txt               |  16 ++
+ tmp/test_vertex_ai.py             |  19 ++
+ 8 files changed, 725 insertions(+)
+--- COMMIT: 087d0881 | update config with gemini | 2026-03-29 ---
+
+ 50 testcase.xlsx                                   |  Bin 0 -> 35684 bytes
+ README.md                                          |   57 +-
+ analyze_entity_types.py                            |   79 +
+ entity_type_distribution.png                       |  Bin 0 -> 83134 bytes
+ finetune/fine_tuning_vietmed_ner.ipynb             | 9324 --------------------
+ finetune/finetune_nomic_embed.py                   |  243 +
+ finetune/generate_training_data.py                 |  609 ++
+ lightrag/evaluation/eval_rag_quality.py            |    4 +-
+ testcase/130_testcase.xlsx                         |  Bin 0 -> 56040 bytes
+ ...sults_20260204_014454.xlsx => 50 testcase.xlsx} |  Bin
+ testcase/eval_130.xlsx                             |  Bin 0 -> 107971 bytes
+ testcase/eval_lightrag_paper.py                    |  350 +
+ testcase/eval_lightrag_paper_20260302_015814.xlsx  |  Bin 0 -> 23309 bytes
+ testcase/eval_ragas.py                             |  240 +
+ testcase/eval_ragas_naive_mix.py                   |  281 +
+ testcase/eval_ragas_naive_mix_2603.xlsx            |  Bin 0 -> 965450 bytes
+ testcase/eval_text_similarity.py                   |  278 +
+ testcase/eval_text_similarity_20260302_010240.xlsx |  Bin 0 -> 63431 bytes
+ testcase/prepare_ragas_test.py                     |   40 +
+ .../ragas_naive_vs_hybrid_20260305_142744.xlsx     |  Bin 0 -> 1113300 bytes
+ testcase/ragas_results_20260304_232527.xlsx        |  Bin 0 -> 506130 bytes
+ testcase/run_testcase.py                           |   26 +-
+ testcase/show_results.py                           |   19 +
+ testcase/test_ragas_1question.py                   |  153 +
+ testcase/test_results_20260203_234622.xlsx         |  Bin 14039 -> 0 bytes
+ thesis_outline.md.resolved                         |  243 +
+ tmp/analyze_other.py                               |   83 +
+ tmp/analyze_other2.py                              |   78 +
+ tmp/calc_kg_time.py                                |  148 +
+ tmp/calc_kg_time2.py                               |  124 +
+ tmp/check_entity_types.py                          |   83 +
+ tmp/check_env.py                                   |   22 +
+ tmp/check_json.py                                  |   24 +
+ tmp/kg_time_report.txt                             |   40 +
+ tmp/other2_result.txt                              |    8 +
+ tmp/other_analysis.txt                             |  Bin 0 -> 2254 bytes
+ tmp/repair_json.py                                 |   69 +
+ tmp/test_chunking.py                               |   22 +
+ tmp/test_updated_script.py                         |   29 +
+ 39 files changed, 3334 insertions(+), 9342 deletions(-)
+--- COMMIT: 7f13ac0a | Update .gitignore and code changes | 2026-02-05 ---
+
+ .gitignore                                  |  10 +-
+ chunk_analysis.txt                          |  26 --
+ compare_modes.py                            |  84 +++++
+ lightrag/api/lightrag_server.py             |   5 +-
+ lightrag/llm/openai.py                      |   6 +
+ lightrag/utils.py                           |   9 +
+ reranker_server.py                          |  77 +++++
+ testcase/check.ipynb                        | 442 +++++++++++++++++++++++
+ testcase/filtered-articles-on-treatment.csv | 519 ++++++++++++++++++++++++++++
+ testcase/get_testcase.ipynb                 | 348 +++++++++++++++++++
+ testcase/run_testcase.py                    | 126 +++++++
+ testcase/test_case.xlsx                     | Bin 0 -> 56040 bytes
+ testcase/test_results_20260203_234622.xlsx  | Bin 0 -> 14039 bytes
+ testcase/test_results_20260204_014454.xlsx  | Bin 0 -> 68080 bytes
+ tests/test_cloudflare_llm.py                | 155 +++++++++
+ 15 files changed, 1779 insertions(+), 28 deletions(-)
+--- COMMIT: 251432d2 | fix conflict readme | 2026-01-03 ---
+
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)
+--- COMMIT: 119a4f6a | Merge branch 'main' of https://github.com/Jmhzbmcn2/Graduation-Thesis | 2026-01-03 ---
+--- COMMIT: bf283c12 | push proj firstly | 2026-01-03 ---
+
+ .gitignore | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+--- COMMIT: 0f020339 | Remove data and RAG artifacts from repository | 2026-01-03 ---
+
+ .gitignore                                |     2 +-
+ README-zh.md                              |  2088 -----
+ README.md                                 |  2090 +----
+ chunk_analysis.txt                        |    26 +
+ examples/analyze_chunks.py                |    61 +
+ examples/batch_process.py                 |   282 +
+ examples/gradio_webui.py                  |   141 +
+ examples/query_medical_rag.py             |   144 +
+ examples/run_acepron_megallm.py           |   275 +
+ examples/test_ollama_embed.py             |    11 +
+ examples/visualize_kg.py                  |   174 +
+ lib/bindings/utils.js                     |   189 +
+ lib/tom-select/tom-select.complete.min.js |   356 +
+ lib/tom-select/tom-select.css             |   334 +
+ lib/vis-9.1.2/vis-network.css             |     1 +
+ lib/vis-9.1.2/vis-network.min.js          |    27 +
+ lightrag_webui/package-lock.json          | 11778 ++++++++++++++++++++++++++++
+ 17 files changed, 13802 insertions(+), 4177 deletions(-)
+--- COMMIT: 316ff8f8 | add finetuning ner model file | 2025-12-13 ---
+
+ finetune/fine_tuning_vietmed_ner.ipynb | 9324 ++++++++++++++++++++++++++++++++
+ 1 file changed, 9324 insertions(+)

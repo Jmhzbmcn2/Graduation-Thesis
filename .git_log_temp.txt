@@ -1,0 +1,50 @@
+ce4f2a6a|VUDUYLINH|update config cloudflare
+087d0881|VUDUYLINH|update config with gemini
+7f13ac0a|VUDUYLINH|Update .gitignore and code changes
+251432d2|VUDUYLINH|fix conflict readme
+119a4f6a|VUDUYLINH|Merge branch 'main' of https://github.com/Jmhzbmcn2/Graduation-Thesis
+bf283c12|VUDUYLINH|push proj firstly
+0f020339|VUDUYLINH|Remove data and RAG artifacts from repository
+f54ec538|Daniel.y|Merge pull request #2534 from Peefy/patch-3
+649b0182|Daniel.y|Merge pull request #2532 from Peefy/patch-2
+14d98656|yangdx|Fix linting
+a03005a1|Peefy|docs: fix the simple program rag init function return value in README-zh.md
+bc3be3b0|Peefy|docs: fix the simple program rag init function return value
+833ddf49|yangdx|Add CLAUDE.md to .gitignore
+f88e90c6|Daniel.y|Merge pull request #2531 from danielaskdd/gemini-aio
+b88c0d7b|yangdx|Bump core version to 1.4.9.11 and API to 0264
+085c1509|yangdx|Migrate Gemini LLM to native async Google GenAI client
+dc3bf9df|Daniel.y|Merge pull request #2529 from danielaskdd/gemini-vertex
+0739ce2b|yangdx|Add Google Vertex AI support for Gemini LLM binding
+b4371edb|yangdx|Update docs
+4a29c91e|yangdx|Bump core version to 1.4.9.10 and API version to 0263
+8c8186ad|Daniel.y|Merge pull request #2526 from danielaskdd/hotfix-neo4j-memgraph
+736d7f76|yangdx|Fix logging logic in Memgraph and Neo4j init
+dccf1ef4|Daniel.y|Merge pull request #2524 from danielaskdd/fix-pg-cypher-dollar-quoting
+f70fdfef|yangdx|Fix PostgreSQL Cypher queries failing on content with dollar signs
+67e8a2b1|yangdx|Document max_token_size=0 behavior in openai_embed
+dca23e2a|Daniel.y|Merge pull request #2523 from danielaskdd/embedding-max-token
+e2a95ab5|yangdx|Fix missing parenthesis in log message
+3527c68d|yangdx|Fix table formatting in OfflineDeployment docs
+5a455985|yangdx|Update default cache path comment in docs
+9c9dfcd4|yangdx|Fix tiktoken cache env var and support encoding names
+26780054|yangdx|feat: inject max_token_size and add client-side truncation for OpenAI
+b31b910e|Daniel.y|Merge pull request #2522 from danielaskdd/fix-embedding-func
+afe5b134|yangdx|Bump API version to 0262
+b3d66ae0|yangdx|Merge branch 'main' of github.com:HKUDS/LightRAG into embedding-wrapping
+2e784c69|Daniel.y|Merge pull request #2521 from danielaskdd/fix-post-init
+273165f4|yangdx|Refactor vector storage validation and enhance workspace logging
+8aeb234a|yangdx|Improve EmbeddingFunc unwrapping safety and docs
+705e8c6c|yangdx|Fix nested EmbeddingFunc wrapping and update demo usage
+3ca9f611|yangdx|docs: Sync Chinese README with English updates
+fbd11ffc|yangdx|Merge branch 'update-full-text-index-for-workspace'
+2a02b69e|yangdx|Improve CJK detection and safely drop Neo4j indexes
+a6c365e8|yangdx|Sanitize workspace labels for Neo4j index names
+c9bbc3c6|yangdx|Merge branch 'main' into update-full-text-index-for-workspace
+7145b934|yangdx|Bump API version to 0261
+3c566912|Daniel.y|Merge pull request #2516 from HKUDS/dependabot/bun/lightrag_webui/build-tools-58aed0c0ce
+d719ee49|Daniel.y|Merge pull request #2515 from HKUDS/dependabot/bun/lightrag_webui/frontend-minor-patch-241571b80e
+f5f34e56|dependabot[bot]|Bump eslint-plugin-react-refresh
+2d047496|dependabot[bot]|Bump the frontend-minor-patch group across 1 directory with 3 updates
+55474464|Daniel.y|Merge pull request #2511 from HKUDS/dependabot/bun/lightrag_webui/build-tools-ab633d47b1
+0645cffc|Daniel.y|Merge pull request #2510 from HKUDS/dependabot/bun/lightrag_webui/ui-components-d28d7df1f4
