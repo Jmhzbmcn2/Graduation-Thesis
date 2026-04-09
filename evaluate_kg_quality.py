@@ -26,37 +26,41 @@ import os
 # Đường dẫn tới file GraphML
 GRAPHML_PATH = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
-    "medical_rag_ollama",
+    "medical_rag/medical_rag_ollama",
     "graph_chunk_entity_relation.graphml",
 )
 
 # 10 entity types được predefined trong .env
+# ENTITY_TYPES=["Disease","Symptom","Drug","Chemical compound","Protein",
+#               "Anatomy","Biological process","Exposure","Diagnostic test","Treatment method"]
+# LightRAG lưu entity_type dưới dạng lowercase, bỏ dấu cách trong GraphML
 PREDEFINED_SCHEMA_TYPES = {
-    "biologicalprocess",   # Biological process
-    "protein",            # Protein
-    "disease",            # Disease
-    "phenotype",          # Phenotype
-    "anatomy",            # Anatomy
-    "molecularfunction",  # Molecular function
-    "drug",               # Drug
-    "cellularcomponent",  # Cellular component
-    "pathway",            # Pathway
-    "exposure",           # Exposure
+    "disease",              # Disease
+    "symptom",              # Symptom
+    "drug",                 # Drug
+    "chemicalcompound",     # Chemical compound
+    "protein",              # Protein
+    "anatomy",              # Anatomy
+    "biologicalprocess",    # Biological process
+    "exposure",             # Exposure
+    "diagnostictest",       # Diagnostic test
+    "treatmentmethod",      # Treatment method
 }
 
 # Mapping: entity types tiếng Việt → type chuẩn (để phân tích hallucination)
 VIETNAMESE_TYPE_MAPPING = {
     "khác": "other",
-    "kiểuhình": "phenotype",
-    "quátrìnhsinhhọc": "biologicalprocess",
-    "thuốc": "drug",
-    "biểuhiệnlâmsàng": "phenotype",
-    "phơinhiễm": "exposure",
     "bệnh": "disease",
-    "chứcnăngphântử": "molecularfunction",
-    "giảiphẫu": "anatomy",
     "bệnhlý": "disease",
-    "thànhphầntếbào": "cellularcomponent",
+    "triệuchứng": "symptom",
+    "thuốc": "drug",
+    "hợpchấthóahọc": "chemicalcompound",
+    "giảiphẫu": "anatomy",
+    "quátrìnhsinhhọc": "biologicalprocess",
+    "phơinhiễm": "exposure",
+    "xétnghiệmchẩnđoán": "diagnostictest",
+    "phươngphápđiềutrị": "treatmentmethod",
+    "biểuhiệnlâmsàng": "symptom",
     "yếutốphơinhiễm": "exposure",
 }
 
@@ -64,6 +68,8 @@ VIETNAMESE_TYPE_MAPPING = {
 OUT_OF_DOMAIN_TYPES = {
     "method", "location", "person", "concept", "organization",
     "creature", "artifact", "naturalobject", "content", "event", "data",
+    # Các type cũ không còn dùng
+    "phenotype", "molecularfunction", "cellularcomponent", "pathway",
 }
 
 

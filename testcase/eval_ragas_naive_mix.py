@@ -1,5 +1,5 @@
 """
-RAGAS Evaluation — So sánh Naive vs Mix (50 câu hỏi đầu từ 130_testcase.xlsx)
+RAGAS Evaluation — So sánh Naive vs Mix (500 test cases từ 500_cases.csv)
 Khóa Luận Tốt Nghiệp
 
 Đánh giá 4 metrics RAGAS:
@@ -8,7 +8,12 @@ Khóa Luận Tốt Nghiệp
   - Context Recall: Context truy xuất có đầy đủ không?
   - Context Precision: Context có chính xác không?
 
-Output: eval_ragas_naive_mix_2603.xlsx (3 sheets: Naive, Mix, Summary)
+Cấu hình local server:
+  - LLM Judge  : vLLM (Qwen2.5-14B-Instruct-AWQ) tại http://localhost:8000
+  - Embedding  : Ollama (nomic-embed-text) tại http://localhost:11434
+  - LightRAG   : http://localhost:9621
+
+Output: eval_ragas_naive_mix_500cases.xlsx (3 sheets: Naive, Mix, Summary)
 
 Cách dùng:
   python testcase/eval_ragas_naive_mix.py
@@ -30,20 +35,29 @@ warnings.filterwarnings("ignore", message=".*token usage.*", category=UserWarnin
 
 # ======================== CẤU HÌNH ========================
 LIGHTRAG_URL = "http://localhost:9621"
-INPUT_FILE = r"C:\Users\VUDUYLINH\PycharmProjects\KLTN\LightRAG\testcase\130_testcase.xlsx"
-OUTPUT_FILE = r"C:\Users\VUDUYLINH\PycharmProjects\KLTN\LightRAG\testcase\eval_ragas_naive_mix_2603.xlsx"
 
-# LLM Judge (Gemini via OpenAI-compatible endpoint)
-EVAL_LLM_MODEL = os.getenv("EVAL_LLM_MODEL", "gemini-2.0-flash")
-EVAL_LLM_API_KEY = os.getenv("EVAL_LLM_BINDING_API_KEY") or os.getenv("OPENAI_API_KEY")
-EVAL_LLM_BASE_URL = os.getenv("EVAL_LLM_BINDING_HOST")
+# Đường dẫn file (server)
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+INPUT_FILE  = os.path.join(_SCRIPT_DIR, "500_cases.csv")
+OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_ragas_naive_mix_500cases.xlsx")
 
-# Embedding (Ollama local)
-EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "nomic-embed-text")
-EMBEDDING_HOST = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
+# LLM Judge — vLLM local (OpenAI-compatible)
+# Có thể override qua environment variables
+EVAL_LLM_MODEL   = os.getenv("EVAL_LLM_MODEL",    "Qwen/Qwen2.5-14B-Instruct-AWQ")
+EVAL_LLM_API_KEY = os.getenv("EVAL_LLM_API_KEY",  "EMPTY")          # vLLM không cần key thật
+EVAL_LLM_BASE_URL = os.getenv("EVAL_LLM_BASE_URL", "http://localhost:8000/v1")
 
-# Số test case (lấy 50 câu đầu)
-TEST_LIMIT = 50
+# Embedding — Ollama local
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL",        "nomic-embed-text")
+EMBEDDING_HOST  = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
+
+# Số test case (None = dùng tất cả)
+TEST_LIMIT = 5   # Đặt số nguyên (ví dụ 50) để giới hạn số câu hỏi
+
+# Giới hạn độ dài context (ký tự) để tránh vượt token limit của LLM Judge
+# Qwen2.5-14B-Instruct-AWQ có context window 8192 tokens
+# ~4 ký tự ≈ 1 token → 4000 ký tự ≈ 1000 tokens
+MAX_CONTEXT_CHARS = None
 
 # Modes cần đánh giá
 MODES = ["naive", "mix"]
@@ -55,13 +69,83 @@ def clean_answer(answer: str) -> str:
     return re.split(r"\n*###\s*References", answer, maxsplit=1)[0].strip()
 
 
+def extract_chunks_from_context(raw_context: str) -> str:
+    """
+    Trích xuất CHỈ phần Document Chunks từ context trả về của LightRAG.
+
+    Context mix mode có cấu trúc:
+      1. Knowledge Graph Data (Entity)      ← entity JSON → BỎ QUA
+      2. Knowledge Graph Data (Relationship) ← relation JSON → BỎ QUA
+      3. Document Chunks                     ← text chunks → LẤY CÁI NÀY
+      4. Reference Document List             ← file list → BỎ QUA
+
+    Lý do: RAGAS đánh giá trên văn bản xuôi. Entity/Relationship dạng JSON
+    gây nhiễu → RAGAS chấm Faithfulness/Recall sai lệch nghiêm trọng.
+    """
+    # Tìm phần Document Chunks
+    chunk_start = raw_context.find("Document Chunks")
+    if chunk_start == -1:
+        # Không tìm thấy cấu trúc → trả về nguyên gốc (naive mode)
+        return raw_context
+
+    # Tìm phần Reference Document List (phần sau Document Chunks)
+    ref_start = raw_context.find("Reference Document List", chunk_start)
+
+    if ref_start != -1:
+        chunk_section = raw_context[chunk_start:ref_start]
+    else:
+        chunk_section = raw_context[chunk_start:]
+
+    # Parse JSON content entries và lấy field "content" ra thành text xuôi
+    extracted_texts = []
+    try:
+        import json as _json
+        # Tìm các JSON object trong block ```json ... ```
+        json_match = re.search(r'```json\s*\n(.*?)```', chunk_section, re.DOTALL)
+        if json_match:
+            json_lines = json_match.group(1).strip().split('\n')
+            for line in json_lines:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    obj = _json.loads(line)
+                    content = obj.get("content", "")
+                    if content:
+                        extracted_texts.append(content.strip())
+                except _json.JSONDecodeError:
+                    continue
+    except Exception:
+        pass
+
+    if extracted_texts:
+        return "\n\n".join(extracted_texts)
+
+    # Fallback: trả về nguyên phần chunk section nếu không parse được JSON
+    return chunk_section.strip()
+
+
+def truncate_context(text: str, max_chars: int = None) -> str:
+    """Truncate context để không vượt token limit của LLM Judge"""
+    if max_chars is None:
+        max_chars = MAX_CONTEXT_CHARS
+
+    if max_chars is None:
+        return text
+
+    if len(text) <= max_chars:
+        return text
+    return text[:max_chars] + "\n... [truncated]"
+
+
 def query_lightrag(question: str, mode: str, retries: int = 3):
     """
     Query LightRAG: lấy answer + full context.
     - Call 1: normal query → answer
     - Call 2: only_need_context=True → full context (entities + relations + chunks)
+    Với mode mix/local/global: chỉ trích xuất phần Document Chunks cho RAGAS.
     """
-    base = {"query": question, "mode": mode, "stream": False, "top_k": 10}
+    base = {"query": question, "mode": mode, "stream": False, "top_k": 5}
 
     for attempt in range(retries):
         try:
@@ -83,6 +167,10 @@ def query_lightrag(question: str, mode: str, retries: int = 3):
             resp2.raise_for_status()
             full_context = resp2.json().get("response", "")
 
+            # Trích xuất CHỈ phần Document Chunks (bỏ Entity/Relation)
+            if full_context:
+                full_context = extract_chunks_from_context(full_context)
+                full_context = truncate_context(full_context)
             contexts = [full_context] if full_context else ["No context retrieved"]
             return answer, contexts
 
@@ -99,18 +187,32 @@ def run_ragas_evaluation(questions, answers, contexts_list, ground_truths):
     from datasets import Dataset
     from ragas import evaluate
     from ragas.metrics import Faithfulness, AnswerRelevancy, ContextRecall, ContextPrecision
-    from langchain_openai import ChatOpenAI
-    from langchain_ollama import OllamaEmbeddings
+    from langchain_openai import ChatOpenAI, OpenAIEmbeddings
     from ragas.llms import LangchainLLMWrapper
+    from ragas.embeddings import LangchainEmbeddingsWrapper
 
-    # LLM Judge
-    llm_kwargs = {"model": EVAL_LLM_MODEL, "api_key": EVAL_LLM_API_KEY}
-    if EVAL_LLM_BASE_URL:
-        llm_kwargs["base_url"] = EVAL_LLM_BASE_URL
-    llm = LangchainLLMWrapper(langchain_llm=ChatOpenAI(**llm_kwargs), bypass_n=True)
+    # LLM Judge — vLLM local (OpenAI-compatible)
+    llm = LangchainLLMWrapper(
+        langchain_llm=ChatOpenAI(
+            model=EVAL_LLM_MODEL,
+            api_key=EVAL_LLM_API_KEY,
+            base_url=EVAL_LLM_BASE_URL,
+            temperature=0,
+            max_tokens=1024,
+        ),
+        bypass_n=True,
+    )
 
-    # Embedding
-    emb = OllamaEmbeddings(model=EMBEDDING_MODEL, base_url=EMBEDDING_HOST)
+    # Embedding — Ollama local qua OpenAI-compatible endpoint
+    # Ollama expose /v1/embeddings tương thích OpenAI ở cổng 11434
+    emb = LangchainEmbeddingsWrapper(
+        OpenAIEmbeddings(
+            model=EMBEDDING_MODEL,
+            api_key="ollama",               # Ollama không cần key thật
+            base_url=f"{EMBEDDING_HOST}/v1",
+            check_embedding_ctx_length=False,
+        )
+    )
 
     dataset = Dataset.from_dict({
         "question": questions,
@@ -169,12 +271,15 @@ def main():
 
     # 1. Đọc test cases
     print(f"\n📂 Input: {INPUT_FILE}")
-    df = pd.read_excel(INPUT_FILE)
+    df = pd.read_csv(INPUT_FILE)
     print(f"   Tìm thấy {len(df)} test cases")
 
-    # Lấy 50 câu đầu
-    df = df.head(TEST_LIMIT)
-    print(f"   Sử dụng {len(df)} câu đầu tiên")
+    # Giới hạn số câu nếu cần
+    if TEST_LIMIT is not None:
+        df = df.head(TEST_LIMIT)
+        print(f"   Sử dụng {TEST_LIMIT} câu đầu tiên")
+    else:
+        print(f"   Sử dụng toàn bộ {len(df)} câu")
 
     total = len(df)
     all_mode_results = {}

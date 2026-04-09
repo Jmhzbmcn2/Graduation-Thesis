@@ -21,7 +21,7 @@ tmux send-keys -t $SESSION_NAME:0 'ollama serve' C-m
 # Cửa sổ 1: vLLM (Qwen2.5-14B-Instruct-AWQ)
 tmux new-window -t $SESSION_NAME -n 'vLLM'
 tmux send-keys -t $SESSION_NAME:1 'source $HOME/miniconda/bin/activate lightrag' C-m
-tmux send-keys -t $SESSION_NAME:1 'vllm serve Qwen/Qwen2.5-14B-Instruct-AWQ --dtype auto --max-model-len 8192 --port 8000' C-m
+tmux send-keys -t $SESSION_NAME:1 'vllm serve Qwen/Qwen2.5-14B-Instruct-AWQ --dtype auto --max-model-len 32768 --port 8000' C-m
 
 # Cửa sổ 2: LightRAG API Server
 tmux new-window -t $SESSION_NAME -n 'LightRAG_Server'
