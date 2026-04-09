@@ -2,7 +2,7 @@
 import json
 from datetime import datetime, timezone
 
-with open(r"C:\Users\VUDUYLINH\PycharmProjects\KLTN\LightRAG\medical_rag_ollama\kv_store_doc_status.json", "r", encoding="utf-8") as f:
+with open(r"/home/linhvd/Graduation-Thesis/medical_rag/medical_rag_ollama/kv_store_doc_status.json", "r", encoding="utf-8") as f:
     data = json.load(f)
 
 total_docs = len(data)
@@ -120,5 +120,5 @@ lines.append("=" * 60)
 output = "\n".join(lines)
 print(output)
 
-with open(r"C:\Users\VUDUYLINH\PycharmProjects\KLTN\LightRAG\tmp\kg_time_report.txt", "w", encoding="utf-8") as f:
+with open(r"/home/linhvd/Graduation-Thesis/tmp/kg_time_report.txt", "w", encoding="utf-8") as f:
     f.write(output)

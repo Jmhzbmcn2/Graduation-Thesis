@@ -10,7 +10,7 @@ print("=" * 60)
 # Parse graphml for entity types
 import xml.etree.ElementTree as ET
 
-tree = ET.parse(r"C:\Users\VUDUYLINH\PycharmProjects\KLTN\LightRAG\medical_rag_ollama_local\graph_chunk_entity_relation.graphml")
+tree = ET.parse(r"/home/linhvd/Graduation-Thesis/medical_rag/medical_rag_ollama/graph_chunk_entity_relation.graphml")
 root = tree.getroot()
 
 ns = {'g': 'http://graphml.graphstruct.org/graphml'}
@@ -73,7 +73,7 @@ print(f"\n{'=' * 60}")
 print("  ENTITY_TYPES CONFIG IN .env")
 print("=" * 60)
 try:
-    with open(r"C:\Users\VUDUYLINH\PycharmProjects\KLTN\LightRAG\.env", "r", encoding="utf-8") as f:
+    with open(r"/home/linhvd/Graduation-Thesis/.env", "r", encoding="utf-8") as f:
         for line in f:
             if "ENTITY_TYPE" in line.upper():
                 print(f"  {line.strip()}")
