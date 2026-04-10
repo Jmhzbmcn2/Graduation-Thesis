@@ -10,7 +10,7 @@ print("=" * 60)
 # Parse graphml for entity types
 import xml.etree.ElementTree as ET
 
-tree = ET.parse(r"/home/linhvd/Graduation-Thesis/medical_rag/medical_rag_ollama/graph_chunk_entity_relation.graphml")
+tree = ET.parse(r"/home/linhvd/Graduation-Thesis/medical_rag/medical_rag_v2/graph_chunk_entity_relation.graphml")
 root = tree.getroot()
 
 ns = {'g': 'http://graphml.graphstruct.org/graphml'}

@@ -18,15 +18,18 @@ fi
 tmux new-session -d -s $SESSION_NAME -n 'Ollama'
 tmux send-keys -t $SESSION_NAME:0 'ollama serve' C-m
 
-# Cửa sổ 1: vLLM (Qwen2.5-14B-Instruct-AWQ)
+# Cửa sổ 1: vLLM — LLM Judge
+# [ACTIVE] Qwen3-8B-AWQ (reasoning, 128K context, ~6GB VRAM)
 tmux new-window -t $SESSION_NAME -n 'vLLM'
 tmux send-keys -t $SESSION_NAME:1 'source $HOME/miniconda/bin/activate lightrag' C-m
+# tmux send-keys -t $SESSION_NAME:1 'vllm serve Qwen/Qwen3-8B-AWQ --dtype auto --max-model-len 40960 --port 8000' C-m
+# [BACKUP] Qwen2.5-14B-Instruct-AWQ (chat, 32K context, ~10GB VRAM)
 tmux send-keys -t $SESSION_NAME:1 'vllm serve Qwen/Qwen2.5-14B-Instruct-AWQ --dtype auto --max-model-len 32768 --port 8000' C-m
 
 # Cửa sổ 2: LightRAG API Server
 tmux new-window -t $SESSION_NAME -n 'LightRAG_Server'
 tmux send-keys -t $SESSION_NAME:2 'source $HOME/miniconda/bin/activate lightrag' C-m
-tmux send-keys -t $SESSION_NAME:2 'cd /home/linhvd/Graduation-Thesis && lightrag-server --workspace ./medical_rag_ollama' C-m
+tmux send-keys -t $SESSION_NAME:2 'cd /home/linhvd/Graduation-Thesis && lightrag-server --workspace ./medical_rag_v2' C-m
 
 # Cửa sổ 3: Web UI (Bun + Vite)
 tmux new-window -t $SESSION_NAME -n 'WebUI'
@@ -36,7 +39,7 @@ tmux send-keys -t $SESSION_NAME:3 'cd /home/linhvd/Graduation-Thesis/lightrag_we
 echo ""
 echo "✅ Đã khởi động toàn bộ dịch vụ trong tmux session '$SESSION_NAME':"
 echo "   [0] Ollama Embedding    -> http://localhost:11434"
-echo "   [1] vLLM Qwen2.5-14B   -> http://localhost:8000"
+echo "   [1] vLLM Qwen2.5-14B-Instruct-AWQ  -> http://localhost:8000  (128K context)"
 echo "   [2] LightRAG API Server -> http://localhost:9621"
 echo "   [3] Web UI              -> http://localhost:5173/webui/"
 echo ""

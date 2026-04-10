@@ -38,12 +38,12 @@ LIGHTRAG_URL = "http://localhost:9621"
 
 # Đường dẫn file (server)
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-INPUT_FILE  = os.path.join(_SCRIPT_DIR, "500_cases.csv")
+INPUT_FILE  = os.path.join(_SCRIPT_DIR, "500_cases_part2.csv")
 OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_ragas_naive_mix_500cases.xlsx")
 
 # LLM Judge — vLLM local (OpenAI-compatible)
 # Có thể override qua environment variables
-EVAL_LLM_MODEL   = os.getenv("EVAL_LLM_MODEL",    "Qwen/Qwen2.5-14B-Instruct-AWQ")
+EVAL_LLM_MODEL   = os.getenv("EVAL_LLM_MODEL",    "Qwen/Qwen3-8B-AWQ")
 EVAL_LLM_API_KEY = os.getenv("EVAL_LLM_API_KEY",  "EMPTY")          # vLLM không cần key thật
 EVAL_LLM_BASE_URL = os.getenv("EVAL_LLM_BASE_URL", "http://localhost:8000/v1")
 
@@ -52,7 +52,7 @@ EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL",        "nomic-embed-text")
 EMBEDDING_HOST  = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
 
 # Số test case (None = dùng tất cả)
-TEST_LIMIT = 5   # Đặt số nguyên (ví dụ 50) để giới hạn số câu hỏi
+TEST_LIMIT = 1
 
 # Giới hạn độ dài context (ký tự) để tránh vượt token limit của LLM Judge
 # Qwen2.5-14B-Instruct-AWQ có context window 8192 tokens
@@ -71,57 +71,90 @@ def clean_answer(answer: str) -> str:
 
 def extract_chunks_from_context(raw_context: str) -> str:
     """
-    Trích xuất CHỈ phần Document Chunks từ context trả về của LightRAG.
+    Trích xuất context từ LightRAG cho RAGAS evaluation.
 
-    Context mix mode có cấu trúc:
-      1. Knowledge Graph Data (Entity)      ← entity JSON → BỎ QUA
-      2. Knowledge Graph Data (Relationship) ← relation JSON → BỎ QUA
-      3. Document Chunks                     ← text chunks → LẤY CÁI NÀY
-      4. Reference Document List             ← file list → BỎ QUA
+    Chiến lược: CHUNKS TRƯỚC, GRAPH SAU
+      1. Document Chunks (text gốc)     ← đặt TRƯỚC → Context Precision cao
+      2. Entity descriptions (verbalize) ← đặt SAU   → bổ sung Faithfulness
+      3. Relation descriptions (verbalize)← đặt SAU   → bổ sung Faithfulness
 
-    Lý do: RAGAS đánh giá trên văn bản xuôi. Entity/Relationship dạng JSON
-    gây nhiễu → RAGAS chấm Faithfulness/Recall sai lệch nghiêm trọng.
+    Lý do: LLM sinh answer từ cả Graph + Chunks. Nếu RAGAS chỉ thấy Chunks
+    thì sẽ đánh tụt Faithfulness cho phần answer lấy từ Entity/Relation.
     """
-    # Tìm phần Document Chunks
+    import json as _json
+
     chunk_start = raw_context.find("Document Chunks")
     if chunk_start == -1:
-        # Không tìm thấy cấu trúc → trả về nguyên gốc (naive mode)
-        return raw_context
+        return raw_context  # naive mode → trả nguyên gốc
 
-    # Tìm phần Reference Document List (phần sau Document Chunks)
+    # --- 1. Trích xuất Document Chunks ---
     ref_start = raw_context.find("Reference Document List", chunk_start)
+    chunk_section = raw_context[chunk_start:ref_start] if ref_start != -1 else raw_context[chunk_start:]
 
-    if ref_start != -1:
-        chunk_section = raw_context[chunk_start:ref_start]
-    else:
-        chunk_section = raw_context[chunk_start:]
-
-    # Parse JSON content entries và lấy field "content" ra thành text xuôi
-    extracted_texts = []
-    try:
-        import json as _json
-        # Tìm các JSON object trong block ```json ... ```
-        json_match = re.search(r'```json\s*\n(.*?)```', chunk_section, re.DOTALL)
-        if json_match:
-            json_lines = json_match.group(1).strip().split('\n')
-            for line in json_lines:
-                line = line.strip()
-                if not line:
-                    continue
+    chunk_texts = []
+    json_match = re.search(r'```json\s*\n(.*?)```', chunk_section, re.DOTALL)
+    if json_match:
+        for line in json_match.group(1).strip().split('\n'):
+            line = line.strip()
+            if line:
                 try:
                     obj = _json.loads(line)
                     content = obj.get("content", "")
                     if content:
-                        extracted_texts.append(content.strip())
+                        chunk_texts.append(content.strip())
                 except _json.JSONDecodeError:
-                    continue
-    except Exception:
-        pass
+                    pass
 
-    if extracted_texts:
-        return "\n\n".join(extracted_texts)
+    # --- 2. Verbalize Entity descriptions ---
+    graph_texts = []
+    entity_start = raw_context.find("Knowledge Graph Data (Entity):")
+    rel_start = raw_context.find("Knowledge Graph Data (Relationship):")
 
-    # Fallback: trả về nguyên phần chunk section nếu không parse được JSON
+    if entity_start != -1:
+        end_idx = rel_start if rel_start != -1 else chunk_start
+        entity_section = raw_context[entity_start:end_idx]
+        json_match = re.search(r'```json\s*\n(.*?)```', entity_section, re.DOTALL)
+        if json_match:
+            for line in json_match.group(1).strip().split('\n'):
+                line = line.strip()
+                if line:
+                    try:
+                        obj = _json.loads(line)
+                        name = obj.get("entity", "")
+                        desc = obj.get("description", "")
+                        if name and desc:
+                            graph_texts.append(f"{name}: {desc}")
+                    except _json.JSONDecodeError:
+                        pass
+
+    # --- 3. Verbalize Relation descriptions ---
+    if rel_start != -1:
+        rel_section = raw_context[rel_start:chunk_start]
+        json_match = re.search(r'```json\s*\n(.*?)```', rel_section, re.DOTALL)
+        if json_match:
+            for line in json_match.group(1).strip().split('\n'):
+                line = line.strip()
+                if line:
+                    try:
+                        obj = _json.loads(line)
+                        e1 = obj.get("entity1", "")
+                        e2 = obj.get("entity2", "")
+                        desc = obj.get("description", "")
+                        if e1 and e2 and desc:
+                            graph_texts.append(f"{e1} - {e2}: {desc}")
+                    except _json.JSONDecodeError:
+                        pass
+
+    # --- Ghép: Chunks trước, Graph sau ---
+    result_parts = []
+    if chunk_texts:
+        result_parts.append("\n\n".join(chunk_texts))
+    if graph_texts:
+        result_parts.append("\n".join(graph_texts))
+
+    if result_parts:
+        return "\n\n".join(result_parts)
+
     return chunk_section.strip()
 
 
@@ -145,7 +178,7 @@ def query_lightrag(question: str, mode: str, retries: int = 3):
     - Call 2: only_need_context=True → full context (entities + relations + chunks)
     Với mode mix/local/global: chỉ trích xuất phần Document Chunks cho RAGAS.
     """
-    base = {"query": question, "mode": mode, "stream": False, "top_k": 5}
+    base = {"query": question, "mode": mode, "stream": False, "top_k": 20}
 
     for attempt in range(retries):
         try:
@@ -191,14 +224,21 @@ def run_ragas_evaluation(questions, answers, contexts_list, ground_truths):
     from ragas.llms import LangchainLLMWrapper
     from ragas.embeddings import LangchainEmbeddingsWrapper
 
-    # LLM Judge — vLLM local (OpenAI-compatible)
+    # LLM Judge — Qwen3-8B-AWQ (vLLM local)
+    # Thinking mode TẮT: tránh LLMDidNotFinishException do think tokens chiếm hết output budget.
+    # Qwen3 không thinking vẫn mạnh hơn Qwen2.5 về reasoning.
     llm = LangchainLLMWrapper(
         langchain_llm=ChatOpenAI(
             model=EVAL_LLM_MODEL,
             api_key=EVAL_LLM_API_KEY,
             base_url=EVAL_LLM_BASE_URL,
-            temperature=0,
-            max_tokens=1024,
+            temperature=0.0,
+            max_tokens=2048,
+            model_kwargs={
+                "extra_body": {
+                    "chat_template_kwargs": {"enable_thinking": False}
+                }
+            },
         ),
         bypass_n=True,
     )

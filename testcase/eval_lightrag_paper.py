@@ -41,11 +41,11 @@ LIGHTRAG_URL = os.getenv("LIGHTRAG_URL", "http://localhost:9621")
 
 # LLM Judge — vLLM local (OpenAI-compatible)
 # Có thể override qua environment variables
-JUDGE_MODEL    = os.getenv("EVAL_LLM_MODEL",    "Qwen/Qwen2.5-14B-Instruct-AWQ")
+JUDGE_MODEL    = os.getenv("EVAL_LLM_MODEL",    "Qwen/Qwen3-8B-AWQ")
 JUDGE_API_KEY  = os.getenv("EVAL_LLM_API_KEY",  "EMPTY")   # vLLM không cần key thật
 JUDGE_BASE_URL = os.getenv("EVAL_LLM_BASE_URL", "http://localhost:8000/v1")
 
-TEST_LIMIT = 50  # None = tất cả, số nguyên = giới hạn (ví dụ: 50)
+TEST_LIMIT = 10  # None = tất cả, số nguyên = giới hạn (ví dụ: 50)
 
 # Đường dẫn file (server — relative to this script)
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
