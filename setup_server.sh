@@ -7,7 +7,7 @@
 #    2. Miniconda (Python 3.10)
 #    3. Conda environment "lightrag" với các thư viện cần thiết
 #    4. vLLM (serving Qwen2.5-14B-Instruct-AWQ)
-#    5. Ollama (serving nomic-embed-text embedding)
+#    5. Ollama (serving embeddinggemma:300m embedding)
 #    6. LightRAG + API dependencies
 #    7. sentence-transformers (cho reranker server)
 #    8. Bun (cho WebUI)
@@ -44,7 +44,7 @@ PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 VLLM_MODEL="Qwen/Qwen2.5-14B-Instruct-AWQ"
 VLLM_PORT=8000
-OLLAMA_EMBED_MODEL="nomic-embed-text"
+OLLAMA_EMBED_MODEL="embeddinggemma:300m"
 
 # ─── Kiểm tra quyền root ────────────────────────────────────────────────────
 if [ "$EUID" -ne 0 ]; then

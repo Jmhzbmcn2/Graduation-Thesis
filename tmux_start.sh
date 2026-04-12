@@ -1,6 +1,7 @@
 #!/bin/bash
 
 SESSION_NAME="lightrag_services"
+OLLAMA_EMBED_MODEL="google/embeddinggemma:300m"
 
 echo "Đang dọn dẹp các tiến trình cũ (nếu có)..."
 pkill -f "vllm serve"
@@ -38,7 +39,7 @@ tmux send-keys -t $SESSION_NAME:3 'cd /home/linhvd/Graduation-Thesis/lightrag_we
 
 echo ""
 echo "✅ Đã khởi động toàn bộ dịch vụ trong tmux session '$SESSION_NAME':"
-echo "   [0] Ollama Embedding    -> http://localhost:11434"
+echo "   [0] Ollama Embedding ($OLLAMA_EMBED_MODEL) -> http://localhost:11434"
 echo "   [1] vLLM Qwen2.5-14B-Instruct-AWQ  -> http://localhost:8000  (128K context)"
 echo "   [2] LightRAG API Server -> http://localhost:9621"
 echo "   [3] Web UI              -> http://localhost:5173/webui/"

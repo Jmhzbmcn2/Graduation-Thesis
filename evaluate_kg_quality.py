@@ -23,29 +23,37 @@ import os
 # CẤU HÌNH
 # ============================================================
 
-# Đường dẫn tới file GraphML
-GRAPHML_PATH = os.path.join(
+# 10 entity types khớp .env / LightRAG ENTITY_TYPES (phiên bản medical KG)
+ENTITY_TYPES = [
+    "Disease",
+    "Symptom",
+    "Drug",
+    "Chemical compound",
+    "Protein",
+    "Anatomy",
+    "Biological process",
+    "Exposure",
+    "Diagnostic test",
+    "Treatment method",
+]
+
+
+def _normalize_entity_type_label(label: str) -> str:
+    """LightRAG lưu entity_type trong GraphML: lowercase, bỏ khoảng trắng."""
+    return "".join(label.lower().split())
+
+
+# Tập type chuẩn dùng cho fCorrectness / ICR (đồng bộ với ENTITY_TYPES ở trên)
+PREDEFINED_SCHEMA_TYPES = {_normalize_entity_type_label(t) for t in ENTITY_TYPES}
+
+# Đường dẫn GraphML mặc định: KG trong medical_rag_v2. Ghi đè bằng KG_EVAL_GRAPHML_PATH nếu cần.
+_GRAPHML_DEFAULT = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
-    "medical_rag/medical_rag_ollama",
+    "medical_rag",
+    "medical_rag_v2",
     "graph_chunk_entity_relation.graphml",
 )
-
-# 10 entity types được predefined trong .env
-# ENTITY_TYPES=["Disease","Symptom","Drug","Chemical compound","Protein",
-#               "Anatomy","Biological process","Exposure","Diagnostic test","Treatment method"]
-# LightRAG lưu entity_type dưới dạng lowercase, bỏ dấu cách trong GraphML
-PREDEFINED_SCHEMA_TYPES = {
-    "disease",              # Disease
-    "symptom",              # Symptom
-    "drug",                 # Drug
-    "chemicalcompound",     # Chemical compound
-    "protein",              # Protein
-    "anatomy",              # Anatomy
-    "biologicalprocess",    # Biological process
-    "exposure",             # Exposure
-    "diagnostictest",       # Diagnostic test
-    "treatmentmethod",      # Treatment method
-}
+GRAPHML_PATH = os.environ.get("KG_EVAL_GRAPHML_PATH", _GRAPHML_DEFAULT)
 
 # Mapping: entity types tiếng Việt → type chuẩn (để phân tích hallucination)
 VIETNAMESE_TYPE_MAPPING = {
@@ -62,14 +70,6 @@ VIETNAMESE_TYPE_MAPPING = {
     "phươngphápđiềutrị": "treatmentmethod",
     "biểuhiệnlâmsàng": "symptom",
     "yếutốphơinhiễm": "exposure",
-}
-
-# Entity types ngoài domain y tế (LLM tự tạo)
-OUT_OF_DOMAIN_TYPES = {
-    "method", "location", "person", "concept", "organization",
-    "creature", "artifact", "naturalobject", "content", "event", "data",
-    # Các type cũ không còn dùng
-    "phenotype", "molecularfunction", "cellularcomponent", "pathway",
 }
 
 
@@ -156,8 +156,9 @@ def evaluate_f_correctness(G: nx.Graph) -> dict:
     vn_hallucination_count = sum(
         entity_types.get(t, 0) for t in VIETNAMESE_TYPE_MAPPING
     )
-    ood_count = sum(
-        entity_types.get(t, 0) for t in OUT_OF_DOMAIN_TYPES
+    # Mọi entity có type không thuộc 10 loại ENTITY_TYPES (không cần danh sách tay)
+    non_schema_count = sum(
+        c for t, c in entity_types.items() if t not in PREDEFINED_SCHEMA_TYPES
     )
     combined_type_count = sum(
         c for t, c in entity_types.items() if "," in t
@@ -191,7 +192,8 @@ def evaluate_f_correctness(G: nx.Graph) -> dict:
     print(f"  'other' (không phân loại được): {other_count:>10,}  ({other_count/total_entities*100:.1f}%)")
     print(f"  'UNKNOWN':                     {unknown_count:>10,}  ({unknown_count/total_entities*100:.1f}%)")
     print(f"  Vietnamese hallucination:      {vn_hallucination_count:>10,}  ({vn_hallucination_count/total_entities*100:.4f}%)")
-    print(f"  Out-of-domain types:           {ood_count:>10,}  ({ood_count/total_entities*100:.1f}%)")
+    print(f"  Ngoài 10 loại schema (tổng):   {non_schema_count:>10,}  ({non_schema_count/total_entities*100:.1f}%)")
+    print(f"    (gồm other, unknown, type do LLM tự tạo — không dùng whitelist tay)")
     print(f"  Combined types (format error): {combined_type_count:>10,}  ({combined_type_count/total_entities*100:.4f}%)")
 
     print(f"\n{'─' * 50}")
@@ -217,12 +219,10 @@ def evaluate_f_correctness(G: nx.Graph) -> dict:
             status = "⚠️  Unknown"
         elif t in VIETNAMESE_TYPE_MAPPING:
             status = f"❌ VN→{VIETNAMESE_TYPE_MAPPING[t]}"
-        elif t in OUT_OF_DOMAIN_TYPES:
-            status = "❌ Out-of-domain"
         elif "," in t:
             status = "❌ Combined"
         else:
-            status = "❌ Other"
+            status = "❌ Ngoài schema"
         print(f"  {t:<35} {c:>8,}  {pct:>6.1f}%  {status}")
 
     # Top violation reasons
@@ -242,7 +242,8 @@ def evaluate_f_correctness(G: nx.Graph) -> dict:
         "icr": round(icr, 2),
         "other_rate": round(other_count / total_entities, 4),
         "vn_hallucination_count": vn_hallucination_count,
-        "ood_count": ood_count,
+        "non_schema_entities": non_schema_count,
+        "non_schema_rate": round(non_schema_count / total_entities, 4),
     }
 
 
@@ -467,7 +468,7 @@ def evaluate_graph_topology(G: nx.Graph) -> dict:
 def main():
     print("\n" + "█" * 70)
     print("  KNOWLEDGE GRAPH QUALITY EVALUATION")
-    print("  LightRAG Medical KG")
+    print("  LightRAG Medical KG (medical_rag_v2 schema)")
     print("█" * 70)
     print()
 

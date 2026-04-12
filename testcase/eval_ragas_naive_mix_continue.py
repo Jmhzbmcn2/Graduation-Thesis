@@ -1,6 +1,11 @@
 """
-RAGAS Evaluation — So sánh Naive vs Mix (500 test cases từ 500_cases.csv)
+RAGAS Evaluation — So sánh Naive vs Hybrid vs Mix (500 test cases từ 500_cases.csv)
 Khóa Luận Tốt Nghiệp
+
+**Phiên bản CONTINUE**: Hỗ trợ chạy tiếp từ kết quả đã lưu.
+  - Đọc file output Excel đã có, xác định câu nào đã chạy rồi
+  - Chỉ query + evaluate các câu CHƯA chạy
+  - Ghép kết quả cũ + mới, tính lại Summary trên TOÀN BỘ
 
 Đánh giá 4 metrics RAGAS:
   - Faithfulness: Câu trả lời có đúng theo context không?
@@ -16,7 +21,7 @@ Cấu hình local server:
 Output: eval_ragas_naive_mix_500cases.xlsx (mỗi mode 1 sheet + Summary)
 
 Cách dùng:
-  python testcase/eval_ragas_naive_mix.py
+  python testcase/eval_ragas_naive_mix_continue.py
 """
 import os
 import re
@@ -52,7 +57,7 @@ EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL",        "embeddinggemma:300m")
 EMBEDDING_HOST  = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
 
 # Số test case (None = dùng tất cả)
-TEST_LIMIT = 20
+TEST_LIMIT = 100
 
 # Giới hạn độ dài context (ký tự) để tránh vượt token limit của LLM Judge
 # Qwen2.5-14B-Instruct-AWQ có context window 8192 tokens
@@ -61,6 +66,9 @@ MAX_CONTEXT_CHARS = None
 
 # Modes cần đánh giá (phải là mode mà LightRAG API chấp nhận: naive, local, global, hybrid, mix, …)
 MODES = ["naive", "hybrid", "mix"]
+
+# Batch size cho RAGAS evaluation (tránh OOM khi đánh giá quá nhiều câu 1 lúc)
+EVAL_BATCH_SIZE = 50
 # ===========================================================
 
 
@@ -298,9 +306,70 @@ def create_summary_sheet(all_mode_results):
     return summary_df
 
 
+def load_existing_results() -> dict[str, pd.DataFrame]:
+    """
+    Đọc kết quả đã chạy từ file output Excel.
+    Trả về dict {mode: DataFrame} cho mỗi mode đã có dữ liệu.
+    Nếu file chưa tồn tại → trả về dict rỗng.
+    """
+    existing = {}
+    if not os.path.exists(OUTPUT_FILE):
+        return existing
+
+    try:
+        xls = pd.ExcelFile(OUTPUT_FILE, engine="openpyxl")
+        for mode in MODES:
+            sheet_name = mode.capitalize()[:31]
+            if sheet_name in xls.sheet_names:
+                df = pd.read_excel(xls, sheet_name=sheet_name)
+                if "question_text" in df.columns and len(df) > 0:
+                    existing[mode] = df
+        xls.close()
+    except Exception as e:
+        print(f"⚠️ Không đọc được file output cũ: {e}")
+        return {}
+
+    return existing
+
+
+def get_pending_questions(all_questions: list[str], existing_df: pd.DataFrame | None) -> tuple[list[int], list[str]]:
+    """
+    Xác định các câu hỏi CHƯA được đánh giá.
+    Trả về (indices, questions) — indices tương ứng vị trí trong all_questions.
+    """
+    if existing_df is None or len(existing_df) == 0:
+        return list(range(len(all_questions))), all_questions
+
+    done_questions = set(existing_df["question_text"].astype(str).tolist())
+    pending_indices = []
+    pending_questions = []
+    for i, q in enumerate(all_questions):
+        if q not in done_questions:
+            pending_indices.append(i)
+            pending_questions.append(q)
+
+    return pending_indices, pending_questions
+
+
+def save_intermediate_results(all_mode_results: dict[str, pd.DataFrame]):
+    """
+    Lưu kết quả trung gian sau mỗi batch để tránh mất dữ liệu nếu bị crash.
+    """
+    try:
+        summary_df = create_summary_sheet(all_mode_results)
+        with pd.ExcelWriter(OUTPUT_FILE, engine="openpyxl") as writer:
+            for mode in MODES:
+                if mode in all_mode_results:
+                    sheet = mode.capitalize()[:31]
+                    all_mode_results[mode].to_excel(writer, sheet_name=sheet, index=False)
+            summary_df.to_excel(writer, sheet_name="Summary", index=False)
+    except Exception as e:
+        print(f"    ⚠️ Lưu trung gian thất bại: {e}")
+
+
 def main():
     print("=" * 65)
-    print(f"📊 RAGAS Evaluation — modes: {', '.join(MODES)}")
+    print(f"📊 RAGAS Evaluation (CONTINUE) — modes: {', '.join(MODES)}")
     print("   Khóa Luận Tốt Nghiệp")
     print("=" * 65)
 
@@ -316,7 +385,28 @@ def main():
     else:
         print(f"   Sử dụng toàn bộ {len(df)} câu")
 
-    total = len(df)
+    # Chuẩn bị danh sách câu hỏi + ground truth
+    all_questions = []
+    all_ground_truths = []
+    for _, row in df.iterrows():
+        question = str(row.get("question", row.get("Question", "")))
+        ground_truth = str(row.get("answer", row.get("Answer", "")))
+        if question and question != "nan":
+            all_questions.append(question)
+            all_ground_truths.append(ground_truth)
+
+    total = len(all_questions)
+    print(f"   Tổng số câu hợp lệ: {total}")
+
+    # 2. Đọc kết quả đã chạy (nếu có)
+    print(f"\n📦 Kiểm tra kết quả đã lưu: {OUTPUT_FILE}")
+    existing_results = load_existing_results()
+    if existing_results:
+        for mode, edf in existing_results.items():
+            print(f"   ✅ Mode {mode.upper()}: đã có {len(edf)} câu")
+    else:
+        print("   ℹ️ Chưa có kết quả nào — chạy từ đầu")
+
     all_mode_results = {}
 
     for mode in MODES:
@@ -324,66 +414,135 @@ def main():
         print(f"🔍 ĐÁNH GIÁ MODE: {mode.upper()} ({total} câu hỏi)")
         print(f"{'=' * 65}")
 
-        questions = []
-        answers = []
-        contexts_list = []
-        ground_truths = []
+        # Xác định câu nào chưa chạy
+        existing_df = existing_results.get(mode, None)
+        pending_indices, pending_questions = get_pending_questions(all_questions, existing_df)
+        done_count = total - len(pending_questions)
 
-        # Query LightRAG
+        if done_count > 0:
+            print(f"\n   ⏩ Đã chạy: {done_count}/{total} câu — bỏ qua")
+
+        if len(pending_questions) == 0:
+            print(f"   ✅ Mode {mode.upper()} đã hoàn thành — không cần chạy thêm")
+            all_mode_results[mode] = existing_df
+            continue
+
+        print(f"   🆕 Cần chạy thêm: {len(pending_questions)} câu")
+
+        # Query LightRAG cho các câu chưa chạy
+        new_questions = []
+        new_answers = []
+        new_contexts_list = []
+        new_ground_truths = []
+
         print(f"\n🔄 Querying LightRAG (mode: {mode})...")
         query_start = time.time()
 
-        for idx, row in df.iterrows():
-            question = str(row.get("question", row.get("Question", "")))
-            ground_truth = str(row.get("answer", row.get("Answer", "")))
+        for i, idx in enumerate(pending_indices):
+            question = all_questions[idx]
+            ground_truth = all_ground_truths[idx]
 
-            if not question or question == "nan":
-                continue
-
-            print(f"  [{idx+1}/{total}] {question[:65]}...")
+            print(f"  [{done_count + i + 1}/{total}] {question[:65]}...")
 
             answer, contexts = query_lightrag(question, mode)
 
-            questions.append(question)
-            answers.append(answer)
-            contexts_list.append(contexts)
-            ground_truths.append(ground_truth)
+            new_questions.append(question)
+            new_answers.append(answer)
+            new_contexts_list.append(contexts)
+            new_ground_truths.append(ground_truth)
 
         query_time = time.time() - query_start
-        print(f"\n✅ Query xong {len(questions)} câu trong {query_time:.1f}s")
+        print(f"\n✅ Query xong {len(new_questions)} câu mới trong {query_time:.1f}s")
 
-        # Chạy RAGAS
-        print(f"\n🔬 Chạy RAGAS evaluation ({mode})...")
+        # Chạy RAGAS evaluation theo batch
+        print(f"\n🔬 Chạy RAGAS evaluation ({mode}) — {len(new_questions)} câu mới...")
         print(f"   LLM Judge: {EVAL_LLM_MODEL}")
         print(f"   Embedding: {EMBEDDING_MODEL} (Ollama)")
 
         eval_start = time.time()
-        results_df = run_ragas_evaluation(questions, answers, contexts_list, ground_truths)
+        new_result_dfs = []
+
+        # Chia thành batch để tránh OOM và lưu trung gian
+        for batch_start in range(0, len(new_questions), EVAL_BATCH_SIZE):
+            batch_end = min(batch_start + EVAL_BATCH_SIZE, len(new_questions))
+            batch_num = batch_start // EVAL_BATCH_SIZE + 1
+            total_batches = (len(new_questions) + EVAL_BATCH_SIZE - 1) // EVAL_BATCH_SIZE
+
+            print(f"\n   📦 Batch {batch_num}/{total_batches} (câu {batch_start+1}–{batch_end})...")
+
+            batch_q = new_questions[batch_start:batch_end]
+            batch_a = new_answers[batch_start:batch_end]
+            batch_c = new_contexts_list[batch_start:batch_end]
+            batch_g = new_ground_truths[batch_start:batch_end]
+
+            try:
+                batch_df = run_ragas_evaluation(batch_q, batch_a, batch_c, batch_g)
+
+                # Thêm cột phụ
+                batch_df.insert(0, "question_text", batch_q)
+                batch_df["mode"] = mode
+
+                # Tính RAGAS score
+                metric_cols = ["faithfulness", "answer_relevancy", "context_recall", "context_precision"]
+                valid_cols = [c for c in metric_cols if c in batch_df.columns]
+                batch_df["ragas_score"] = batch_df[valid_cols].mean(axis=1)
+
+                new_result_dfs.append(batch_df)
+
+                # Lưu trung gian: ghép kết quả cũ + mới (đến thời điểm hiện tại)
+                partial_new = pd.concat(new_result_dfs, ignore_index=True) if new_result_dfs else pd.DataFrame()
+                if existing_df is not None and len(existing_df) > 0:
+                    combined = pd.concat([existing_df, partial_new], ignore_index=True)
+                else:
+                    combined = partial_new
+                all_mode_results[mode] = combined
+
+                # Lưu file trung gian (bảo vệ dữ liệu)
+                save_intermediate_results(all_mode_results)
+                print(f"   💾 Đã lưu trung gian ({len(combined)} câu tổng cộng cho {mode})")
+
+            except Exception as e:
+                print(f"   ❌ Lỗi RAGAS batch {batch_num}: {e}")
+                print(f"   ⚠️ Bỏ qua batch này, tiếp tục...")
+                continue
+
         eval_time = time.time() - eval_start
 
-        # Thêm cột phụ
-        results_df.insert(0, "question_text", questions)
-        results_df["mode"] = mode
+        # Ghép toàn bộ kết quả: cũ + mới
+        if new_result_dfs:
+            new_results_df = pd.concat(new_result_dfs, ignore_index=True)
+        else:
+            new_results_df = pd.DataFrame()
 
-        # Tính RAGAS score
+        if existing_df is not None and len(existing_df) > 0:
+            combined_df = pd.concat([existing_df, new_results_df], ignore_index=True)
+        else:
+            combined_df = new_results_df
+
+        all_mode_results[mode] = combined_df
+
+        # In kết quả mode này (trên TOÀN BỘ dữ liệu cũ + mới)
         metric_cols = ["faithfulness", "answer_relevancy", "context_recall", "context_precision"]
-        valid_cols = [c for c in metric_cols if c in results_df.columns]
-        results_df["ragas_score"] = results_df[valid_cols].mean(axis=1)
-
-        all_mode_results[mode] = results_df
-
-        # In kết quả mode này
-        print(f"\n📈 Kết quả {mode.upper()}:")
+        print(f"\n📈 Kết quả {mode.upper()} ({len(combined_df)} câu tổng cộng):")
         for col in metric_cols:
-            if col in results_df.columns:
-                print(f"   {col:<25s}: {results_df[col].mean():.4f}")
-        print(f"   {'RAGAS Score (avg)':<25s}: {results_df['ragas_score'].mean():.4f}")
-        print(f"   ⏱️ Query: {query_time:.1f}s | Eval: {eval_time:.1f}s")
+            if col in combined_df.columns:
+                print(f"   {col:<25s}: {combined_df[col].mean():.4f}")
+        if "ragas_score" in combined_df.columns:
+            print(f"   {'RAGAS Score (avg)':<25s}: {combined_df['ragas_score'].mean():.4f}")
+        if len(new_results_df) > 0:
+            print(f"   ⏱️ Query: {query_time:.1f}s | Eval: {eval_time:.1f}s (cho {len(new_results_df)} câu mới)")
 
     # ==================== SO SÁNH ====================
     print(f"\n{'=' * 65}")
     print(f"📊 SO SÁNH CÁC MODE: {', '.join(m.upper() for m in MODES)}")
     print(f"{'=' * 65}")
+
+    # Kiểm tra tất cả modes đã có dữ liệu
+    missing_modes = [m for m in MODES if m not in all_mode_results or len(all_mode_results[m]) == 0]
+    if missing_modes:
+        print(f"⚠️ Các mode chưa có dữ liệu: {', '.join(missing_modes)}")
+        print("   Không thể so sánh. Hãy chạy lại để hoàn thành.")
+        return
 
     metric_cols = ["faithfulness", "answer_relevancy", "context_recall", "context_precision", "ragas_score"]
     col_w = max(10, max(len(m) for m in MODES) + 2)
@@ -404,7 +563,11 @@ def main():
 
     print(f"{'=' * 65}")
 
-    # ==================== LƯU KẾT QUẢ ====================
+    # In số câu mỗi mode
+    for mode in MODES:
+        print(f"   📊 {mode.upper()}: {len(all_mode_results[mode])} câu")
+
+    # ==================== LƯU KẾT QUẢ CUỐI CÙNG ====================
     # Tạo summary sheet
     summary_df = create_summary_sheet(all_mode_results)
 
@@ -417,7 +580,7 @@ def main():
 
     print(f"\n💾 Kết quả đã lưu: {OUTPUT_FILE}")
     for mode in MODES:
-        print(f"   📄 Sheet '{mode.capitalize()[:31]}' — chi tiết mode {mode}")
+        print(f"   📄 Sheet '{mode.capitalize()[:31]}' — {len(all_mode_results[mode])} câu (mode {mode})")
     print("   📄 Sheet 'Summary' — tổng hợp so sánh các mode")
 
 

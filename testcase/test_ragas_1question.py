@@ -56,7 +56,7 @@ def run_ragas(question, answer, contexts, ground_truth):
 
     llm = LangchainLLMWrapper(langchain_llm=ChatOpenAI(**llm_kwargs), bypass_n=True)
     emb = OllamaEmbeddings(
-        model=os.getenv("EMBEDDING_MODEL", "nomic-embed-text"),
+        model=os.getenv("EMBEDDING_MODEL", "embeddinggemma:300m"),
         base_url=os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434"),
     )
 

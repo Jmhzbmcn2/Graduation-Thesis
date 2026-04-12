@@ -37,7 +37,7 @@ CHECKPOINT_FILE = "./medical_rag_ollama/checkpoint.json"
 
 # Ollama Embedding Configuration
 OLLAMA_HOST = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
-OLLAMA_EMBED_MODEL = "nomic-embed-text"
+OLLAMA_EMBED_MODEL = "embeddinggemma:300m"
 OLLAMA_EMBED_DIM = 768
 
 # ================================
@@ -87,7 +87,7 @@ def delete_old_data():
 # Ollama Embedding
 # ================================
 async def ollama_embedding_func(texts: list[str]) -> np.ndarray:
-    """Ollama embedding function using nomic-embed-text (768d)"""
+    """Ollama embedding function using embeddinggemma:300m (768d)"""
     client = ollama.AsyncClient(host=OLLAMA_HOST)
     try:
         response = await client.embed(model=OLLAMA_EMBED_MODEL, input=texts)

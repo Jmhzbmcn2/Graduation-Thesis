@@ -2,7 +2,7 @@ import requests
 import json
 
 r = requests.post('http://localhost:11434/api/embed', json={
-    'model': 'nomic-embed-text', 
+    'model': 'embeddinggemma:300m',
     'input': 'test'
 })
 data = r.json()

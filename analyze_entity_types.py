@@ -1,5 +1,5 @@
 """
-Phân tích phân bố Entity Types từ Knowledge Graph trong medical_rag_ollama.
+Phân tích phân bố Entity Types từ Knowledge Graph (medical_rag_v2).
 Đọc từ file graphml và vẽ đồ thị bar chart.
 """
 
@@ -12,7 +12,13 @@ import os
 matplotlib.rcParams['font.family'] = 'DejaVu Sans'
 
 # ==================== PARSE GRAPHML ====================
-GRAPHML_PATH = "medical_rag_ollama/graph_chunk_entity_relation.graphml"
+_ROOT = os.path.dirname(os.path.abspath(__file__))
+GRAPHML_PATH = os.path.join(
+    _ROOT,
+    "medical_rag",
+    "medical_rag_v2",
+    "graph_chunk_entity_relation.graphml",
+)
 OUTPUT_PATH = "entity_type_distribution.png"
 
 tree = ET.parse(GRAPHML_PATH)

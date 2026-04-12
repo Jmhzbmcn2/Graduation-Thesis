@@ -37,7 +37,7 @@ EVAL_LLM_API_KEY = os.getenv("EVAL_LLM_BINDING_API_KEY") or os.getenv("OPENAI_AP
 EVAL_LLM_BASE_URL = os.getenv("EVAL_LLM_BINDING_HOST")
 
 # Embedding (Ollama local)
-EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "nomic-embed-text")
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "embeddinggemma:300m")
 EMBEDDING_HOST = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
 
 # Số test case chạy (None = chạy tất cả)

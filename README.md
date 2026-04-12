@@ -20,7 +20,7 @@ python -m venv .venv && .venv\Scripts\activate
 pip install -e ".[api]"
 
 # 2. Pull embedding model
-ollama pull nomic-embed-text
+ollama pull embeddinggemma:300m
 
 # 3. Tạo file .env (copy từ env.example, điền API key)
 cp env.example .env
@@ -51,4 +51,4 @@ curl -X POST http://localhost:9621/query \
 
 ## Công nghệ
 
-LightRAG · Gemini 2.5 Flash · Ollama (nomic-embed-text) · NetworkX · FastAPI · React + Vite
+LightRAG · Gemini 2.5 Flash · Ollama (embeddinggemma:300m) · NetworkX · FastAPI · React + Vite
