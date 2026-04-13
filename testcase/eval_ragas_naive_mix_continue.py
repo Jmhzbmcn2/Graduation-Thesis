@@ -57,7 +57,7 @@ EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL",        "embeddinggemma:300m")
 EMBEDDING_HOST  = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
 
 # Số test case (None = dùng tất cả)
-TEST_LIMIT = 100
+TEST_LIMIT = 300
 
 # Giới hạn độ dài context (ký tự) để tránh vượt token limit của LLM Judge
 # Qwen2.5-14B-Instruct-AWQ có context window 8192 tokens
@@ -68,7 +68,7 @@ MAX_CONTEXT_CHARS = None
 MODES = ["naive", "hybrid", "mix"]
 
 # Batch size cho RAGAS evaluation (tránh OOM khi đánh giá quá nhiều câu 1 lúc)
-EVAL_BATCH_SIZE = 50
+EVAL_BATCH_SIZE = 100
 # ===========================================================
 
 
