@@ -235,7 +235,7 @@ class LightRAG:
     If both are None, the default TiktokenTokenizer is used.
     """
 
-    tiktoken_model_name: str = field(default="gpt-4o-mini")
+    tiktoken_model_name: str = field(default="gpt-3.5-turbo")
     """Model name used for tokenization when chunking text with tiktoken. Defaults to `gpt-4o-mini`."""
 
     chunking_func: Callable[

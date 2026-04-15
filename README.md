@@ -28,7 +28,7 @@ cp env.example .env
 
 # 4. Chạy
 ollama serve                                        # Terminal 1: Embedding server
-lightrag-server --working-dir ./medical_rag_ollama  # Terminal 2: API server (port 9621)
+lightrag-server --working-dir ./medical_rag/medical_rag_v2  # Terminal 2: API server (port 9621)
 ```
 
 API docs: `http://localhost:9621/docs`
