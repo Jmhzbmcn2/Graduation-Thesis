@@ -85,13 +85,14 @@ T = TypeVar("T")
 class QueryParam:
     """Configuration parameters for query execution in LightRAG."""
 
-    mode: Literal["local", "global", "hybrid", "naive", "mix", "bypass"] = "mix"
+    mode: Literal["local", "global", "hybrid", "naive", "mix", "bypass", "beam"] = "mix"
     """Specifies the retrieval mode:
     - "local": Focuses on context-dependent information.
     - "global": Utilizes global knowledge.
     - "hybrid": Combines local and global retrieval methods.
     - "naive": Performs a basic search without advanced techniques.
     - "mix": Integrates knowledge graph and vector retrieval.
+    - "beam": Semantic Beam Search with Adaptive Pruning (KLTN improvement).
     """
 
     only_need_context: bool = False
@@ -105,6 +106,17 @@ class QueryParam:
 
     stream: bool = False
     """If True, enables streaming output for real-time responses."""
+
+    # === Beam Search Parameters (KLTN) ===
+    beam_width: int = 3
+    """Number of top-scoring neighbors to keep at each hop during Semantic Beam Search."""
+
+    max_depth: int = 1
+    """Maximum number of hops (k-hop) for Beam Search traversal on the knowledge graph.
+    Default 1 = semantic reranking 1-hop (best latency). Set 2 for deeper exploration."""
+
+    pruning_threshold: float = 0.15
+    """Minimum score threshold for Adaptive Pruning. Neighbors scoring below this are discarded immediately."""
 
     top_k: int = int(os.getenv("TOP_K", str(DEFAULT_TOP_K)))
     """Number of top items to retrieve. Represents entities in 'local' mode and relationships in 'global' mode."""

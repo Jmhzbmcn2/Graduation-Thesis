@@ -44,20 +44,18 @@ LIGHTRAG_URL = "http://localhost:9621"
 # Đường dẫn file (server)
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_FILE  = os.path.join(_SCRIPT_DIR, "500_cases.csv")
-OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_ragas_naive_mix_500cases.xlsx")
+OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_ragas_naive_mix_500cases_gemini.xlsx")
 
-# LLM Judge — vLLM local (OpenAI-compatible)
-# Có thể override qua environment variables
-EVAL_LLM_MODEL   = os.getenv("EVAL_LLM_MODEL",    "Qwen/Qwen2.5-14B-Instruct-AWQ")
-EVAL_LLM_API_KEY = os.getenv("EVAL_LLM_API_KEY",  "EMPTY")          # vLLM không cần key thật
-EVAL_LLM_BASE_URL = os.getenv("EVAL_LLM_BASE_URL", "http://localhost:8000/v1")
+# LLM Judge — Gemini via Native SDK
+EVAL_LLM_MODEL = os.getenv("EVAL_LLM_MODEL", "gemini-2.5-flash")
+EVAL_LLM_API_KEY = os.getenv("EVAL_LLM_BINDING_API_KEY", os.getenv("GEMINI_API_KEY", "EMPTY"))
 
 # Embedding — Ollama local
-EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL",        "embeddinggemma:300m")
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "embeddinggemma:300m")
 EMBEDDING_HOST  = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
 
 # Số test case (None = dùng tất cả)
-TEST_LIMIT = 300
+TEST_LIMIT = 5
 
 # Giới hạn độ dài context (ký tự) để tránh vượt token limit của LLM Judge
 # Qwen2.5-14B-Instruct-AWQ có context window 8192 tokens
@@ -65,7 +63,7 @@ TEST_LIMIT = 300
 MAX_CONTEXT_CHARS = None
 
 # Modes cần đánh giá (phải là mode mà LightRAG API chấp nhận: naive, local, global, hybrid, mix, …)
-MODES = ["naive", "hybrid", "mix"]
+MODES = ["hybrid", "mix", "beam"]
 
 # Batch size cho RAGAS evaluation (tránh OOM khi đánh giá quá nhiều câu 1 lúc)
 EVAL_BATCH_SIZE = 100
@@ -228,37 +226,32 @@ def run_ragas_evaluation(questions, answers, contexts_list, ground_truths):
     from datasets import Dataset
     from ragas import evaluate
     from ragas.metrics import Faithfulness, AnswerRelevancy, ContextRecall, ContextPrecision
-    from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+    from langchain_google_genai import ChatGoogleGenerativeAI
     from ragas.llms import LangchainLLMWrapper
     from ragas.embeddings import LangchainEmbeddingsWrapper
-
-    # LLM Judge — Qwen3-8B-AWQ (vLLM local)
-    # Thinking mode TẮT: tránh LLMDidNotFinishException do think tokens chiếm hết output budget.
-    # Qwen3 không thinking vẫn mạnh hơn Qwen2.5 về reasoning.
+    from langchain_openai import OpenAIEmbeddings
     llm = LangchainLLMWrapper(
-        langchain_llm=ChatOpenAI(
+        langchain_llm=ChatGoogleGenerativeAI(
             model=EVAL_LLM_MODEL,
             api_key=EVAL_LLM_API_KEY,
-            base_url=EVAL_LLM_BASE_URL,
             temperature=0.0,
             max_tokens=2048,
-            model_kwargs={
-                "extra_body": {
-                    "chat_template_kwargs": {"enable_thinking": False}
-                }
-            },
+            max_retries=10,
+            timeout=120.0,
         ),
         bypass_n=True,
     )
 
     # Embedding — Ollama local qua OpenAI-compatible endpoint
-    # Ollama expose /v1/embeddings tương thích OpenAI ở cổng 11434
+    # Embedding — Ollama local qua OpenAI-compatible endpoint
     emb = LangchainEmbeddingsWrapper(
         OpenAIEmbeddings(
             model=EMBEDDING_MODEL,
             api_key="ollama",               # Ollama không cần key thật
             base_url=f"{EMBEDDING_HOST}/v1",
             check_embedding_ctx_length=False,
+            max_retries=10,
+            timeout=120.0,
         )
     )
 
@@ -269,11 +262,14 @@ def run_ragas_evaluation(questions, answers, contexts_list, ground_truths):
         "ground_truth": ground_truths,
     })
 
+    from ragas.run_config import RunConfig
+    
     results = evaluate(
         dataset=dataset,
         metrics=[Faithfulness(), AnswerRelevancy(), ContextRecall(), ContextPrecision()],
         llm=llm,
         embeddings=emb,
+        run_config=RunConfig(max_workers=2, max_retries=10) # Control concurrency to prevent overloading local Ollama
     )
     return results.to_pandas()
 

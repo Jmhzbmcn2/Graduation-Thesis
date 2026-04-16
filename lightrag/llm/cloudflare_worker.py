@@ -110,7 +110,12 @@ async def cloudflare_worker_complete(
                 if resp.status == 200:
                     data = await resp.json()
                     content = data.get("response", "")
-                    if not content or not content.strip():
+                    
+                    # Handle cases where the worker nests the CF AI response object
+                    if isinstance(content, dict):
+                        content = content.get("response", "")
+                        
+                    if not content or not isinstance(content, str) or not content.strip():
                         logger.warning("Empty response from Cloudflare Worker")
                         raise CloudflareWorkerRetryError(
                             "Empty response from Cloudflare Worker"
