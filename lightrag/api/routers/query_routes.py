@@ -105,9 +105,28 @@ class QueryRequest(BaseModel):
         description="If True, includes actual chunk text content in references. Only applies when include_references=True. Useful for evaluation and debugging.",
     )
 
+    include_context: Optional[bool] = Field(
+        default=False,
+        description="If True, includes the raw retrieval context text in the response. Useful for evaluation (RAGAS) without needing a second API call.",
+    )
+
     stream: Optional[bool] = Field(
         default=True,
         description="If True, enables streaming output for real-time responses. Only affects /query/stream endpoint.",
+    )
+
+    beam_width: Optional[int] = Field(
+        default=None,
+        ge=1,
+        le=20,
+        description="Beam width for beam search mode. Number of top candidates to keep at each hop. Higher = more context but slower.",
+    )
+
+    beam_max_depth: Optional[int] = Field(
+        default=None,
+        ge=1,
+        le=10,
+        description="Maximum graph traversal depth for beam search. Higher = indirect relationships but more tokens.",
     )
 
     @field_validator("query", mode="after")
@@ -134,8 +153,12 @@ class QueryRequest(BaseModel):
         # Use Pydantic's `.model_dump(exclude_none=True)` to remove None values automatically
         # Exclude API-level parameters that don't belong in QueryParam
         request_data = self.model_dump(
-            exclude_none=True, exclude={"query", "include_chunk_content"}
+            exclude_none=True, exclude={"query", "include_chunk_content", "include_context", "beam_max_depth"}
         )
+
+        # Map beam_max_depth → max_depth for QueryParam
+        if self.beam_max_depth is not None:
+            request_data["max_depth"] = self.beam_max_depth
 
         # Ensure `mode` and `stream` are set explicitly
         param = QueryParam(**request_data)
@@ -161,6 +184,18 @@ class QueryResponse(BaseModel):
     references: Optional[List[ReferenceItem]] = Field(
         default=None,
         description="Reference list (Disabled when include_references=False, /query/data always includes references.)",
+    )
+    timing: Optional[Dict[str, float]] = Field(
+        default=None,
+        description="Server-side timing breakdown in milliseconds: retrieval_ms, generation_ms, total_ms.",
+    )
+    token_counts: Optional[Dict[str, int]] = Field(
+        default=None,
+        description="Real token counts from server tokenizer: input_tokens (query + system prompt), output_tokens (LLM response).",
+    )
+    context: Optional[str] = Field(
+        default=None,
+        description="Raw retrieval context text used for LLM generation. Only included when include_context=True.",
     )
 
 
@@ -444,11 +479,17 @@ def create_query_routes(rag, api_key: Optional[str] = None, top_k: int = 60):
                     enriched_references.append(ref_copy)
                 references = enriched_references
 
+            # Extract server-side timing, token counts, and context from metadata
+            metadata = result.get("metadata", {})
+            timing = metadata.get("timing", None)
+            token_counts = metadata.get("token_counts", None)
+            context_text = metadata.get("context_text", None) if request.include_context else None
+
             # Return response with or without references based on request
             if request.include_references:
-                return QueryResponse(response=response_content, references=references)
+                return QueryResponse(response=response_content, references=references, timing=timing, token_counts=token_counts, context=context_text)
             else:
-                return QueryResponse(response=response_content, references=None)
+                return QueryResponse(response=response_content, references=None, timing=timing, token_counts=token_counts, context=context_text)
         except Exception as e:
             logger.error(f"Error processing query: {str(e)}", exc_info=True)
             raise HTTPException(status_code=500, detail=str(e))

@@ -1,4 +1,5 @@
 from __future__ import annotations
+import math
 from functools import partial
 from pathlib import Path
 
@@ -3109,6 +3110,7 @@ async def kg_query(
     )
 
     _t3 = time.perf_counter()
+    retrieval_ms = (_t3 - _t0) * 1000
     logger.info(
         f"⏱ Stage 2 — Graph Search + Context Build ({query_param.mode}): {_t3 - _t2:.3f}s"
     )
@@ -3117,6 +3119,14 @@ async def kg_query(
     if context_result is None:
         logger.info("[kg_query] No query context could be built; returning no-result.")
         return None
+
+    # Inject retrieval timing into raw_data for API consumers
+    if context_result.raw_data is not None:
+        if "metadata" not in context_result.raw_data:
+            context_result.raw_data["metadata"] = {}
+        context_result.raw_data["metadata"]["timing"] = {
+            "retrieval_ms": round(retrieval_ms, 2),
+        }
 
     # Return different content based on query parameters
     if query_param.only_need_context and not query_param.only_need_prompt:
@@ -3166,6 +3176,8 @@ async def kg_query(
         ll_keywords_str,
         query_param.user_prompt or "",
         query_param.enable_rerank,
+        query_param.beam_width,
+        query_param.max_depth,
     )
 
     cached_result = await handle_cache(
@@ -3214,6 +3226,29 @@ async def kg_query(
             )
 
     # Return unified result based on actual response type
+    _t4 = time.perf_counter()
+    generation_ms = (_t4 - _t3) * 1000
+    total_ms = (_t4 - _t0) * 1000
+    logger.info(f"⏱ Stage 3 — LLM Generation: {generation_ms / 1000:.3f}s")
+    logger.info(f"⏱ Total query pipeline: {total_ms / 1000:.3f}s")
+
+    # Inject full timing into raw_data for API consumers
+    if context_result.raw_data is not None:
+        if "metadata" not in context_result.raw_data:
+            context_result.raw_data["metadata"] = {}
+        context_result.raw_data["metadata"]["timing"] = {
+            "retrieval_ms": round(retrieval_ms, 2),
+            "generation_ms": round(generation_ms, 2),
+            "total_ms": round(total_ms, 2),
+        }
+        # Store retrieval context so API can return it (avoids needing a second call)
+        context_result.raw_data["metadata"]["context_text"] = context_result.context
+        # Store real token counts (from server tokenizer, not client-side estimates)
+        context_result.raw_data["metadata"]["token_counts"] = {
+            "input_tokens": len_of_prompts,  # query + system prompt (computed above)
+            "output_tokens": len(tokenizer.encode(response)) if isinstance(response, str) else 0,
+        }
+
     if isinstance(response, str):
         # Non-streaming response (string)
         if len(response) > len(sys_prompt):
@@ -3498,33 +3533,42 @@ async def _beam_search_graph(
     effective_top_k = min(query_param.top_k, BEAM_MAX_ANCHOR_K)
 
     # Scoring weights (tunable hyperparameters for ablation study)
-    ALPHA_SEMANTIC = 0.7    # Weight for semantic relevance (cosine similarity)
-    BETA_WEIGHT = 0.3       # Weight for edge structural importance
-    GAMMA_LENGTH = 0.1      # Length penalty per hop depth
+    # v2: Path-aware scoring — parent score carries forward query alignment
+    ALPHA_SEMANTIC = 0.5    # Weight for semantic relevance (cosine similarity)
+    BETA_PATH = 0.3         # Weight for parent path score inheritance
+    BETA_WEIGHT = 0.2       # Weight for edge structural importance
+    GAMMA_LENGTH = 0.1      # Length penalty per hop depth (applied via log)
+    EARLY_STOP_THRESHOLD = 0.85  # If top candidate score exceeds this, skip deeper hops
 
     # ─── Phase 1: Pre-retrieval — Find anchor entities via VDB ───
+    # Optimization: run LL entity query and HL relationship query in parallel
     anchor_entities = []
-    if ll_keywords:
-        ll_results = await entities_vdb.query(
-            ll_keywords, top_k=effective_top_k
-        )
-        anchor_entities.extend(ll_results)
-        logger.info(
-            f"Beam search anchors (LL): {len(ll_results)} entities "
-            f"(top_k:{effective_top_k}, cosine:{entities_vdb.cosine_better_than_threshold})"
-        )
-
-    # Also use HL keywords to find anchor edges (global perspective)
     anchor_edge_results = []
+
+    vdb_tasks = []
+    task_labels = []  # track which task is which
+    if ll_keywords:
+        vdb_tasks.append(entities_vdb.query(ll_keywords, top_k=effective_top_k))
+        task_labels.append("ll")
     if hl_keywords:
-        hl_results = await relationships_vdb.query(
-            hl_keywords, top_k=effective_top_k
-        )
-        anchor_edge_results.extend(hl_results)
-        logger.info(
-            f"Beam search anchors (HL): {len(hl_results)} edges "
-            f"(top_k:{effective_top_k}, cosine:{relationships_vdb.cosine_better_than_threshold})"
-        )
+        vdb_tasks.append(relationships_vdb.query(hl_keywords, top_k=effective_top_k))
+        task_labels.append("hl")
+
+    if vdb_tasks:
+        vdb_results = await asyncio.gather(*vdb_tasks)
+        for label, result in zip(task_labels, vdb_results):
+            if label == "ll":
+                anchor_entities.extend(result)
+                logger.info(
+                    f"Beam search anchors (LL): {len(result)} entities "
+                    f"(top_k:{effective_top_k}, cosine:{entities_vdb.cosine_better_than_threshold})"
+                )
+            else:
+                anchor_edge_results.extend(result)
+                logger.info(
+                    f"Beam search anchors (HL): {len(result)} edges "
+                    f"(top_k:{effective_top_k}, cosine:{relationships_vdb.cosine_better_than_threshold})"
+                )
 
     if not anchor_entities and not anchor_edge_results:
         logger.warning("Beam search: No anchors found from VDB queries")
@@ -3556,9 +3600,11 @@ async def _beam_search_graph(
     collected_entities: dict[str, dict] = {}   # name -> {node_data, score, hop}
     collected_relations: dict[tuple, dict] = {}  # (src,tgt) sorted -> {edge_data, score}
 
-    # Initialize anchor nodes with their graph data
-    anchor_nodes = await knowledge_graph_inst.get_nodes_batch(anchor_names)
-    anchor_degrees = await knowledge_graph_inst.node_degrees_batch(anchor_names)
+    # Initialize anchor nodes with their graph data (parallel fetch)
+    anchor_nodes, anchor_degrees = await asyncio.gather(
+        knowledge_graph_inst.get_nodes_batch(anchor_names),
+        knowledge_graph_inst.node_degrees_batch(anchor_names),
+    )
 
     for name in anchor_names:
         node_data = anchor_nodes.get(name)
@@ -3593,7 +3639,11 @@ async def _beam_search_graph(
                     "src_tgt": (src, tgt),
                 }
 
-    current_frontier = [n for n in anchor_names if n in collected_entities]
+    # v2: Frontier stores (name, score) tuples for path-aware scoring
+    current_frontier = [
+        (n, collected_entities[n]["score"])
+        for n in anchor_names if n in collected_entities
+    ]
 
     logger.info(
         f"Beam search initialized: {len(collected_entities)} anchor entities, "
@@ -3605,16 +3655,23 @@ async def _beam_search_graph(
         if not current_frontier:
             break
 
+        # v2: Extract names and build parent_scores lookup from frontier tuples
+        frontier_names = [name for name, _score in current_frontier]
+        parent_scores = {name: score for name, score in current_frontier}
+
+        # v2: Dynamic Beam Width — shrink beam at deeper hops to reduce noise
+        hop_beam_width = beam_width if depth == 1 else max(beam_width - 2, 2)
+
         # Batch-fetch all neighbor edges for frontier nodes
         edges_batch = await knowledge_graph_inst.get_nodes_edges_batch(
-            current_frontier
+            frontier_names
         )
 
         # Collect unique neighbor names (not yet visited)
         neighbor_set: set[str] = set()
         frontier_edges: list[tuple[str, str, str]] = []  # (from_node, src, tgt)
 
-        for node_name in current_frontier:
+        for node_name in frontier_names:
             edges = edges_batch.get(node_name, [])
             for src, tgt in edges:
                 neighbor = tgt if src == node_name else src
@@ -3626,21 +3683,48 @@ async def _beam_search_graph(
             logger.debug(f"Beam search hop {depth}: no new neighbors found")
             break
 
-        # Batch-fetch neighbor embeddings from VDB for scoring
+        # Parallel fetch: neighbor embeddings + edge properties at the same time
         neighbor_list = list(neighbor_set)
-        neighbor_vectors = await entities_vdb.get_vectors_by_ids(neighbor_list)
-
-        # Batch-fetch edge properties
         unique_edge_pairs = list(set(
             (fe[1], fe[2]) for fe in frontier_edges
         ))
         edge_pairs_dicts = [{"src": s, "tgt": t} for s, t in unique_edge_pairs]
-        edge_data_batch = await knowledge_graph_inst.get_edges_batch(
-            edge_pairs_dicts
+
+        neighbor_vectors, edge_data_batch = await asyncio.gather(
+            entities_vdb.get_vectors_by_ids(neighbor_list),
+            knowledge_graph_inst.get_edges_batch(edge_pairs_dicts),
         )
 
-        # Score each candidate neighbor
+        # ─── Batch cosine similarity using numpy matrix ops ───
+        # Pre-compute all semantic scores at once instead of per-neighbor loop
+        neighbor_semantic_scores: dict[str, float] = {}
+        if query_embedding is not None and neighbor_vectors:
+            # Build matrix of neighbor vectors that exist
+            scored_names = [n for n in neighbor_list if n in neighbor_vectors]
+            if scored_names:
+                query_vec = np.asarray(query_embedding, dtype=np.float32)
+                query_norm = np.linalg.norm(query_vec)
+                if query_norm > 0:
+                    # Stack all neighbor vectors into a matrix (N x D)
+                    neighbor_matrix = np.array(
+                        [neighbor_vectors[n] for n in scored_names],
+                        dtype=np.float32,
+                    )
+                    # Compute all cosine similarities in one matrix multiply
+                    norms = np.linalg.norm(neighbor_matrix, axis=1)
+                    valid_mask = norms > 0
+                    similarities = np.zeros(len(scored_names), dtype=np.float32)
+                    if valid_mask.any():
+                        similarities[valid_mask] = (
+                            neighbor_matrix[valid_mask] @ query_vec
+                        ) / (norms[valid_mask] * query_norm)
+                    for name, sim in zip(scored_names, similarities):
+                        neighbor_semantic_scores[name] = float(sim)
+
+        # Score each candidate neighbor using pre-computed similarities
         candidates: list[dict] = []
+        # v2: Logarithmic depth penalty — gentler than linear, allows hop 2 to survive
+        length_penalty = GAMMA_LENGTH * math.log(depth + 1)
 
         for from_node, src, tgt in frontier_edges:
             neighbor = tgt if src == from_node else src
@@ -3652,23 +3736,21 @@ async def _beam_search_graph(
             if edge_data is None:
                 continue
 
-            # --- Multi-Factor Scoring ---
-            # Factor 1: Semantic Similarity (cosine between query and neighbor)
-            semantic_score = 0.0
-            if query_embedding is not None and neighbor in neighbor_vectors:
-                neighbor_vec = neighbor_vectors[neighbor]
-                semantic_score = _cosine_similarity(query_embedding, neighbor_vec)
+            # --- v2: Path-Aware Multi-Factor Scoring ---
+            # Factor 1: Semantic Similarity (pre-computed via batch numpy)
+            semantic_score = neighbor_semantic_scores.get(neighbor, 0.0)
 
-            # Factor 2: Edge Structural Weight (normalized to 0-1)
+            # Factor 2: Parent Path Score (inherited from the node that led us here)
+            parent_score = parent_scores.get(from_node, 0.5)
+
+            # Factor 3: Edge Structural Weight (normalized to 0-1)
             edge_weight = float(edge_data.get("weight", 1.0))
             normalized_weight = min(edge_weight / 10.0, 1.0)
 
-            # Factor 3: Length Penalty (penalize deeper hops)
-            length_penalty = GAMMA_LENGTH * depth
-
-            # Combined Score
+            # Combined Score — path-aware: parent score carries query alignment forward
             score = (
                 ALPHA_SEMANTIC * semantic_score
+                + BETA_PATH * parent_score
                 + BETA_WEIGHT * normalized_weight
                 - length_penalty
             )
@@ -3694,8 +3776,8 @@ async def _beam_search_graph(
         # Sort by score descending
         candidates.sort(key=lambda x: x["score"], reverse=True)
 
-        # Adaptive threshold: if too many candidates, tighten threshold
-        effective_beam = beam_width * len(current_frontier)
+        # v2: Use dynamic hop_beam_width instead of static beam_width
+        effective_beam = hop_beam_width * len(frontier_names)
         if len(candidates) > effective_beam * 2:
             adaptive_threshold = candidates[effective_beam]["score"]
             candidates = [c for c in candidates if c["score"] >= adaptive_threshold]
@@ -3725,6 +3807,7 @@ async def _beam_search_graph(
         else:
             batch_nodes, batch_degrees = {}, {}
 
+        # v2: new_frontier stores (name, score) tuples for path-aware propagation
         new_frontier = []
         for c in unique_selected:
             neighbor = c["neighbor"]
@@ -3736,7 +3819,7 @@ async def _beam_search_graph(
                     "hop": depth,
                     "degree": batch_degrees.get(neighbor, 0),
                 }
-                new_frontier.append(neighbor)
+                new_frontier.append((neighbor, c["score"]))
 
             # Collect the edge
             edge_key = tuple(sorted([c["edge_src"], c["edge_tgt"]]))
@@ -3750,10 +3833,24 @@ async def _beam_search_graph(
         logger.info(
             f"Beam search hop {depth}: {len(candidates)} scored → "
             f"{len(new_frontier)} selected "
-            f"(beam_width={beam_width}, threshold={pruning_threshold:.2f})"
+            f"(hop_beam_width={hop_beam_width}, threshold={pruning_threshold:.2f})"
         )
 
         current_frontier = new_frontier
+
+        # ─── v2: Early Stopping — skip deeper hops if we already found strong matches ───
+        # For 1-hop QA (e.g., "What are the side effects of drug X?"),
+        # the answer is usually adjacent to the anchor. If top candidates
+        # at hop 1 already have high semantic scores, deeper hops only add noise.
+        if candidates and depth < max_depth:
+            top_semantic = max(c["semantic_score"] for c in candidates[:3])
+            if top_semantic >= EARLY_STOP_THRESHOLD:
+                logger.info(
+                    f"Beam search early stop: top semantic score {top_semantic:.3f} "
+                    f">= threshold {EARLY_STOP_THRESHOLD} at hop {depth}, "
+                    f"skipping remaining {max_depth - depth} hop(s)"
+                )
+                break
 
     # ─── Phase 3: Harvest subgraph — format for downstream pipeline ───
 
@@ -3770,22 +3867,43 @@ async def _beam_search_graph(
         }
         final_entities.append(entity)
 
-    # Sort by beam score (best first)
+    # ─── Phase 3.5: Entity Cap (prevent context dilution) ───
+    # Beam traversal accumulates entities across all hops (anchors + hop1 + hop2),
+    # often resulting in 20-40 entities. Hybrid only sends ~5-10 entities.
+    # Too many entities dilute the context and hurt Faithfulness.
+    # Solution: sort by existing beam_score (already includes semantic sim)
+    # and cap to top_k * 2 to match hybrid's context density.
     final_entities.sort(key=lambda x: x.get("beam_score", 0), reverse=True)
 
+    max_entities = max(effective_top_k * 2, 10)
+    if len(final_entities) > max_entities:
+        before_count = len(final_entities)
+        final_entities = final_entities[:max_entities]
+        logger.info(
+            f"Beam entity cap: {before_count} → {len(final_entities)} entities "
+            f"(top beam_score={final_entities[0].get('beam_score', 0):.3f}, "
+            f"cutoff={final_entities[-1].get('beam_score', 0):.3f})"
+        )
+
     # Format relations (same structure as _find_most_related_edges_from_entities output)
+    # Only keep relations whose endpoints are in the retained entity set
+    retained_entity_names = {e["entity_name"] for e in final_entities}
+
     final_relations = []
     for edge_key, info in collected_relations.items():
-        edge_data = info["data"]
-        if "weight" not in edge_data:
-            edge_data["weight"] = 1.0
-        relation = {
-            "src_tgt": info["src_tgt"],
-            "rank": int(info["score"] * 100),
-            "beam_score": info["score"],
-            **edge_data,
-        }
-        final_relations.append(relation)
+        src, tgt = info["src_tgt"]
+        # Keep relation if at least one endpoint is a retained entity
+        if src in retained_entity_names or tgt in retained_entity_names:
+            edge_data = info["data"]
+            if "weight" not in edge_data:
+                edge_data["weight"] = 1.0
+            relation = {
+                "src_tgt": info["src_tgt"],
+                "rank": int(info["score"] * 100),
+                "beam_score": info["score"],
+                **edge_data,
+            }
+            final_relations.append(relation)
 
     final_relations.sort(key=lambda x: x.get("beam_score", 0), reverse=True)
 
@@ -3871,9 +3989,8 @@ async def _perform_kg_search(
 
     elif query_param.mode == "beam":
         # === Semantic Beam Search mode (KLTN Improvement) ===
-        # Bypass the standard local/global pipeline entirely.
         # Uses k-hop traversal with semantic scoring + adaptive pruning.
-        return await _beam_search_graph(
+        beam_result = await _beam_search_graph(
             query,
             ll_keywords,
             hl_keywords,
@@ -3884,6 +4001,34 @@ async def _perform_kg_search(
             query_param,
             query_embedding,
         )
+
+        # Supplement with direct vector chunks (like mix mode) to improve Context Recall.
+        # Beam's graph traversal finds precise entities but may miss relevant text chunks
+        # that are semantically close but not graph-connected.
+        if chunks_vdb:
+            direct_chunks = await _get_vector_context(
+                query,
+                chunks_vdb,
+                query_param,
+                query_embedding,
+            )
+            if direct_chunks:
+                beam_result["vector_chunks"] = direct_chunks
+                # Track vector chunks with source metadata
+                for i, chunk in enumerate(direct_chunks):
+                    chunk_id = chunk.get("chunk_id") or chunk.get("id")
+                    if chunk_id:
+                        chunk_tracking[chunk_id] = {
+                            "source": "vector_search",
+                            "frequency": 1,
+                            "order": i,
+                        }
+                beam_result["chunk_tracking"] = chunk_tracking
+                logger.info(
+                    f"Beam search supplemented with {len(direct_chunks)} direct vector chunks"
+                )
+
+        return beam_result
 
     else:  # hybrid or mix mode
         if len(ll_keywords) > 0:
