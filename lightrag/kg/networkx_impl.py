@@ -129,6 +129,59 @@ class NetworkXStorage(BaseGraphStorage):
             return list(graph.edges(source_node_id))
         return None
 
+    # ─── Batch method overrides (Beam Search v3 latency optimization) ───
+    # The base class default implementation calls _get_graph() once per item,
+    # causing hundreds of redundant lock acquisitions during beam traversal.
+    # These overrides call _get_graph() exactly ONCE and loop in-memory.
+
+    async def get_nodes_batch(self, node_ids: list[str]) -> dict[str, dict]:
+        """Get multiple nodes in a single graph access (O(1) per lookup)."""
+        graph = await self._get_graph()
+        result = {}
+        for nid in node_ids:
+            node_data = graph.nodes.get(nid)
+            if node_data is not None:
+                result[nid] = dict(node_data)
+        return result
+
+    async def node_degrees_batch(self, node_ids: list[str]) -> dict[str, int]:
+        """Get degrees for multiple nodes in a single graph access."""
+        graph = await self._get_graph()
+        result = {}
+        for nid in node_ids:
+            if graph.has_node(nid):
+                result[nid] = graph.degree(nid)
+        return result
+
+    async def get_edges_batch(
+        self, pairs: list[dict[str, str]]
+    ) -> dict[tuple[str, str], dict]:
+        """Get multiple edges in a single graph access."""
+        graph = await self._get_graph()
+        result = {}
+        for pair in pairs:
+            src, tgt = pair["src"], pair["tgt"]
+            edge_data = graph.edges.get((src, tgt))
+            if edge_data is None:
+                # Try reverse direction for undirected graph
+                edge_data = graph.edges.get((tgt, src))
+            if edge_data is not None:
+                result[(src, tgt)] = dict(edge_data)
+        return result
+
+    async def get_nodes_edges_batch(
+        self, node_ids: list[str]
+    ) -> dict[str, list[tuple[str, str]]]:
+        """Get edges for multiple nodes in a single graph access."""
+        graph = await self._get_graph()
+        result = {}
+        for nid in node_ids:
+            if graph.has_node(nid):
+                result[nid] = list(graph.edges(nid))
+            else:
+                result[nid] = []
+        return result
+
     async def upsert_node(self, node_id: str, node_data: dict[str, str]) -> None:
         """
         Importance notes:

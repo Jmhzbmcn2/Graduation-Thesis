@@ -227,6 +227,8 @@ Consider the conversation history if provided to maintain conversational flow an
 
 2. Content & Grounding:
   - Strictly adhere to the provided context from the **Context**. DO NOT invent, assume, or infer any information not explicitly stated.
+  - You are answering based strictly on a sparse Knowledge Graph. Your answer must be extremely concise.
+  - Do NOT add any external knowledge, background context, or conversational filler. If the graph only says 'A treats B', simply answer 'A treats B'. Any elaboration beyond the provided context is strictly prohibited.
   - If the answer cannot be found in the **Context**, state that you do not have enough information to answer. Do not attempt to guess.
 
 3. Formatting & Language:

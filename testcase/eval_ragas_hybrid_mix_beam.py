@@ -26,6 +26,10 @@ import time
 import warnings
 import pandas as pd
 import requests
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
+
 from datetime import datetime
 from dotenv import load_dotenv
 
@@ -38,8 +42,8 @@ warnings.filterwarnings("ignore", message=".*token usage.*", category=UserWarnin
 LIGHTRAG_URL = "http://localhost:9621"
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-INPUT_FILE  = os.path.join(_SCRIPT_DIR, "500_cases.csv")
-OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_ragas_hybrid_mix_beam_1case.xlsx")
+INPUT_FILE  = os.path.join(_SCRIPT_DIR, "500_cases_part2.csv")
+OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_ragas_hybrid_mix_beam.xlsx")
 
 # RAGAS LLM Judge — OpenRouter
 EVAL_LLM_MODEL = os.getenv("EVAL_LLM_MODEL", "qwen/qwen3-30b-a3b-instruct-2507")
@@ -69,12 +73,12 @@ EVAL_BATCH_SIZE = 100
 
 # ======================== CẤU HÌNH MODE-SPECIFIC ========================
 # Beam search tối ưu: beam_width lớn + depth sâu hơn để lấy nhiều context
-BEAM_BEAM_WIDTH = 5     # Mặc định = 3. Tăng lên 7 để mỗi hop giữ nhiều candidate hơn
+BEAM_BEAM_WIDTH = 7     # Mặc định = 3. Tăng lên 7 để mỗi hop giữ nhiều candidate hơn
 BEAM_MAX_DEPTH = 2     # Mặc định = 1. Tăng lên 2 để khám phá indirect relationships
-BEAM_CHUNK_TOP_K = 5   # Mặc định = 10. Tăng để lấy nhiều text chunks hơn
+BEAM_CHUNK_TOP_K = 10   # Mặc định = 10. Tăng để lấy nhiều text chunks hơn
 
 # Các mode khác dùng top_k mặc định
-DEFAULT_TOP_K = 5
+DEFAULT_TOP_K = 10
 # ===========================================================
 
 
@@ -99,10 +103,30 @@ def load_existing_results() -> dict:
     return existing
 
 
-def save_results_incremental(all_mode_results: dict):
+def load_baseline_results() -> dict:
+    """Đọc kết quả baseline (hybrid, mix) từ file Excel để so sánh % cải thiện.
+    Luôn tải hybrid và mix bất kể MODES hiện tại là gì."""
+    baselines = {}
+    if not os.path.exists(OUTPUT_FILE):
+        return baselines
+    try:
+        xls = pd.ExcelFile(OUTPUT_FILE, engine="openpyxl")
+        for mode in ["hybrid", "mix"]:
+            sheet = mode.capitalize()[:31]
+            if sheet in xls.sheet_names:
+                df = pd.read_excel(xls, sheet_name=sheet)
+                if "question_text" in df.columns and len(df) > 0:
+                    baselines[mode] = df
+        xls.close()
+    except Exception:
+        pass
+    return baselines
+
+
+def save_results_incremental(all_mode_results: dict, baselines: dict = None):
     """Lưu kết quả hiện tại ra Excel (ghi đè). Gọi sau mỗi mode để tránh mất data."""
     try:
-        summary_df = create_summary_sheet(all_mode_results)
+        summary_df = create_summary_sheet(all_mode_results, baselines)
         with pd.ExcelWriter(OUTPUT_FILE, engine="openpyxl") as writer:
             for mode in all_mode_results:
                 sheet = mode.capitalize()[:31]
@@ -176,7 +200,7 @@ def extract_chunks_from_context(raw_context: str) -> str:
                         name = obj.get("entity", "")
                         desc = obj.get("description", "")
                         if name and desc:
-                            graph_texts.append(f"{name}: {desc}")
+                            graph_texts.append(f"Thực thể [{name}] có thông tin: {desc}")
                     except _json.JSONDecodeError:
                         pass
 
@@ -193,7 +217,7 @@ def extract_chunks_from_context(raw_context: str) -> str:
                         e2 = obj.get("entity2", "")
                         desc = obj.get("description", "")
                         if e1 and e2 and desc:
-                            graph_texts.append(f"{e1} - {e2}: {desc}")
+                            graph_texts.append(f"Mối quan hệ giữa [{e1}] và [{e2}] là: {desc}")
                     except _json.JSONDecodeError:
                         pass
 
@@ -369,8 +393,8 @@ def run_ragas_evaluation(questions, answers, contexts_list, ground_truths):
     return results.to_pandas()
 
 
-def create_summary_sheet(all_mode_results: dict) -> pd.DataFrame:
-    """Tạo sheet Summary: thống kê theo từng mode"""
+def create_summary_sheet(all_mode_results: dict, baselines: dict = None) -> pd.DataFrame:
+    """Tạo sheet Summary: thống kê theo từng mode + % cải thiện so với baseline"""
     metric_cols = [
         "faithfulness", "answer_relevancy", "context_recall", "context_precision",
         "ragas_score", "input_tokens", "output_tokens",
@@ -381,6 +405,11 @@ def create_summary_sheet(all_mode_results: dict) -> pd.DataFrame:
         "RAGAS Score", "Input Tokens", "Output Tokens",
         "Retrieval Latency (ms)", "Generation Latency (ms)", "Total Latency (ms)"
     ]
+    # Quality metrics: higher is better; Cost/latency metrics: lower is better
+    higher_is_better = {"faithfulness", "answer_relevancy", "context_recall", "context_precision", "ragas_score"}
+
+    if baselines is None:
+        baselines = {}
 
     rows = []
     for label, col in zip(metric_labels, metric_cols):
@@ -395,25 +424,44 @@ def create_summary_sheet(all_mode_results: dict) -> pd.DataFrame:
                 means[mode] = 0.0
                 row[f"{mode.capitalize()}_Mean"] = "-"
 
-        if col in ["faithfulness", "answer_relevancy", "context_recall", "context_precision", "ragas_score"]:
+        if col in higher_is_better:
             best = max(means, key=means.get)
             worst = min(means, key=means.get)
             row["Winner"] = best.capitalize()
             row["Spread"] = round(means[best] - means[worst], 4)
         else:
-            # Latency/tokens: lower is better
             best = min(means, key=means.get)
             worst = max(means, key=means.get)
             row["Winner"] = best.capitalize()
             row["Spread"] = round(means[worst] - means[best], 4)
+
+        # --- % cải thiện so với baseline (hybrid, mix) ---
+        beam_val = means.get("beam")
+        if beam_val is not None:
+            for baseline_mode in ["hybrid", "mix"]:
+                baseline_df = baselines.get(baseline_mode)
+                if baseline_df is None:
+                    baseline_df = all_mode_results.get(baseline_mode)
+                if baseline_df is not None and col in baseline_df.columns:
+                    baseline_val = float(baseline_df[col].mean())
+                    if baseline_val != 0:
+                        pct = ((beam_val - baseline_val) / abs(baseline_val)) * 100
+                        row[f"Beam_vs_{baseline_mode.capitalize()}_%"] = f"{pct:+.1f}%"
+                    else:
+                        row[f"Beam_vs_{baseline_mode.capitalize()}_%"] = "N/A"
+                else:
+                    row[f"Beam_vs_{baseline_mode.capitalize()}_%"] = "-"
 
         rows.append(row)
 
     return pd.DataFrame(rows)
 
 
-def print_comparison_table(all_mode_results: dict):
-    """In bảng so sánh ra console"""
+def print_comparison_table(all_mode_results: dict, baselines: dict = None):
+    """In bảng so sánh ra console, bao gồm cột % cải thiện so với Hybrid/Mix"""
+    if baselines is None:
+        baselines = {}
+
     metric_cols = [
         "faithfulness", "answer_relevancy", "context_recall", "context_precision",
         "ragas_score", "input_tokens", "output_tokens",
@@ -424,11 +472,28 @@ def print_comparison_table(all_mode_results: dict):
         "RAGAS Score", "Input Tokens", "Output Tokens",
         "Retrieval Latency (ms)", "Generation Latency (ms)", "Total Latency (ms)"
     ]
+    # Quality metrics: higher is better; Cost/latency metrics: lower is better
+    higher_is_better = {"faithfulness", "answer_relevancy", "context_recall", "context_precision", "ragas_score"}
+
+    # Detect which baselines are available
+    available_baselines = []
+    for bm in ["hybrid", "mix"]:
+        if bm in all_mode_results or bm in baselines:
+            available_baselines.append(bm)
 
     col_w = max(10, max(len(m) for m in MODES) + 2)
-    header = f"  {'Metric':<28s}" + "".join(f"{m.upper():>{col_w}s}" for m in MODES) + f"  {'Winner':>10s}"
+    pct_w = 12  # width for % columns
+
+    # Build header
+    header = f"  {'Metric':<28s}"
+    header += "".join(f"{m.upper():>{col_w}s}" for m in MODES)
+    for bm in available_baselines:
+        header += f"  {'vs ' + bm.capitalize():>{pct_w}s}"
+    header += f"  {'Winner':>10s}"
     print(header)
-    print(f"  {'─' * (28 + col_w * len(MODES) + 12)}")
+
+    sep_len = 28 + col_w * len(MODES) + pct_w * len(available_baselines) + 2 * len(available_baselines) + 12
+    print(f"  {'─' * sep_len}")
 
     for label, col in zip(metric_labels, metric_cols):
         means = {}
@@ -440,16 +505,15 @@ def print_comparison_table(all_mode_results: dict):
                 means[mode] = None
 
         if col in ["ragas_score"]:
-            print(f"  {'─' * (28 + col_w * len(MODES) + 12)}")
+            print(f"  {'─' * sep_len}")
 
         # Determine winner
         valid_means = {m: v for m, v in means.items() if v is not None and v != 0}
         if not valid_means:
             continue
 
-        if col in ["faithfulness", "answer_relevancy", "context_recall", "context_precision", "ragas_score"]:
+        if col in higher_is_better:
             best_m = max(valid_means, key=valid_means.get)
-            # TIE if all same
             if len(set(round(v, 4) for v in valid_means.values())) == 1:
                 winner = "TIE"
             else:
@@ -461,19 +525,42 @@ def print_comparison_table(all_mode_results: dict):
             else:
                 winner = best_m.upper()
 
-        # Format values
+        # Format mode values
         vals_str = ""
         for mode in MODES:
             v = means[mode]
             if v is None or v == 0:
                 vals_str += f"{'N/A':>{col_w}s}"
-            elif col in ["ragas_score", "faithfulness", "answer_relevancy", "context_recall", "context_precision"]:
+            elif col in higher_is_better:
                 vals_str += f"{v:>{col_w}.4f}"
             else:
                 vals_str += f"{v:>{col_w}.1f}"
 
+        # Format % vs baseline columns
+        beam_val = means.get("beam")
+        for bm in available_baselines:
+            baseline_df = baselines.get(bm)
+            if baseline_df is None:
+                baseline_df = all_mode_results.get(bm)
+            if baseline_df is not None and col in baseline_df.columns and beam_val is not None:
+                baseline_val = float(baseline_df[col].mean())
+                if baseline_val != 0:
+                    pct = ((beam_val - baseline_val) / abs(baseline_val)) * 100
+                    # For quality metrics: positive = better; for latency: negative = better
+                    vals_str += f"  {pct:>+{pct_w}.1f}%"
+                else:
+                    vals_str += f"  {'N/A':>{pct_w}s}"
+            else:
+                vals_str += f"  {'-':>{pct_w}s}"
+
         line = f"  {label:<28s}{vals_str}  {winner:>10s}"
         print(line)
+
+    # Print legend
+    if available_baselines:
+        print(f"\n  📝 Ghi chú: Cột 'vs Hybrid/Mix' = % thay đổi của Beam so với baseline")
+        print(f"     Chất lượng (Faithfulness, RAGAS...): + = tốt hơn, - = kém hơn")
+        print(f"     Tốc độ/Token (Latency, Tokens...):  - = nhanh/ít hơn (tốt), + = chậm/nhiều hơn (xấu)")
 
 
 def main():
@@ -640,11 +727,16 @@ def main():
         # Lưu checkpoint sau mỗi mode (tránh mất data nếu crash)
         save_results_incremental(all_mode_results)
 
+    # ==================== LOAD BASELINES ====================
+    baselines = load_baseline_results()
+    if baselines:
+        print(f"\n📊 Đã tải baseline để so sánh: {', '.join(m.upper() for m in baselines)}")
+
     # ==================== SO SÁNH ====================
     print(f"\n{'=' * 70}")
     print(f"📊 SO SÁNH CÁC MODE: {', '.join(m.upper() for m in MODES)}")
     print(f"{'=' * 70}")
-    print_comparison_table(all_mode_results)
+    print_comparison_table(all_mode_results, baselines)
     print(f"{'=' * 70}")
 
     # In số câu mỗi mode
@@ -652,7 +744,7 @@ def main():
         print(f"   📊 {mode.upper()}: {len(all_mode_results[mode])} câu")
 
     # ==================== LƯU KẾT QUẢ CUỐI ====================
-    save_results_incremental(all_mode_results)
+    save_results_incremental(all_mode_results, baselines)
 
     print(f"\n💾 Kết quả đã lưu: {OUTPUT_FILE}")
     for mode in MODES:
