@@ -115,8 +115,19 @@ class QueryParam:
     """Maximum number of hops (k-hop) for Beam Search traversal on the knowledge graph.
     Default 1 = semantic reranking 1-hop (best latency). Set 2 for deeper exploration."""
 
-    pruning_threshold: float = 0.15
+    pruning_threshold: float = 0.35
     """Minimum score threshold for Adaptive Pruning. Neighbors scoring below this are discarded immediately."""
+
+    # === BM25 Hybrid Search Parameters (KLTN) ===
+    anchor_alpha: float = 0.5
+    """Weight for Dense Vector score when merging with BM25 for anchor entity discovery.
+    Formula: Anchor_Score = anchor_alpha × Semantic + (1 - anchor_alpha) × BM25.
+    Lower values → more weight on BM25 (lexical match). Only used in beam mode."""
+
+    chunk_alpha: float = 0.7
+    """Weight for Dense Vector score when merging with BM25 for chunk retrieval.
+    Formula: Chunk_Score = chunk_alpha × Semantic + (1 - chunk_alpha) × BM25.
+    Higher default because chunks are long text where semantic similarity is more valuable."""
 
     top_k: int = int(os.getenv("TOP_K", str(DEFAULT_TOP_K)))
     """Number of top items to retrieve. Represents entities in 'local' mode and relationships in 'global' mode."""
@@ -130,6 +141,9 @@ class QueryParam:
         os.getenv("MAX_ENTITY_TOKENS", str(DEFAULT_MAX_ENTITY_TOKENS))
     )
     """Maximum number of tokens allocated for entity context in unified token control system."""
+
+    related_chunk_number: Optional[int] = None
+    """Override the global related_chunk_number for this specific query."""
 
     max_relation_tokens: int = int(
         os.getenv("MAX_RELATION_TOKENS", str(DEFAULT_MAX_RELATION_TOKENS))

@@ -47,9 +47,15 @@ class QueryRequest(BaseModel):
     )
 
     chunk_top_k: Optional[int] = Field(
-        ge=1,
+        ge=0,
         default=None,
         description="Number of text chunks to retrieve initially from vector search and keep after reranking.",
+    )
+
+    related_chunk_number: Optional[int] = Field(
+        default=None,
+        description="Override the global related_chunk_number for this specific query. Affects the number of chunks retrieved per entity.",
+        ge=0,
     )
 
     max_entity_tokens: Optional[int] = Field(
@@ -129,6 +135,29 @@ class QueryRequest(BaseModel):
         description="Maximum graph traversal depth for beam search. Higher = indirect relationships but more tokens.",
     )
 
+    pruning_threshold: Optional[float] = Field(
+        default=None,
+        ge=0.0,
+        le=1.0,
+        description="Minimum score threshold for beam search adaptive pruning. Neighbors scoring below this are discarded. Lower = keep more candidates (better recall). Default: 0.35.",
+    )
+
+    anchor_alpha: Optional[float] = Field(
+        default=None,
+        ge=0.0,
+        le=1.0,
+        description="Weight for Dense Vector score when merging with BM25 for anchor entity discovery in beam mode. "
+                    "Formula: score = anchor_alpha × Semantic + (1 - anchor_alpha) × BM25. Default: 0.5.",
+    )
+
+    chunk_alpha: Optional[float] = Field(
+        default=None,
+        ge=0.0,
+        le=1.0,
+        description="Weight for Dense Vector score when merging with BM25 for chunk retrieval in beam mode. "
+                    "Formula: score = chunk_alpha × Semantic + (1 - chunk_alpha) × BM25. Default: 0.7.",
+    )
+
     @field_validator("query", mode="after")
     @classmethod
     def query_strip_after(cls, query: str) -> str:
@@ -187,7 +216,7 @@ class QueryResponse(BaseModel):
     )
     timing: Optional[Dict[str, float]] = Field(
         default=None,
-        description="Server-side timing breakdown in milliseconds: retrieval_ms, generation_ms, total_ms.",
+        description="Server-side timing breakdown in milliseconds: keyword_extraction_ms, graph_search_ms, retrieval_ms, generation_ms, total_ms.",
     )
     token_counts: Optional[Dict[str, int]] = Field(
         default=None,

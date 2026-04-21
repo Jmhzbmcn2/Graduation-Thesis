@@ -42,8 +42,8 @@ warnings.filterwarnings("ignore", message=".*token usage.*", category=UserWarnin
 LIGHTRAG_URL = "http://localhost:9621"
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-INPUT_FILE  = os.path.join(_SCRIPT_DIR, "500_cases_part2.csv")
-OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_ragas_hybrid_mix_beam.xlsx")
+INPUT_FILE  = os.path.join(_SCRIPT_DIR, "300_case_random.csv")
+OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_ragas_beam.xlsx")
 
 # RAGAS LLM Judge — OpenRouter
 EVAL_LLM_MODEL = os.getenv("EVAL_LLM_MODEL", "qwen/qwen3-30b-a3b-instruct-2507")
@@ -55,7 +55,7 @@ EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "embeddinggemma:300m")
 EMBEDDING_HOST  = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
 
 # Số test case (None = tất cả, 3 = 3 câu đầu tiên)
-TEST_LIMIT = 5
+TEST_LIMIT = 10
 
 # Giới hạn độ dài context để tránh vượt token limit của LLM Judge
 MAX_CONTEXT_CHARS = None
@@ -73,10 +73,13 @@ EVAL_BATCH_SIZE = 100
 
 # ======================== CẤU HÌNH MODE-SPECIFIC ========================
 # Beam search tối ưu: beam_width lớn + depth sâu hơn để lấy nhiều context
-BEAM_BEAM_WIDTH = 7     # Mặc định = 3. Tăng lên 7 để mỗi hop giữ nhiều candidate hơn
-BEAM_MAX_DEPTH = 2     # Mặc định = 1. Tăng lên 2 để khám phá indirect relationships
-BEAM_CHUNK_TOP_K = 10   # Mặc định = 10. Tăng để lấy nhiều text chunks hơn
-
+BEAM_BEAM_WIDTH = 5     # Mặc định = 3. Tăng lên 7 để mỗi hop giữ nhiều candidate hơn
+BEAM_MAX_DEPTH = 1   # Mặc định = 1. Tăng lên 2 để khám phá indirect relationships
+BEAM_CHUNK_TOP_K = 0   # Mặc định = 10. Tăng để lấy nhiều text chunks hơn
+BEAM_PRUNING_THRESHOLD = 0.3  # Mặc định = 0.35. Giảm để giữ nhiều candidate hơn (tăng recall)
+BEAM_ANCHOR_ALPHA = 0.3  # BM25 hybrid: Dense vs BM25 weight for anchor entities
+BEAM_CHUNK_ALPHA = 0.7    # BM25 hybrid: Dense vs BM25 weight for chunk retrieval
+RELATED_CHUNK_NUMBER = 3
 # Các mode khác dùng top_k mặc định
 DEFAULT_TOP_K = 10
 # ===========================================================
@@ -267,6 +270,11 @@ def query_lightrag_with_timing(question: str, mode: str, retries: int = 3):
             "beam_width": BEAM_BEAM_WIDTH,
             "beam_max_depth": BEAM_MAX_DEPTH,
             "chunk_top_k": BEAM_CHUNK_TOP_K,
+            "pruning_threshold": BEAM_PRUNING_THRESHOLD,
+            "anchor_alpha": BEAM_ANCHOR_ALPHA,
+            "chunk_alpha": BEAM_CHUNK_ALPHA,
+            "related_chunk_number": RELATED_CHUNK_NUMBER, # Ép riêng cho Beam
+            "enable_rerank": False,   # Tắt hẳn rerank để khỏi văng Warning
             "include_context": True,  # Server trả context luôn
         }
     else:
@@ -275,6 +283,7 @@ def query_lightrag_with_timing(question: str, mode: str, retries: int = 3):
             "mode": mode,
             "stream": False,
             "top_k": DEFAULT_TOP_K,
+            "enable_rerank": False, 
             "include_context": True,  # Server trả context luôn
         }
 
@@ -293,6 +302,8 @@ def query_lightrag_with_timing(question: str, mode: str, retries: int = 3):
 
             # Server-side timing (đo chính xác tại server)
             timing = resp_json.get("timing") or {}
+            keyword_extraction_ms = timing.get("keyword_extraction_ms", 0)
+            graph_search_ms = timing.get("graph_search_ms", 0)
             retrieval_latency_ms = timing.get("retrieval_ms", 0)
             generation_latency_ms = timing.get("generation_ms", 0)
             total_latency_ms = timing.get("total_ms", 0)
@@ -316,6 +327,8 @@ def query_lightrag_with_timing(question: str, mode: str, retries: int = 3):
                 output_tokens = estimate_tokens(answer)
 
             metrics = {
+                "keyword_extraction_ms": round(keyword_extraction_ms, 2),
+                "graph_search_ms": round(graph_search_ms, 2),
                 "retrieval_latency_ms": round(retrieval_latency_ms, 2),
                 "generation_latency_ms": round(generation_latency_ms, 2),
                 "input_tokens": input_tokens,
@@ -331,6 +344,8 @@ def query_lightrag_with_timing(question: str, mode: str, retries: int = 3):
                 time.sleep(3)
 
     return "Error: Không lấy được response", ["No context"], {
+        "keyword_extraction_ms": 0,
+        "graph_search_ms": 0,
         "retrieval_latency_ms": 0,
         "generation_latency_ms": 0,
         "input_tokens": 0,
@@ -398,11 +413,13 @@ def create_summary_sheet(all_mode_results: dict, baselines: dict = None) -> pd.D
     metric_cols = [
         "faithfulness", "answer_relevancy", "context_recall", "context_precision",
         "ragas_score", "input_tokens", "output_tokens",
+        "keyword_extraction_ms", "graph_search_ms",
         "retrieval_latency_ms", "generation_latency_ms", "total_latency_ms"
     ]
     metric_labels = [
         "Faithfulness", "Answer Relevancy", "Context Recall", "Context Precision",
         "RAGAS Score", "Input Tokens", "Output Tokens",
+        "Keyword Extraction (ms)", "Graph Search (ms)",
         "Retrieval Latency (ms)", "Generation Latency (ms)", "Total Latency (ms)"
     ]
     # Quality metrics: higher is better; Cost/latency metrics: lower is better
@@ -465,11 +482,13 @@ def print_comparison_table(all_mode_results: dict, baselines: dict = None):
     metric_cols = [
         "faithfulness", "answer_relevancy", "context_recall", "context_precision",
         "ragas_score", "input_tokens", "output_tokens",
+        "keyword_extraction_ms", "graph_search_ms",
         "retrieval_latency_ms", "generation_latency_ms", "total_latency_ms"
     ]
     metric_labels = [
         "Faithfulness", "Answer Relevancy", "Context Recall", "Context Precision",
         "RAGAS Score", "Input Tokens", "Output Tokens",
+        "Keyword Extraction (ms)", "Graph Search (ms)",
         "Retrieval Latency (ms)", "Generation Latency (ms)", "Total Latency (ms)"
     ]
     # Quality metrics: higher is better; Cost/latency metrics: lower is better
@@ -641,6 +660,8 @@ def main():
             print(f"      Answer: {answer[:80]}...")
             print(f"      Input tokens: {metrics['input_tokens']}")
             print(f"      Output tokens: {metrics['output_tokens']}")
+            print(f"      Keyword extraction: {metrics['keyword_extraction_ms']:.1f}ms")
+            print(f"      Graph search: {metrics['graph_search_ms']:.1f}ms")
             print(f"      Retrieval latency: {metrics['retrieval_latency_ms']:.1f}ms")
             print(f"      Generation latency: {metrics['generation_latency_ms']:.1f}ms")
 
@@ -680,7 +701,8 @@ def main():
             ragas_df["ragas_score"] = ragas_df[valid_ragas].mean(axis=1)
 
             # Ghép timing vào
-            for col in ["input_tokens", "output_tokens", "retrieval_latency_ms",
+            for col in ["keyword_extraction_ms", "graph_search_ms",
+                        "input_tokens", "output_tokens", "retrieval_latency_ms",
                         "generation_latency_ms", "total_latency_ms"]:
                 if col in timing_df.columns:
                     ragas_df[col] = timing_df[col].values
@@ -714,6 +736,8 @@ def main():
         print(f"\n📈 Kết quả {mode.upper()}:")
         print(f"   Input Tokens         : {all_mode_results[mode]['input_tokens'].mean():.1f}")
         print(f"   Output Tokens        : {all_mode_results[mode]['output_tokens'].mean():.1f}")
+        print(f"   Keyword Extraction   : {all_mode_results[mode]['keyword_extraction_ms'].mean():.1f}ms")
+        print(f"   Graph Search         : {all_mode_results[mode]['graph_search_ms'].mean():.1f}ms")
         print(f"   Retrieval Latency    : {all_mode_results[mode]['retrieval_latency_ms'].mean():.1f}ms")
         print(f"   Generation Latency   : {all_mode_results[mode]['generation_latency_ms'].mean():.1f}ms")
         print(f"   Total Latency        : {all_mode_results[mode]['total_latency_ms'].mean():.1f}ms")

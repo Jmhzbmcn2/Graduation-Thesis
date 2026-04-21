@@ -337,8 +337,10 @@ class NanoVectorDBStorage(BaseVectorStorage):
         if not ids:
             return []
 
-        client = await self._get_client()
-        results = client.get(ids)
+        storage = await self.client_storage
+        ids_set = set(ids)
+        results = [data for data in storage["data"] if data["__id__"] in ids_set]
+        
         result_map: dict[str, dict[str, Any]] = {}
 
         for dp in results:
@@ -372,8 +374,9 @@ class NanoVectorDBStorage(BaseVectorStorage):
         if not ids:
             return {}
 
-        client = await self._get_client()
-        results = client.get(ids)
+        storage = await self.client_storage
+        ids_set = set(ids)
+        results = [data for data in storage["data"] if data["__id__"] in ids_set]
 
         vectors_dict = {}
         for result in results:

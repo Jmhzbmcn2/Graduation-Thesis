@@ -3107,6 +3107,7 @@ async def kg_query(
         text_chunks_db,
         query_param,
         chunks_vdb,
+        global_config,
     )
 
     _t3 = time.perf_counter()
@@ -3125,6 +3126,8 @@ async def kg_query(
         if "metadata" not in context_result.raw_data:
             context_result.raw_data["metadata"] = {}
         context_result.raw_data["metadata"]["timing"] = {
+            "keyword_extraction_ms": round((_t1 - _t0) * 1000, 2),
+            "graph_search_ms": round((_t3 - _t2) * 1000, 2),
             "retrieval_ms": round(retrieval_ms, 2),
         }
 
@@ -3237,6 +3240,8 @@ async def kg_query(
         if "metadata" not in context_result.raw_data:
             context_result.raw_data["metadata"] = {}
         context_result.raw_data["metadata"]["timing"] = {
+            "keyword_extraction_ms": round((_t1 - _t0) * 1000, 2),
+            "graph_search_ms": round((_t3 - _t2) * 1000, 2),
             "retrieval_ms": round(retrieval_ms, 2),
             "generation_ms": round(generation_ms, 2),
             "total_ms": round(total_ms, 2),
@@ -3437,12 +3442,12 @@ async def _get_vector_context(
     """
     try:
         # Use chunk_top_k if specified, otherwise fall back to top_k
-        search_top_k = query_param.chunk_top_k or query_param.top_k
+        search_top_k = query_param.chunk_top_k if query_param.chunk_top_k is not None else query_param.top_k
         cosine_threshold = chunks_vdb.cosine_better_than_threshold
 
         results = await chunks_vdb.query(
             query, top_k=search_top_k, query_embedding=query_embedding
-        )
+        ) if search_top_k > 0 else []
         if not results:
             logger.info(
                 f"Naive query: 0 chunks (chunk_top_k:{search_top_k} cosine:{cosine_threshold})"
@@ -3500,6 +3505,7 @@ async def _beam_search_graph(
     text_chunks_db: BaseKVStorage,
     query_param: QueryParam,
     query_embedding: list[float] = None,
+    global_config: dict = None,
 ) -> dict[str, Any]:
     """
     Semantic Beam Search with Adaptive Pruning on Knowledge Graph.
@@ -3525,30 +3531,34 @@ async def _beam_search_graph(
     beam_width = query_param.beam_width
     max_depth = query_param.max_depth
     pruning_threshold = query_param.pruning_threshold
+    anchor_alpha = query_param.anchor_alpha
 
     # ─── Optimization: Cap top_k for beam mode ───
     # Beam search discovers neighbors via graph traversal, so it needs
     # far fewer anchors than hybrid mode. 10 anchors is the sweet spot.
-    BEAM_MAX_ANCHOR_K = 10
+    BEAM_MAX_ANCHOR_K = 5
     effective_top_k = min(query_param.top_k, BEAM_MAX_ANCHOR_K)
 
     # Scoring weights (tunable hyperparameters for ablation study)
     # v2: Path-aware scoring — parent score carries forward query alignment
-    ALPHA_SEMANTIC = 0.5    # Weight for semantic relevance (cosine similarity)
-    BETA_PATH = 0.3         # Weight for parent path score inheritance
-    BETA_WEIGHT = 0.2       # Weight for edge structural importance
+    ALPHA_SEMANTIC = 0.6    # Weight for semantic relevance (cosine similarity)
+    BETA_PATH = 0.2         # Weight for parent path score inheritance
+    BETA_WEIGHT = 0.1       # Weight for edge structural importance
     GAMMA_LENGTH = 0.1      # Length penalty per hop depth (applied via log)
-    EARLY_STOP_THRESHOLD = 0.85  # If top candidate score exceeds this, skip deeper hops
+    EARLY_STOP_THRESHOLD = 0.8  # If top candidate score exceeds this, skip deeper hops
 
-    # ─── Phase 1: Pre-retrieval — Find anchor entities via VDB ───
+    # ─── Phase 1: Pre-retrieval — Find anchor entities via VDB + BM25 ───
     # Optimization: run LL entity query and HL relationship query in parallel
     anchor_entities = []
     anchor_edge_results = []
 
+    # Request more candidates from VDB when BM25 is active (for better merge pool)
+    vdb_fetch_k = effective_top_k * 2
+
     vdb_tasks = []
     task_labels = []  # track which task is which
     if ll_keywords:
-        vdb_tasks.append(entities_vdb.query(ll_keywords, top_k=effective_top_k))
+        vdb_tasks.append(entities_vdb.query(ll_keywords, top_k=vdb_fetch_k))
         task_labels.append("ll")
     if hl_keywords:
         vdb_tasks.append(relationships_vdb.query(hl_keywords, top_k=effective_top_k))
@@ -3560,8 +3570,8 @@ async def _beam_search_graph(
             if label == "ll":
                 anchor_entities.extend(result)
                 logger.info(
-                    f"Beam search anchors (LL): {len(result)} entities "
-                    f"(top_k:{effective_top_k}, cosine:{entities_vdb.cosine_better_than_threshold})"
+                    f"Beam search anchors (LL/VDB): {len(result)} entities "
+                    f"(top_k:{vdb_fetch_k}, cosine:{entities_vdb.cosine_better_than_threshold})"
                 )
             else:
                 anchor_edge_results.extend(result)
@@ -3570,8 +3580,68 @@ async def _beam_search_graph(
                     f"(top_k:{effective_top_k}, cosine:{relationships_vdb.cosine_better_than_threshold})"
                 )
 
+    # ─── BM25 Hybrid Merge for Anchor Entities (KLTN BM25 Integration) ───
+    # Query BM25 index in parallel with VDB results and merge using weighted sum.
+    # BM25 is CPU-only (~1ms), so no async needed.
+    from lightrag.bm25_storage import get_bm25_storage_from_config
+    bm25_storage = None
+    if global_config and text_chunks_db:
+        bm25_storage = get_bm25_storage_from_config(global_config, text_chunks_db.workspace)
+
+    if bm25_storage and ll_keywords and anchor_entities:
+        bm25_entity_results = bm25_storage.query_entities(
+            ll_keywords, top_k=vdb_fetch_k
+        )
+
+        if bm25_entity_results:
+            # Build rank-based semantic scores for VDB results (position → score)
+            vdb_scores: dict[str, float] = {}
+            n_vdb = len(anchor_entities)
+            for rank, entity in enumerate(anchor_entities):
+                name = entity.get("entity_name", "")
+                if name and name not in vdb_scores:
+                    vdb_scores[name] = 1.0 - (rank / max(n_vdb, 1))
+
+            # Build BM25 score map (already normalized to [0, 1])
+            bm25_scores: dict[str, float] = {
+                r["entity_name"]: r["bm25_score"] for r in bm25_entity_results
+            }
+
+            # Merge using Weighted Sum
+            all_entity_names = set(vdb_scores.keys()) | set(bm25_scores.keys())
+            combined_scores: dict[str, float] = {}
+            for name in all_entity_names:
+                sem = vdb_scores.get(name, 0.0)
+                bm25 = bm25_scores.get(name, 0.0)
+                combined_scores[name] = anchor_alpha * sem + (1 - anchor_alpha) * bm25
+
+            # Sort by combined score and take top effective_top_k
+            sorted_anchors = sorted(
+                combined_scores.items(), key=lambda x: x[1], reverse=True
+            )[:effective_top_k]
+            merged_names = {name for name, _ in sorted_anchors}
+
+            # Filter anchor_entities to only keep merged winners
+            anchor_entities = [
+                e for e in anchor_entities if e.get("entity_name") in merged_names
+            ]
+            # Add BM25-only entities (found by BM25 but not VDB) as minimal dicts
+            existing_names = {e.get("entity_name") for e in anchor_entities}
+            for name in merged_names - existing_names:
+                anchor_entities.append({"entity_name": name})
+
+            logger.info(
+                f"Beam BM25 anchor merge: {len(vdb_scores)} VDB + "
+                f"{len(bm25_scores)} BM25 → {len(merged_names)} merged "
+                f"(anchor_alpha={anchor_alpha:.2f})"
+            )
+        else:
+            logger.debug("BM25 returned 0 entity results — using VDB-only anchors")
+    elif bm25_storage is None and ll_keywords:
+        logger.debug("BM25 index not available — using VDB-only anchors")
+
     if not anchor_entities and not anchor_edge_results:
-        logger.warning("Beam search: No anchors found from VDB queries")
+        logger.warning("Beam search: No anchors found from VDB/BM25 queries")
         return {
             "final_entities": [],
             "final_relations": [],
@@ -3600,11 +3670,27 @@ async def _beam_search_graph(
     collected_entities: dict[str, dict] = {}   # name -> {node_data, score, hop}
     collected_relations: dict[tuple, dict] = {}  # (src,tgt) sorted -> {edge_data, score}
 
-    # Initialize anchor nodes with their graph data (parallel fetch)
-    anchor_nodes, anchor_degrees = await asyncio.gather(
+    # Initialize anchor nodes with their graph data
+    # Also pre-collect the anchor HL edges
+    # Optimization: run ALL three lookups in a single asyncio.gather (saves ~400ms)
+    hl_edge_pairs = []
+    for edge_r in anchor_edge_results:
+        src = edge_r.get("src_id", "")
+        tgt = edge_r.get("tgt_id", "")
+        if src and tgt:
+            hl_edge_pairs.append({"src": src, "tgt": tgt})
+
+    gather_tasks = [
         knowledge_graph_inst.get_nodes_batch(anchor_names),
         knowledge_graph_inst.node_degrees_batch(anchor_names),
-    )
+    ]
+    if hl_edge_pairs:
+        gather_tasks.append(knowledge_graph_inst.get_edges_batch(hl_edge_pairs))
+
+    gather_results = await asyncio.gather(*gather_tasks)
+    anchor_nodes = gather_results[0]
+    anchor_degrees = gather_results[1]
+    hl_edges_batch = gather_results[2] if len(gather_results) > 2 else {}
 
     for name in anchor_names:
         node_data = anchor_nodes.get(name)
@@ -3616,23 +3702,13 @@ async def _beam_search_graph(
                 "degree": anchor_degrees.get(name, 0),
             }
 
-    # Also pre-collect the anchor HL edges — BATCH fetch (no sequential I/O)
-    hl_edge_pairs = []
-    for edge_r in anchor_edge_results:
-        src = edge_r.get("src_id", "")
-        tgt = edge_r.get("tgt_id", "")
-        if src and tgt:
+    # Process HL edges from the batch result
+    for pair in hl_edge_pairs:
+        src, tgt = pair["src"], pair["tgt"]
+        edge_data = hl_edges_batch.get((src, tgt))
+        if edge_data is not None:
             edge_key = tuple(sorted([src, tgt]))
             if edge_key not in collected_relations:
-                hl_edge_pairs.append({"src": src, "tgt": tgt})
-
-    if hl_edge_pairs:
-        hl_edges_batch = await knowledge_graph_inst.get_edges_batch(hl_edge_pairs)
-        for pair in hl_edge_pairs:
-            src, tgt = pair["src"], pair["tgt"]
-            edge_data = hl_edges_batch.get((src, tgt))
-            if edge_data is not None:
-                edge_key = tuple(sorted([src, tgt]))
                 collected_relations[edge_key] = {
                     "data": edge_data,
                     "score": 0.9,
@@ -3933,6 +4009,7 @@ async def _perform_kg_search(
     text_chunks_db: BaseKVStorage,
     query_param: QueryParam,
     chunks_vdb: BaseVectorStorage = None,
+    global_config: dict = None,
 ) -> dict[str, Any]:
     """
     Pure search logic that retrieves raw entities, relations, and vector chunks.
@@ -3990,7 +4067,8 @@ async def _perform_kg_search(
     elif query_param.mode == "beam":
         # === Semantic Beam Search mode (KLTN Improvement) ===
         # Uses k-hop traversal with semantic scoring + adaptive pruning.
-        beam_result = await _beam_search_graph(
+        # Optimization: run beam search + chunk supplement in PARALLEL (~800ms saved)
+        beam_task = _beam_search_graph(
             query,
             ll_keywords,
             hl_keywords,
@@ -4000,33 +4078,118 @@ async def _perform_kg_search(
             text_chunks_db,
             query_param,
             query_embedding,
+            global_config,
         )
 
-        # Supplement with direct vector chunks (like mix mode) to improve Context Recall.
-        # Beam's graph traversal finds precise entities but may miss relevant text chunks
-        # that are semantically close but not graph-connected.
         if chunks_vdb:
-            direct_chunks = await _get_vector_context(
+            chunk_task = _get_vector_context(
                 query,
                 chunks_vdb,
                 query_param,
                 query_embedding,
             )
-            if direct_chunks:
-                beam_result["vector_chunks"] = direct_chunks
-                # Track vector chunks with source metadata
-                for i, chunk in enumerate(direct_chunks):
-                    chunk_id = chunk.get("chunk_id") or chunk.get("id")
-                    if chunk_id:
-                        chunk_tracking[chunk_id] = {
-                            "source": "vector_search",
-                            "frequency": 1,
-                            "order": i,
-                        }
-                beam_result["chunk_tracking"] = chunk_tracking
-                logger.info(
-                    f"Beam search supplemented with {len(direct_chunks)} direct vector chunks"
+            beam_result, direct_chunks = await asyncio.gather(
+                beam_task, chunk_task
+            )
+        else:
+            beam_result = await beam_task
+            direct_chunks = []
+
+        # ─── BM25 Hybrid Merge for Chunks (KLTN BM25 Integration) ───
+        # Merge VDB vector chunks with BM25 lexical chunks using weighted sum.
+        from lightrag.bm25_storage import get_bm25_storage_from_config
+        bm25_storage = None
+        if global_config and text_chunks_db:
+            bm25_storage = get_bm25_storage_from_config(global_config, text_chunks_db.workspace)
+        chunk_alpha = query_param.chunk_alpha
+
+        if bm25_storage and direct_chunks is not None:
+            search_top_k = query_param.chunk_top_k if query_param.chunk_top_k is not None else query_param.top_k
+            bm25_chunk_results = bm25_storage.query_chunks(
+                query, top_k=search_top_k * 2
+            ) if search_top_k > 0 else []
+
+            if bm25_chunk_results:
+                # Build rank-based semantic scores for VDB chunks
+                vdb_chunk_scores: dict[str, float] = {}
+                n_vdb_c = len(direct_chunks)
+                for rank, chunk in enumerate(direct_chunks):
+                    cid = chunk.get("chunk_id") or chunk.get("id")
+                    if cid and cid not in vdb_chunk_scores:
+                        vdb_chunk_scores[cid] = 1.0 - (rank / max(n_vdb_c, 1))
+
+                # Build BM25 score map
+                bm25_chunk_scores: dict[str, float] = {
+                    r["chunk_id"]: r["bm25_score"] for r in bm25_chunk_results
+                }
+
+                # Merge using Weighted Sum
+                all_chunk_ids = set(vdb_chunk_scores.keys()) | set(bm25_chunk_scores.keys())
+                combined_chunk_scores: dict[str, float] = {}
+                for cid in all_chunk_ids:
+                    sem = vdb_chunk_scores.get(cid, 0.0)
+                    bm25 = bm25_chunk_scores.get(cid, 0.0)
+                    combined_chunk_scores[cid] = chunk_alpha * sem + (1 - chunk_alpha) * bm25
+
+                # Sort by combined score and take top search_top_k
+                sorted_chunks = sorted(
+                    combined_chunk_scores.items(), key=lambda x: x[1], reverse=True
+                )[:search_top_k]
+                merged_chunk_ids = {cid for cid, _ in sorted_chunks}
+
+                # Filter direct_chunks to keep merged winners (preserve original data)
+                merged_direct = [
+                    c for c in direct_chunks
+                    if (c.get("chunk_id") or c.get("id")) in merged_chunk_ids
+                ]
+
+                # For BM25-only chunks: fetch content from text_chunks_db
+                existing_cids = {c.get("chunk_id") or c.get("id") for c in merged_direct}
+                bm25_only_ids = list(merged_chunk_ids - existing_cids)
+                if bm25_only_ids and text_chunks_db:
+                    bm25_only_data = await text_chunks_db.get_by_ids(bm25_only_ids)
+                    for cid, chunk_data in zip(bm25_only_ids, bm25_only_data):
+                        if chunk_data and chunk_data.get("content"):
+                            merged_direct.append({
+                                "content": chunk_data["content"],
+                                "file_path": chunk_data.get("file_path", "unknown_source"),
+                                "source_type": "bm25",
+                                "chunk_id": cid,
+                            })
+
+                # Re-sort merged_direct by combined score
+                chunk_score_map = dict(sorted_chunks)
+                merged_direct.sort(
+                    key=lambda c: chunk_score_map.get(
+                        c.get("chunk_id") or c.get("id"), 0
+                    ),
+                    reverse=True,
                 )
+
+                direct_chunks = merged_direct
+                logger.info(
+                    f"Beam BM25 chunk merge: {len(vdb_chunk_scores)} VDB + "
+                    f"{len(bm25_chunk_scores)} BM25 → {len(direct_chunks)} merged "
+                    f"(chunk_alpha={chunk_alpha:.2f})"
+                )
+            else:
+                logger.debug("BM25 returned 0 chunk results — using VDB-only chunks")
+
+        # Supplement with direct vector chunks (like mix mode) to improve Context Recall.
+        if direct_chunks:
+            beam_result["vector_chunks"] = direct_chunks
+            for i, chunk in enumerate(direct_chunks):
+                chunk_id = chunk.get("chunk_id") or chunk.get("id")
+                if chunk_id:
+                    chunk_tracking[chunk_id] = {
+                        "source": chunk.get("source_type", "vector_search"),
+                        "frequency": 1,
+                        "order": i,
+                    }
+            beam_result["chunk_tracking"] = chunk_tracking
+            logger.info(
+                f"Beam search supplemented with {len(direct_chunks)} direct chunks"
+            )
 
         return beam_result
 
@@ -4601,6 +4764,7 @@ async def _build_query_context(
     text_chunks_db: BaseKVStorage,
     query_param: QueryParam,
     chunks_vdb: BaseVectorStorage = None,
+    global_config: dict = None,
 ) -> QueryContextResult | None:
     """
     Main query context building function using the new 4-stage architecture:
@@ -4625,6 +4789,7 @@ async def _build_query_context(
         text_chunks_db,
         query_param,
         chunks_vdb,
+        global_config,
     )
     _s1e = time.perf_counter()
     logger.info(f"  ⏱ Stage 2a — Graph Search ({query_param.mode}): {_s1e - _s1:.3f}s")
@@ -4882,9 +5047,13 @@ async def _find_related_text_unit_from_entities(
     kg_chunk_pick_method = text_chunks_db.global_config.get(
         "kg_chunk_pick_method", DEFAULT_KG_CHUNK_PICK_METHOD
     )
-    max_related_chunks = text_chunks_db.global_config.get(
-        "related_chunk_number", DEFAULT_RELATED_CHUNK_NUMBER
-    )
+    
+    # Priority: 1. query_param override, 2. global_config, 3. DEFAULT
+    max_related_chunks = getattr(query_param, "related_chunk_number", None)
+    if max_related_chunks is None:
+        max_related_chunks = text_chunks_db.global_config.get(
+            "related_chunk_number", DEFAULT_RELATED_CHUNK_NUMBER
+        )
 
     # Step 2: Count chunk occurrences and deduplicate (keep chunks from earlier positioned entities)
     chunk_occurrence_count = {}
@@ -5138,9 +5307,13 @@ async def _find_related_text_unit_from_relations(
     kg_chunk_pick_method = text_chunks_db.global_config.get(
         "kg_chunk_pick_method", DEFAULT_KG_CHUNK_PICK_METHOD
     )
-    max_related_chunks = text_chunks_db.global_config.get(
-        "related_chunk_number", DEFAULT_RELATED_CHUNK_NUMBER
-    )
+    
+    # Priority: 1. query_param override, 2. global_config, 3. DEFAULT
+    max_related_chunks = getattr(query_param, "related_chunk_number", None)
+    if max_related_chunks is None:
+        max_related_chunks = text_chunks_db.global_config.get(
+            "related_chunk_number", DEFAULT_RELATED_CHUNK_NUMBER
+        )
 
     # Step 2: Count chunk occurrences and deduplicate (keep chunks from earlier positioned relationships)
     # Also remove duplicates with entity_chunks
