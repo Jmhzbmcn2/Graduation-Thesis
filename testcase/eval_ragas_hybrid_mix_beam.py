@@ -1,8 +1,8 @@
 """
-RAGAS Evaluation — So sánh Hybrid vs Mix vs Beam
+RAGAS Evaluation — So sánh Hybrid vs Mix vs Beam vs Focused
 Khóa Luận Tốt Nghiệp
 
-So sánh 3 mode: hybrid, mix, beam trên các tiêu chí:
+So sánh các mode: hybrid, mix, beam, focused trên các tiêu chí:
   1. Số token truyền vào (input tokens - ước lượng từ question + context)
   2. Latency retrieval (thời gian truy xuất context từ LightRAG)
   3. Latency generation (thời gian sinh câu trả lời)
@@ -15,7 +15,7 @@ Cấu hình:
   - RAGAS LLM Judge: OpenRouter (qwen/qwen3-30b-a3b-instruct-2507)
   - RAGAS Embedding: Ollama (embeddinggemma:300m)
 
-Output: eval_ragas_hybrid_mix_beam_1case.xlsx (1 sheet/mode + Summary)
+Output: eval_ragas_beam_phase2.xlsx (1 sheet/mode + Summary)
 
 Cách dùng:
   python testcase/eval_ragas_hybrid_mix_beam.py
@@ -43,7 +43,7 @@ LIGHTRAG_URL = "http://localhost:9621"
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_FILE  = os.path.join(_SCRIPT_DIR, "300_case_random.csv")
-OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_ragas_beam_phase2.xlsx")
+OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_ragas_focused.xlsx")
 
 # RAGAS LLM Judge — OpenRouter
 EVAL_LLM_MODEL = os.getenv("EVAL_LLM_MODEL", "qwen/qwen3-30b-a3b-instruct-2507")
@@ -55,7 +55,7 @@ EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "embeddinggemma:300m")
 EMBEDDING_HOST  = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
 
 # Số test case (None = tất cả, 3 = 3 câu đầu tiên)
-TEST_LIMIT = 100
+TEST_LIMIT = 5
 
 # Giới hạn độ dài context để tránh vượt token limit của LLM Judge
 MAX_CONTEXT_CHARS = None
@@ -66,8 +66,9 @@ MAX_CONTEXT_CHARS = None
 BEAM_MAX_CONTEXT_CHARS = None  # None = không giới hạn (giống các mode khác)
 
 # Modes cần đánh giá
-MODES = ["hybrid", "mix","beam"]
-# MODES = ["beam"]
+# MODES = ["hybrid", "mix", "beam", "focused"]
+# MODES = ["hybrid","mix","focused"]  # chạy riêng 1 mode
+MODES = ["focused"]
 # Batch size cho RAGAS
 EVAL_BATCH_SIZE = 100
 
@@ -87,6 +88,20 @@ RELATED_CHUNK_NUMBER = 10     # từ 5 → giảm chunk kèm entity
 # Rerank: dùng Vietnamese Reranker (AITeamVN/Vietnamese_Reranker) — bật khi server có RERANK_BINDING
 BEAM_ENABLE_RERANK = True    # Bật rerank sau beam search (chunk-level)
 BEAM_ENABLE_ANCHOR_RERANK = True  # Bật rerank ở bước anchor entity selection
+
+# Focused search: per-anchor quota + semantic threshold
+# • focused_edge_quota: mỗi anchor chỉ đóng góp tối đa m cạnh liên quan nhất
+# • focused_edge_threshold: ngưỡng cosine tối thiểu giữa query và edge
+# • focused_alpha/beta: trọng số joint scoring Score(e) = α·Sim(Q,A) + β·Sim(Q,e)
+# • focused_max_edges: tổng số cạnh tối đa sau khi gộp pool
+FOCUSED_TOP_K = 10                  # Số anchor nodes
+FOCUSED_EDGE_QUOTA = 5              # Max edges per anchor
+FOCUSED_EDGE_THRESHOLD = 0.3        # Min semantic score để giữ edge
+FOCUSED_ALPHA = 0.3                 # Weight anchor score
+FOCUSED_BETA = 0.7                  # Weight edge semantic score
+FOCUSED_MAX_EDGES = 30              # Global cap
+FOCUSED_CHUNK_TOP_K = 10            # Direct vector chunks
+
 # Các mode khác dùng top_k mặc định
 DEFAULT_TOP_K = 10
 # ===========================================================
@@ -280,9 +295,24 @@ def query_lightrag_with_timing(question: str, mode: str, retries: int = 3):
             "pruning_threshold": BEAM_PRUNING_THRESHOLD,
             "anchor_alpha": BEAM_ANCHOR_ALPHA,
             "chunk_alpha": BEAM_CHUNK_ALPHA,
-            "related_chunk_number": RELATED_CHUNK_NUMBER, # Ép riêng cho Beam
+            "related_chunk_number": RELATED_CHUNK_NUMBER,  # Ép riêng cho Beam
             "enable_rerank": BEAM_ENABLE_RERANK,  # Vietnamese Reranker lọc context (chunk-level)
             "enable_anchor_rerank": BEAM_ENABLE_ANCHOR_RERANK,  # Rerank anchor entities trước beam
+            "include_context": True,  # Server trả context luôn
+        }
+    elif mode == "focused":
+        base = {
+            "query": question,
+            "mode": mode,
+            "stream": False,
+            "top_k": FOCUSED_TOP_K,
+            "chunk_top_k": FOCUSED_CHUNK_TOP_K,
+            "focused_edge_quota": FOCUSED_EDGE_QUOTA,
+            "focused_edge_threshold": FOCUSED_EDGE_THRESHOLD,
+            "focused_alpha": FOCUSED_ALPHA,
+            "focused_beta": FOCUSED_BETA,
+            "focused_max_edges": FOCUSED_MAX_EDGES,
+            "enable_rerank": False,
             "include_context": True,  # Server trả context luôn
         }
     else:
@@ -291,7 +321,7 @@ def query_lightrag_with_timing(question: str, mode: str, retries: int = 3):
             "mode": mode,
             "stream": False,
             "top_k": DEFAULT_TOP_K,
-            "enable_rerank": False, 
+            "enable_rerank": False,
             "include_context": True,  # Server trả context luôn
         }
 
@@ -482,21 +512,24 @@ def create_summary_sheet(all_mode_results: dict, baselines: dict = None) -> pd.D
             row["Spread"] = round(means[worst] - means[best], 4)
 
         # --- % cải thiện so với baseline (hybrid, mix) ---
-        beam_val = means.get("beam")
-        if beam_val is not None:
-            for baseline_mode in ["hybrid", "mix"]:
-                baseline_df = baselines.get(baseline_mode)
-                if baseline_df is None:
-                    baseline_df = all_mode_results.get(baseline_mode)
-                if baseline_df is not None and col in baseline_df.columns:
-                    baseline_val = float(baseline_df[col].mean())
-                    if baseline_val != 0:
-                        pct = ((beam_val - baseline_val) / abs(baseline_val)) * 100
-                        row[f"Beam_vs_{baseline_mode.capitalize()}_%"] = f"{pct:+.1f}%"
+        # Tính % cải thiện cho tất cả các mode không phải baseline
+        non_baseline_modes = [m for m in MODES if m not in ["hybrid", "mix"]]
+        for cmp_mode in non_baseline_modes:
+            cmp_val = means.get(cmp_mode)
+            if cmp_val is not None:
+                for baseline_mode in ["hybrid", "mix"]:
+                    baseline_df = baselines.get(baseline_mode)
+                    if baseline_df is None:
+                        baseline_df = all_mode_results.get(baseline_mode)
+                    if baseline_df is not None and col in baseline_df.columns:
+                        baseline_val = float(baseline_df[col].mean())
+                        if baseline_val != 0:
+                            pct = ((cmp_val - baseline_val) / abs(baseline_val)) * 100
+                            row[f"{cmp_mode.capitalize()}_vs_{baseline_mode.capitalize()}_%"] = f"{pct:+.1f}%"
+                        else:
+                            row[f"{cmp_mode.capitalize()}_vs_{baseline_mode.capitalize()}_%"] = "N/A"
                     else:
-                        row[f"Beam_vs_{baseline_mode.capitalize()}_%"] = "N/A"
-                else:
-                    row[f"Beam_vs_{baseline_mode.capitalize()}_%"] = "-"
+                        row[f"{cmp_mode.capitalize()}_vs_{baseline_mode.capitalize()}_%"] = "-"
 
         rows.append(row)
 
@@ -584,22 +617,24 @@ def print_comparison_table(all_mode_results: dict, baselines: dict = None):
             else:
                 vals_str += f"{v:>{col_w}.1f}"
 
-        # Format % vs baseline columns
-        beam_val = means.get("beam")
-        for bm in available_baselines:
-            baseline_df = baselines.get(bm)
-            if baseline_df is None:
-                baseline_df = all_mode_results.get(bm)
-            if baseline_df is not None and col in baseline_df.columns and beam_val is not None:
-                baseline_val = float(baseline_df[col].mean())
-                if baseline_val != 0:
-                    pct = ((beam_val - baseline_val) / abs(baseline_val)) * 100
-                    # For quality metrics: positive = better; for latency: negative = better
-                    vals_str += f"  {pct:>+{pct_w}.1f}%"
+        # Format % vs baseline columns (for all non-baseline modes)
+        non_baseline_modes = [m for m in MODES if m not in ["hybrid", "mix"]]
+        for cmp_mode in non_baseline_modes:
+            cmp_val = means.get(cmp_mode)
+            for bm in available_baselines:
+                baseline_df = baselines.get(bm)
+                if baseline_df is None:
+                    baseline_df = all_mode_results.get(bm)
+                if baseline_df is not None and col in baseline_df.columns and cmp_val is not None:
+                    baseline_val = float(baseline_df[col].mean())
+                    if baseline_val != 0:
+                        pct = ((cmp_val - baseline_val) / abs(baseline_val)) * 100
+                        # For quality metrics: positive = better; for latency: negative = better
+                        vals_str += f"  {pct:>+{pct_w}.1f}%"
+                    else:
+                        vals_str += f"  {'N/A':>{pct_w}s}"
                 else:
-                    vals_str += f"  {'N/A':>{pct_w}s}"
-            else:
-                vals_str += f"  {'-':>{pct_w}s}"
+                    vals_str += f"  {'-':>{pct_w}s}"
 
         line = f"  {label:<28s}{vals_str}  {winner:>10s}"
         print(line)
@@ -613,7 +648,7 @@ def print_comparison_table(all_mode_results: dict, baselines: dict = None):
 
 def main():
     print("=" * 70)
-    print(f"📊 RAGAS Evaluation — So sánh Hybrid vs Mix vs Beam")
+    print(f"📊 RAGAS Evaluation — So sánh {' vs '.join(m.capitalize() for m in MODES)}")
     print("   Khóa Luận Tốt Nghiệp")
     print("=" * 70)
 
@@ -685,6 +720,8 @@ def main():
             answer, contexts, metrics = query_lightrag_with_timing(question, mode)
             if mode == "beam":
                 print(f"      BEAM params: beam_width={BEAM_BEAM_WIDTH}, max_depth={BEAM_MAX_DEPTH}, chunk_top_k={BEAM_CHUNK_TOP_K}")
+            elif mode == "focused":
+                print(f"      FOCUSED params: top_k={FOCUSED_TOP_K}, quota={FOCUSED_EDGE_QUOTA}, threshold={FOCUSED_EDGE_THRESHOLD}, α={FOCUSED_ALPHA}, β={FOCUSED_BETA}, max_edges={FOCUSED_MAX_EDGES}")
 
             print(f"      Answer: {answer[:80]}...")
             print(f"      Input tokens: {metrics['input_tokens']}")

@@ -130,6 +130,28 @@ class QueryParam:
     Formula: Chunk_Score = chunk_alpha × Semantic + (1 - chunk_alpha) × BM25.
     Higher default because chunks are long text where semantic similarity is more valuable."""
 
+    # === Focused Mode Parameters (KLTN) ===
+    focused_edge_quota: int = 5
+    """Max edges contributed per anchor node in focused mode.
+    Each anchor contributes at most this many edges (ranked by semantic similarity to query).
+    Default 5: with top_k=4 anchors → 4×5=20 edges max before global cap."""
+
+    focused_edge_threshold: float = 0.3
+    """Minimum cosine similarity between query and edge description required to include an edge.
+    Edges scoring below this threshold are dropped even within per-anchor quota."""
+
+    focused_alpha: float = 0.3
+    """Weight for anchor similarity in focused mode joint scoring formula.
+    Score(e) = focused_alpha × Sim(Query, Anchor) + focused_beta × Sim(Query, e)."""
+
+    focused_beta: float = 0.7
+    """Weight for edge similarity in focused mode joint scoring formula.
+    Higher value prioritizes edge semantics over anchor popularity (avoids hub dominance)."""
+
+    focused_max_edges: int = 30
+    """Global cap on total edges after merging all per-anchor pools in focused mode.
+    Prevents context explosion when top_k is large."""
+
     top_k: int = int(os.getenv("TOP_K", str(DEFAULT_TOP_K)))
     """Number of top items to retrieve. Represents entities in 'local' mode and relationships in 'global' mode."""
 

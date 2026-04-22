@@ -165,6 +165,41 @@ class QueryRequest(BaseModel):
                     "Formula: score = chunk_alpha × Semantic + (1 - chunk_alpha) × BM25. Default: 0.7.",
     )
 
+    # === Focused Mode Parameters ===
+    focused_edge_quota: Optional[int] = Field(
+        default=None,
+        ge=1,
+        description="Max edges contributed per anchor node in focused mode. Default: 5.",
+    )
+
+    focused_edge_threshold: Optional[float] = Field(
+        default=None,
+        ge=0.0,
+        le=1.0,
+        description="Minimum cosine similarity between query and edge description to include an edge in focused mode. Default: 0.3.",
+    )
+
+    focused_alpha: Optional[float] = Field(
+        default=None,
+        ge=0.0,
+        le=1.0,
+        description="Weight for anchor similarity in focused mode joint scoring. "
+                    "Score(e) = focused_alpha × Sim(Query, Anchor) + focused_beta × Sim(Query, e). Default: 0.3.",
+    )
+
+    focused_beta: Optional[float] = Field(
+        default=None,
+        ge=0.0,
+        le=1.0,
+        description="Weight for edge similarity in focused mode joint scoring. Default: 0.7.",
+    )
+
+    focused_max_edges: Optional[int] = Field(
+        default=None,
+        ge=1,
+        description="Global cap on total edges after merging all per-anchor pools in focused mode. Default: 30.",
+    )
+
     @field_validator("query", mode="after")
     @classmethod
     def query_strip_after(cls, query: str) -> str:

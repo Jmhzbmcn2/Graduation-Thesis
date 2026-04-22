@@ -4271,6 +4271,73 @@ async def _perform_kg_search(
 
         return beam_result
 
+    elif query_param.mode == "focused":
+        # === Focused Mode: 1-hop semantic edge scoring with per-anchor quota ===
+        # Uses VDB anchor retrieval → 1-hop edge expansion → semantic scoring → quota filtering
+
+        # Step 1: Get anchor nodes with cosine scores (no edge retrieval)
+        if len(ll_keywords) > 0:
+            anchor_node_datas, anchor_scores = await _get_anchor_nodes(
+                ll_keywords,
+                knowledge_graph_inst,
+                entities_vdb,
+                query_param,
+            )
+
+            if anchor_node_datas and query_embedding is not None:
+                # Step 2-5: Per-anchor quota + semantic edge scoring
+                local_entities, local_relations = await _focused_1hop_edge_scoring(
+                    anchor_node_datas,
+                    anchor_scores,
+                    query_embedding,
+                    knowledge_graph_inst,
+                    relationships_vdb,
+                    query_param,
+                )
+            else:
+                local_entities = anchor_node_datas
+                local_relations = []
+                if query_embedding is None:
+                    logger.warning(
+                        "Focused mode: no query_embedding available, "
+                        "skipping semantic edge scoring"
+                    )
+
+        # Step 6: Vector chunks (direct semantic search)
+        if chunks_vdb:
+            vector_chunks = await _get_vector_context(
+                query,
+                chunks_vdb,
+                query_param,
+                query_embedding,
+            )
+            # Track vector chunks with source metadata
+            for i, chunk in enumerate(vector_chunks):
+                chunk_id = chunk.get("chunk_id") or chunk.get("id")
+                if chunk_id:
+                    chunk_tracking[chunk_id] = {
+                        "source": "C",
+                        "frequency": 1,
+                        "order": i + 1,
+                    }
+
+        # For focused mode, use local results directly (no global search)
+        final_entities = local_entities
+        final_relations = local_relations
+
+        logger.info(
+            f"Focused search results: {len(final_entities)} entities, "
+            f"{len(final_relations)} relations, {len(vector_chunks)} vector chunks"
+        )
+
+        return {
+            "final_entities": final_entities,
+            "final_relations": final_relations,
+            "vector_chunks": vector_chunks,
+            "chunk_tracking": chunk_tracking,
+            "query_embedding": query_embedding,
+        }
+
     else:  # hybrid or mix mode
         if len(ll_keywords) > 0:
             local_entities, local_relations = await _get_node_data(
@@ -4287,8 +4354,8 @@ async def _perform_kg_search(
                 query_param,
             )
 
-        # Get vector chunks for mix and focused modes
-        if query_param.mode in ["mix", "focused"] and chunks_vdb:
+        # Get vector chunks for mix mode
+        if query_param.mode == "mix" and chunks_vdb:
             vector_chunks = await _get_vector_context(
                 query,
                 chunks_vdb,
@@ -5078,6 +5145,291 @@ async def _find_most_related_edges_from_entities(
     )
 
     return all_edges_data
+
+
+async def _get_anchor_nodes(
+    query: str,
+    knowledge_graph_inst: BaseGraphStorage,
+    entities_vdb: BaseVectorStorage,
+    query_param: QueryParam,
+) -> tuple[list[dict], dict[str, float]]:
+    """
+    Retrieve anchor nodes from VDB without fetching edges.
+
+    Returns:
+        tuple: (node_datas, anchor_scores)
+            - node_datas: list of node data dicts with entity_name, rank, etc.
+            - anchor_scores: dict mapping entity_name to VDB cosine similarity score
+    """
+    logger.info(
+        f"Focused anchor query: {query} (top_k:{query_param.top_k}, "
+        f"cosine:{entities_vdb.cosine_better_than_threshold})"
+    )
+
+    results = await entities_vdb.query(query, top_k=query_param.top_k)
+
+    if not results:
+        return [], {}
+
+    node_ids = [r["entity_name"] for r in results]
+
+    # Batch fetch node data and degrees concurrently
+    nodes_dict, degrees_dict = await asyncio.gather(
+        knowledge_graph_inst.get_nodes_batch(node_ids),
+        knowledge_graph_inst.node_degrees_batch(node_ids),
+    )
+
+    node_datas = [nodes_dict.get(nid) for nid in node_ids]
+    node_degrees = [degrees_dict.get(nid, 0) for nid in node_ids]
+
+    if not all(n is not None for n in node_datas):
+        logger.warning("Some anchor nodes are missing, maybe the storage is damaged")
+
+    # Build anchor_scores from VDB cosine similarity results
+    # VDB results typically have "distance" (cosine similarity) field
+    anchor_scores = {}
+    built_node_datas = []
+    for k, n, d in zip(results, node_datas, node_degrees):
+        if n is not None:
+            entity_name = k["entity_name"]
+            built_node_datas.append(
+                {
+                    **n,
+                    "entity_name": entity_name,
+                    "rank": d,
+                    "created_at": k.get("created_at"),
+                }
+            )
+            # Use "distance" field from VDB result as cosine similarity score
+            anchor_scores[entity_name] = k.get("distance", 0.0)
+
+    logger.info(
+        f"Focused anchors: {len(built_node_datas)} nodes retrieved, "
+        f"scores: {', '.join(f'{name}={score:.3f}' for name, score in list(anchor_scores.items())[:5])}"
+    )
+
+    return built_node_datas, anchor_scores
+
+
+async def _focused_1hop_edge_scoring(
+    node_datas: list[dict],
+    anchor_scores: dict[str, float],
+    query_embedding: list[float],
+    knowledge_graph_inst: BaseGraphStorage,
+    relationships_vdb: BaseVectorStorage,
+    query_param: QueryParam,
+) -> tuple[list[dict], list[dict]]:
+    """
+    Focused Mode: Per-anchor quota + semantic threshold edge scoring.
+
+    Pipeline:
+      1. Fetch all 1-hop edges for each anchor (batch)
+      2. Lookup edge embeddings from relationships_vdb
+      3. Compute Sim(Query, e) via batch matrix cosine similarity
+      4. Per-anchor: filter by threshold + take top-m (quota)
+      5. Merge pool → sort by joint score → apply global cap N_max
+
+    Args:
+        node_datas: Anchor node data from _get_anchor_nodes
+        anchor_scores: {entity_name: cosine_sim_with_query} from VDB results
+        query_embedding: Pre-computed query embedding vector
+        knowledge_graph_inst: Graph storage instance
+        relationships_vdb: Relationship vector database for edge embeddings
+        query_param: Query parameters with focused mode settings
+
+    Returns:
+        tuple: (pruned_entities, final_relations)
+            - pruned_entities: anchor nodes that still have edges after pruning
+            - final_relations: semantically scored and filtered edges
+    """
+    anchor_names = [dp["entity_name"] for dp in node_datas]
+    edge_quota = query_param.focused_edge_quota
+    edge_threshold = query_param.focused_edge_threshold
+    alpha = query_param.focused_alpha
+    beta = query_param.focused_beta
+    max_edges = query_param.focused_max_edges
+
+    # ─── Step 1: Fetch all 1-hop edges per anchor (single batch call) ───
+    batch_edges_dict = await knowledge_graph_inst.get_nodes_edges_batch(anchor_names)
+
+    # Build deduplicated edge list and track which anchor owns which edges
+    all_edges = []
+    seen_edges = set()
+    anchor_to_edges: dict[str, list[tuple[str, str]]] = {name: [] for name in anchor_names}
+
+    for anchor_name in anchor_names:
+        this_edges = batch_edges_dict.get(anchor_name, [])
+        for e in this_edges:
+            sorted_edge = tuple(sorted(e))
+            # Track which anchor this edge belongs to (an edge can belong to multiple anchors)
+            anchor_to_edges[anchor_name].append(sorted_edge)
+            if sorted_edge not in seen_edges:
+                seen_edges.add(sorted_edge)
+                all_edges.append(sorted_edge)
+
+    total_raw_edges = len(all_edges)
+    if not all_edges:
+        logger.info("Focused 1-hop: No edges found for any anchor")
+        return node_datas, []
+
+    logger.info(
+        f"Focused 1-hop: {total_raw_edges} unique edges from {len(anchor_names)} anchors"
+    )
+
+    # ─── Step 2: Lookup edge embeddings from relationships_vdb ───
+    # Edge VDB IDs use compute_mdhash_id(src + tgt, prefix="rel-")
+    # Try both directions since edge storage is undirected
+    edge_to_rel_ids: dict[tuple[str, str], list[str]] = {}
+    all_rel_ids = []
+    for edge in all_edges:
+        src, tgt = edge
+        fwd_id = compute_mdhash_id(src + tgt, prefix="rel-")
+        rev_id = compute_mdhash_id(tgt + src, prefix="rel-")
+        edge_to_rel_ids[edge] = [fwd_id, rev_id]
+        all_rel_ids.extend([fwd_id, rev_id])
+
+    # Fetch edge properties and edge vectors in parallel
+    edge_pairs_dicts = [{"src": e[0], "tgt": e[1]} for e in all_edges]
+    edge_vectors_raw, edge_data_batch = await asyncio.gather(
+        relationships_vdb.get_vectors_by_ids(all_rel_ids),
+        knowledge_graph_inst.get_edges_batch(edge_pairs_dicts),
+    )
+
+    # Resolve edge vectors: for each edge, pick whichever direction has a vector
+    edge_vectors: dict[tuple[str, str], list[float]] = {}
+    for edge in all_edges:
+        fwd_id, rev_id = edge_to_rel_ids[edge]
+        if fwd_id in edge_vectors_raw:
+            edge_vectors[edge] = edge_vectors_raw[fwd_id]
+        elif rev_id in edge_vectors_raw:
+            edge_vectors[edge] = edge_vectors_raw[rev_id]
+
+    # ─── Step 3: Batch matrix cosine similarity ───
+    edge_sim_scores: dict[tuple[str, str], float] = {}
+
+    if query_embedding is not None and edge_vectors:
+        scored_edges = [e for e in all_edges if e in edge_vectors]
+        if scored_edges:
+            query_vec = np.asarray(query_embedding, dtype=np.float32)
+            query_norm = np.linalg.norm(query_vec)
+            if query_norm > 0:
+                # Stack all edge vectors into matrix (N x D) for batch computation
+                edge_matrix = np.array(
+                    [edge_vectors[e] for e in scored_edges],
+                    dtype=np.float32,
+                )
+                # Compute all cosine similarities in one matrix multiply
+                norms = np.linalg.norm(edge_matrix, axis=1)
+                valid_mask = norms > 0
+                similarities = np.zeros(len(scored_edges), dtype=np.float32)
+                if valid_mask.any():
+                    similarities[valid_mask] = (
+                        edge_matrix[valid_mask] @ query_vec
+                    ) / (norms[valid_mask] * query_norm)
+
+                for edge, sim in zip(scored_edges, similarities):
+                    edge_sim_scores[edge] = float(sim)
+
+        logger.debug(
+            f"Focused edge scoring: computed cosine similarity for "
+            f"{len(edge_sim_scores)}/{total_raw_edges} edges"
+        )
+    else:
+        logger.warning(
+            "Focused mode: no query_embedding or edge_vectors available, "
+            "falling back to zero similarity scores"
+        )
+
+    # ─── Step 4: Per-anchor quota with semantic threshold ───
+    per_anchor_results: dict[str, list[dict]] = {}
+    edges_before_threshold = 0
+    edges_after_threshold = 0
+
+    for anchor_name in anchor_names:
+        anchor_score = anchor_scores.get(anchor_name, 0.0)
+        anchor_edges = anchor_to_edges.get(anchor_name, [])
+
+        scored = []
+        for edge in anchor_edges:
+            edge_sim = edge_sim_scores.get(edge, 0.0)
+            edges_before_threshold += 1
+
+            # Apply semantic threshold
+            if edge_sim < edge_threshold:
+                continue
+            edges_after_threshold += 1
+
+            # Joint scoring: α × Sim(Query, Anchor) + β × Sim(Query, Edge)
+            joint_score = alpha * anchor_score + beta * edge_sim
+
+            edge_data = edge_data_batch.get(edge, {})
+            if "weight" not in edge_data:
+                edge_data["weight"] = 1.0
+
+            scored.append(
+                {
+                    "src_tgt": edge,
+                    "rank": int(joint_score * 100),
+                    "joint_score": joint_score,
+                    "edge_sim": edge_sim,
+                    "anchor_score": anchor_score,
+                    "anchor_name": anchor_name,
+                    **edge_data,
+                }
+            )
+
+        # Sort by joint score and take top-m (quota)
+        scored.sort(key=lambda x: x["joint_score"], reverse=True)
+        per_anchor_results[anchor_name] = scored[:edge_quota]
+
+    logger.info(
+        f"Focused per-anchor quota: {edges_before_threshold} total edge-anchor pairs → "
+        f"{edges_after_threshold} after threshold ({edge_threshold}) → "
+        f"{sum(len(v) for v in per_anchor_results.values())} after quota (m={edge_quota})"
+    )
+
+    # ─── Step 5: Global merge with deduplication + cap ───
+    pool = []
+    seen_in_pool = set()
+    for anchor_name, edges in per_anchor_results.items():
+        for edge_entry in edges:
+            edge_key = tuple(sorted(edge_entry["src_tgt"]))
+            if edge_key not in seen_in_pool:
+                seen_in_pool.add(edge_key)
+                pool.append(edge_entry)
+
+    pool.sort(key=lambda x: x["joint_score"], reverse=True)
+
+    # Apply global cap
+    before_cap = len(pool)
+    pool = pool[:max_edges]
+
+    logger.info(
+        f"Focused global merge: {before_cap} unique edges → {len(pool)} after cap (N_max={max_edges})"
+    )
+
+    # ─── Step 6: Prune anchors that have no edges left ───
+    anchors_with_edges = set()
+    for edge_entry in pool:
+        anchors_with_edges.add(edge_entry.get("anchor_name"))
+        # Also include both endpoints of the edge
+        src, tgt = edge_entry["src_tgt"]
+        anchors_with_edges.add(src)
+        anchors_with_edges.add(tgt)
+
+    pruned_entities = [
+        nd for nd in node_datas if nd["entity_name"] in anchors_with_edges
+    ]
+
+    logger.info(
+        f"Focused 1-hop edge scoring complete: "
+        f"{len(node_datas)} anchors → {len(pruned_entities)} kept, "
+        f"{total_raw_edges} raw edges → {len(pool)} final edges "
+        f"(quota={edge_quota}, threshold={edge_threshold}, "
+        f"α={alpha}, β={beta}, cap={max_edges})"
+    )
+
+    return pruned_entities, pool
 
 
 async def _find_related_text_unit_from_entities(
