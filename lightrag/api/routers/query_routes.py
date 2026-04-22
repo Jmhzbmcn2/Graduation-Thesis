@@ -101,6 +101,13 @@ class QueryRequest(BaseModel):
         description="Enable reranking for retrieved text chunks. If True but no rerank model is configured, a warning will be issued. Default is True.",
     )
 
+    enable_anchor_rerank: Optional[bool] = Field(
+        default=None,
+        description="Enable reranking at the anchor entity selection step in beam search. "
+                    "Uses cross-encoder reranker to re-score anchor entities (query vs entity description) "
+                    "before graph traversal. Only applies to beam mode. Default is False.",
+    )
+
     include_references: Optional[bool] = Field(
         default=True,
         description="If True, includes reference list in responses. Affects /query and /query/stream endpoints. /query/data always includes references.",

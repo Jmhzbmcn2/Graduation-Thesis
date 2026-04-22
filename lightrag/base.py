@@ -188,6 +188,14 @@ class QueryParam:
     Default is True to enable reranking when rerank model is available.
     """
 
+    enable_anchor_rerank: bool = False
+    """Enable reranking at the anchor entity selection step in beam search.
+    When True, anchor entities found by VDB+BM25 are re-scored using the cross-encoder
+    reranker (query vs entity description) before graph traversal begins.
+    This corrects anchor selection errors that would otherwise propagate through the
+    entire beam search. Only applies to beam mode. Default is False.
+    """
+
     include_references: bool = False
     """If True, includes reference list in the response for supported endpoints.
     This parameter controls whether the API response includes a references field

@@ -43,7 +43,7 @@ LIGHTRAG_URL = "http://localhost:9621"
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_FILE  = os.path.join(_SCRIPT_DIR, "300_case_random.csv")
-OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_ragas_beam.xlsx")
+OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_ragas_beam_phase2.xlsx")
 
 # RAGAS LLM Judge — OpenRouter
 EVAL_LLM_MODEL = os.getenv("EVAL_LLM_MODEL", "qwen/qwen3-30b-a3b-instruct-2507")
@@ -55,7 +55,7 @@ EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "embeddinggemma:300m")
 EMBEDDING_HOST  = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
 
 # Số test case (None = tất cả, 3 = 3 câu đầu tiên)
-TEST_LIMIT = 10
+TEST_LIMIT = 100
 
 # Giới hạn độ dài context để tránh vượt token limit của LLM Judge
 MAX_CONTEXT_CHARS = None
@@ -72,14 +72,21 @@ MODES = ["hybrid", "mix","beam"]
 EVAL_BATCH_SIZE = 100
 
 # ======================== CẤU HÌNH MODE-SPECIFIC ========================
-# Beam search tối ưu: beam_width lớn + depth sâu hơn để lấy nhiều context
-BEAM_BEAM_WIDTH = 5     # Mặc định = 3. Tăng lên 7 để mỗi hop giữ nhiều candidate hơn
-BEAM_MAX_DEPTH = 1   # Mặc định = 1. Tăng lên 2 để khám phá indirect relationships
-BEAM_CHUNK_TOP_K = 0   # Mặc định = 10. Tăng để lấy nhiều text chunks hơn
-BEAM_PRUNING_THRESHOLD = 0.3  # Mặc định = 0.35. Giảm để giữ nhiều candidate hơn (tăng recall)
-BEAM_ANCHOR_ALPHA = 0.3  # BM25 hybrid: Dense vs BM25 weight for anchor entities
-BEAM_CHUNK_ALPHA = 0.7    # BM25 hybrid: Dense vs BM25 weight for chunk retrieval
-RELATED_CHUNK_NUMBER = 3
+# Beam search tối ưu: Narrow + Deep + Rerank
+# • beam_width nhỏ (5) → chỉ theo nhánh tốt nhất, giảm context pollution
+# • max_depth=2 → bắt entity 2-hop, bù cho width nhỏ
+# • pruning cao (0.4) → cắt entity kem sớm hơn để giữ token budget ~15k
+# • enable_rerank=True → lọc lại context sau beam bằng Vietnamese Reranker
+BEAM_BEAM_WIDTH = 6          # từ 10 → narrow để tránh noise
+BEAM_MAX_DEPTH = 2           # từ 1 → bắt entity 2-hop
+BEAM_CHUNK_TOP_K = 15         # từ 15 → ít chunk rác hơn
+BEAM_PRUNING_THRESHOLD = 0.2 # từ 0.25 → cắt noise sớm hơn
+BEAM_ANCHOR_ALPHA = 0.7      # từ 0.7 → cân bằng BM25/dense
+BEAM_CHUNK_ALPHA = 0.5       # từ 0.7 → tương tự
+RELATED_CHUNK_NUMBER = 10     # từ 5 → giảm chunk kèm entity
+# Rerank: dùng Vietnamese Reranker (AITeamVN/Vietnamese_Reranker) — bật khi server có RERANK_BINDING
+BEAM_ENABLE_RERANK = True    # Bật rerank sau beam search (chunk-level)
+BEAM_ENABLE_ANCHOR_RERANK = True  # Bật rerank ở bước anchor entity selection
 # Các mode khác dùng top_k mặc định
 DEFAULT_TOP_K = 10
 # ===========================================================
@@ -274,7 +281,8 @@ def query_lightrag_with_timing(question: str, mode: str, retries: int = 3):
             "anchor_alpha": BEAM_ANCHOR_ALPHA,
             "chunk_alpha": BEAM_CHUNK_ALPHA,
             "related_chunk_number": RELATED_CHUNK_NUMBER, # Ép riêng cho Beam
-            "enable_rerank": False,   # Tắt hẳn rerank để khỏi văng Warning
+            "enable_rerank": BEAM_ENABLE_RERANK,  # Vietnamese Reranker lọc context (chunk-level)
+            "enable_anchor_rerank": BEAM_ENABLE_ANCHOR_RERANK,  # Rerank anchor entities trước beam
             "include_context": True,  # Server trả context luôn
         }
     else:
@@ -289,12 +297,18 @@ def query_lightrag_with_timing(question: str, mode: str, retries: int = 3):
 
     for attempt in range(retries):
         try:
+            # Đo wall-clock time phía client để bắt rerank latency
+            # (server không có field rerank_ms riêng, gộp trong retrieval_ms)
+            client_start = time.perf_counter()
+
             # --- DUY NHẤT 1 CALL: answer + timing + context ---
             resp = requests.post(
                 f"{LIGHTRAG_URL}/query",
                 json=base,
                 timeout=180,
             )
+            client_elapsed_ms = (time.perf_counter() - client_start) * 1000
+
             resp.raise_for_status()
             resp_json = resp.json()
 
@@ -304,9 +318,16 @@ def query_lightrag_with_timing(question: str, mode: str, retries: int = 3):
             timing = resp_json.get("timing") or {}
             keyword_extraction_ms = timing.get("keyword_extraction_ms", 0)
             graph_search_ms = timing.get("graph_search_ms", 0)
+            rerank_ms = timing.get("rerank_ms", 0)           # ← Tách riêng từ server
             retrieval_latency_ms = timing.get("retrieval_ms", 0)
             generation_latency_ms = timing.get("generation_ms", 0)
             total_latency_ms = timing.get("total_ms", 0)
+
+            # ước tính rerank_latency:
+            # Client wall-time - server total = network overhead + rerank (nếu rerank chạy ngoài server timer)
+            # Thực tế: rerank đã được gộp trong retrieval_ms của server
+            # → Lưu client_wall_ms để theo dõi toàn bộ round-trip (bao gồm rerank)
+            rerank_latency_ms = round(client_elapsed_ms - total_latency_ms, 2) if total_latency_ms > 0 else 0
 
             # Context từ cùng response (không cần call thêm)
             full_context = resp_json.get("context", "")
@@ -328,12 +349,15 @@ def query_lightrag_with_timing(question: str, mode: str, retries: int = 3):
 
             metrics = {
                 "keyword_extraction_ms": round(keyword_extraction_ms, 2),
-                "graph_search_ms": round(graph_search_ms, 2),
+                "graph_search_ms": round(graph_search_ms, 2),        # Graph thuần (không rerank)
+                "rerank_ms": round(rerank_ms, 2),                     # Rerank riêng (từ server)
                 "retrieval_latency_ms": round(retrieval_latency_ms, 2),
+                "rerank_latency_ms": rerank_latency_ms,               # client overhead
                 "generation_latency_ms": round(generation_latency_ms, 2),
                 "input_tokens": input_tokens,
                 "output_tokens": output_tokens,
                 "total_latency_ms": round(total_latency_ms, 2),
+                "client_wall_ms": round(client_elapsed_ms, 2),
             }
 
             return answer, contexts, metrics
@@ -346,12 +370,17 @@ def query_lightrag_with_timing(question: str, mode: str, retries: int = 3):
     return "Error: Không lấy được response", ["No context"], {
         "keyword_extraction_ms": 0,
         "graph_search_ms": 0,
+        "rerank_ms": 0,
         "retrieval_latency_ms": 0,
+        "rerank_latency_ms": 0,
         "generation_latency_ms": 0,
         "input_tokens": 0,
         "output_tokens": 0,
         "total_latency_ms": 0,
+        "client_wall_ms": 0,
     }
+
+
 
 
 def run_ragas_evaluation(questions, answers, contexts_list, ground_truths):
@@ -775,29 +804,29 @@ def main():
         print(f"   📄 Sheet '{mode.capitalize()[:31]}' — {len(all_mode_results[mode])} câu")
     print("   📄 Sheet 'Summary' — tổng hợp so sánh")
 
-    # In chi tiết từng câu
-    print(f"\n{'=' * 70}")
-    print("📋 CHI TIẾT TỪNG CÂU HỎI")
-    print(f"{'=' * 70}")
-    for i, question in enumerate(all_questions):
-        print(f"\n--- Câu {i+1}: {question[:60]}...")
-        for mode in MODES:
-            df = all_mode_results.get(mode)
-            if df is None:
-                continue
-            match = df[df["question_text"] == question]
-            if len(match) > 0:
-                row = match.iloc[0]
-                print(f"  [{mode.upper()}]")
-                print(f"    Input Tokens: {int(row.get('input_tokens', 0))}")
-                print(f"    Retrieval: {row.get('retrieval_latency_ms', 0):.1f}ms")
-                print(f"    Generation: {row.get('generation_latency_ms', 0):.1f}ms")
-                for col in ["faithfulness", "answer_relevancy", "context_recall", "context_precision", "ragas_score"]:
-                    if col in row.index and row[col] is not None:
-                        try:
-                            print(f"    {col}: {float(row[col]):.4f}")
-                        except (ValueError, TypeError):
-                            pass
+    # # In chi tiết từng câu
+    # print(f"\n{'=' * 70}")
+    # print("📋 CHI TIẾT TỪNG CÂU HỎI")
+    # print(f"{'=' * 70}")
+    # for i, question in enumerate(all_questions):
+    #     print(f"\n--- Câu {i+1}: {question[:60]}...")
+    #     for mode in MODES:
+    #         df = all_mode_results.get(mode)
+    #         if df is None:
+    #             continue
+    #         match = df[df["question_text"] == question]
+    #         if len(match) > 0:
+    #             row = match.iloc[0]
+    #             print(f"  [{mode.upper()}]")
+    #             print(f"    Input Tokens: {int(row.get('input_tokens', 0))}")
+    #             print(f"    Retrieval: {row.get('retrieval_latency_ms', 0):.1f}ms")
+    #             print(f"    Generation: {row.get('generation_latency_ms', 0):.1f}ms")
+    #             for col in ["faithfulness", "answer_relevancy", "context_recall", "context_precision", "ragas_score"]:
+    #                 if col in row.index and row[col] is not None:
+    #                     try:
+    #                         print(f"    {col}: {float(row[col]):.4f}")
+    #                     except (ValueError, TypeError):
+    #                         pass
 
 
 if __name__ == "__main__":

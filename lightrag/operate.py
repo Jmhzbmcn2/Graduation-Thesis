@@ -3096,6 +3096,9 @@ async def kg_query(
 
     # Build query context (unified interface)
     _t2 = time.perf_counter()
+    # Reset _rerank_ms trong đúng global_config mà apply_rerank_if_enabled sẽ ghi vào
+    global_config["_rerank_ms"] = 0.0
+    text_chunks_db.global_config["_rerank_ms"] = 0.0
 
     context_result = await _build_query_context(
         query,
@@ -3111,9 +3114,12 @@ async def kg_query(
     )
 
     _t3 = time.perf_counter()
+    # apply_rerank_if_enabled ghi _rerank_ms vào text_chunks_db.global_config (không phải global_config của kg_query)
+    _rerank_ms = text_chunks_db.global_config.get("_rerank_ms", 0.0)
+    _graph_only_ms = (_t3 - _t2) * 1000 - _rerank_ms   # Graph thuần (không rerank)
     retrieval_ms = (_t3 - _t0) * 1000
     logger.info(
-        f"⏱ Stage 2 — Graph Search + Context Build ({query_param.mode}): {_t3 - _t2:.3f}s"
+        f"⏱ Stage 2 — Graph Search ({query_param.mode}): {_graph_only_ms:.1f}ms | Rerank: {_rerank_ms:.1f}ms"
     )
     logger.info(f"⏱ Total retrieval pipeline: {_t3 - _t0:.3f}s")
 
@@ -3127,7 +3133,8 @@ async def kg_query(
             context_result.raw_data["metadata"] = {}
         context_result.raw_data["metadata"]["timing"] = {
             "keyword_extraction_ms": round((_t1 - _t0) * 1000, 2),
-            "graph_search_ms": round((_t3 - _t2) * 1000, 2),
+            "graph_search_ms": round(_graph_only_ms, 2),   # Graph thuần, không bao gồm rerank
+            "rerank_ms": round(_rerank_ms, 2),              # Rerank riêng
             "retrieval_ms": round(retrieval_ms, 2),
         }
 
@@ -3241,7 +3248,8 @@ async def kg_query(
             context_result.raw_data["metadata"] = {}
         context_result.raw_data["metadata"]["timing"] = {
             "keyword_extraction_ms": round((_t1 - _t0) * 1000, 2),
-            "graph_search_ms": round((_t3 - _t2) * 1000, 2),
+            "graph_search_ms": round(_graph_only_ms, 2),   # Graph thuần
+            "rerank_ms": round(_rerank_ms, 2),              # Rerank riêng
             "retrieval_ms": round(retrieval_ms, 2),
             "generation_ms": round(generation_ms, 2),
             "total_ms": round(total_ms, 2),
@@ -3535,8 +3543,9 @@ async def _beam_search_graph(
 
     # ─── Optimization: Cap top_k for beam mode ───
     # Beam search discovers neighbors via graph traversal, so it needs
-    # far fewer anchors than hybrid mode. 10 anchors is the sweet spot.
-    BEAM_MAX_ANCHOR_K = 5
+    # fewer anchors than hybrid mode, but not too few — 10 anchors gives
+    # a better balance between precision and relation coverage.
+    BEAM_MAX_ANCHOR_K = 10
     effective_top_k = min(query_param.top_k, BEAM_MAX_ANCHOR_K)
 
     # Scoring weights (tunable hyperparameters for ablation study)
@@ -3561,7 +3570,11 @@ async def _beam_search_graph(
         vdb_tasks.append(entities_vdb.query(ll_keywords, top_k=vdb_fetch_k))
         task_labels.append("ll")
     if hl_keywords:
-        vdb_tasks.append(relationships_vdb.query(hl_keywords, top_k=effective_top_k))
+        # HL top_k × 3: Beam already stores these edges in collected_relations (score=0.9).
+        # Fetching 3× more HL edges is the minimal change to increase relation coverage
+        # while keeping 100% beam architecture (semantic VDB scored, no all-1-hop expansion).
+        vdb_hl_fetch_k = effective_top_k * 3
+        vdb_tasks.append(relationships_vdb.query(hl_keywords, top_k=vdb_hl_fetch_k))
         task_labels.append("hl")
 
     if vdb_tasks:
@@ -3663,6 +3676,72 @@ async def _beam_search_graph(
             anchor_names.append(src)
         if tgt and tgt not in anchor_names:
             anchor_names.append(tgt)
+
+    # ─── Anchor Reranking (Optional) ────────────────────────────────────
+    # Dùng cross-encoder reranker để re-score anchor entities trước beam traversal.
+    # So sánh (query, entity_description) → loại anchor sai hướng ngay từ đầu.
+    if query_param.enable_anchor_rerank and anchor_names:
+        rerank_func = global_config.get("rerank_model_func") if global_config else None
+        if rerank_func:
+            _anchor_rerank_t0 = time.perf_counter()
+            try:
+                # Lấy node data để có description cho rerank
+                anchor_node_data = await knowledge_graph_inst.get_nodes_batch(anchor_names)
+
+                # Build (query, description) pairs cho reranker
+                rerank_docs = []
+                valid_anchor_names = []
+                for name in anchor_names:
+                    node = anchor_node_data.get(name, {})
+                    desc = node.get("description", "") or node.get("entity_type", "") or name
+                    # Nối tên entity + description để reranker có đủ context
+                    doc_text = f"{name}: {desc}" if desc != name else name
+                    rerank_docs.append(doc_text)
+                    valid_anchor_names.append(name)
+
+                if rerank_docs:
+                    rerank_results = await rerank_func(
+                        query=query,
+                        documents=rerank_docs,
+                        top_n=len(rerank_docs),  # Lấy hết, lọc bằng threshold
+                    )
+
+                    if rerank_results:
+                        # Sort by relevance_score, giữ top effective_top_k
+                        scored_anchors = []
+                        for r in rerank_results:
+                            idx = r.get("index", 0)
+                            score = r.get("relevance_score", 0.0)
+                            if 0 <= idx < len(valid_anchor_names):
+                                scored_anchors.append((valid_anchor_names[idx], score))
+
+                        # Lọc theo threshold (loại anchor có score quá thấp)
+                        ANCHOR_RERANK_THRESHOLD = 0.01  # Rất thấp — chỉ loại rác rõ ràng
+                        scored_anchors = [(n, s) for n, s in scored_anchors if s >= ANCHOR_RERANK_THRESHOLD]
+                        scored_anchors.sort(key=lambda x: x[1], reverse=True)
+
+                        # Giữ top effective_top_k
+                        scored_anchors = scored_anchors[:effective_top_k]
+
+                        old_count = len(anchor_names)
+                        anchor_names = [name for name, _ in scored_anchors]
+
+                        _anchor_rerank_ms = (time.perf_counter() - _anchor_rerank_t0) * 1000
+                        # Tích lũy vào _rerank_ms để timing dict bắt được
+                        if global_config:
+                            global_config["_rerank_ms"] = global_config.get("_rerank_ms", 0.0) + _anchor_rerank_ms
+                        if text_chunks_db and hasattr(text_chunks_db, 'global_config'):
+                            text_chunks_db.global_config["_rerank_ms"] = text_chunks_db.global_config.get("_rerank_ms", 0.0) + _anchor_rerank_ms
+
+                        logger.info(
+                            f"⏱ Anchor rerank: {old_count} → {len(anchor_names)} anchors "
+                            f"(threshold={ANCHOR_RERANK_THRESHOLD}, latency={_anchor_rerank_ms:.1f}ms) "
+                            f"Top scores: {[f'{n}={s:.3f}' for n, s in scored_anchors[:5]]}"
+                        )
+            except Exception as e:
+                logger.warning(f"Anchor rerank failed, using original anchors: {e}")
+        else:
+            logger.debug("Anchor rerank enabled but no rerank_model_func configured — skipping")
 
     # ─── Phase 2: Semantic Beam Search — k-hop traversal ───
 
@@ -3944,14 +4023,12 @@ async def _beam_search_graph(
         final_entities.append(entity)
 
     # ─── Phase 3.5: Entity Cap (prevent context dilution) ───
-    # Beam traversal accumulates entities across all hops (anchors + hop1 + hop2),
-    # often resulting in 20-40 entities. Hybrid only sends ~5-10 entities.
-    # Too many entities dilute the context and hurt Faithfulness.
-    # Solution: sort by existing beam_score (already includes semantic sim)
-    # and cap to top_k * 2 to match hybrid's context density.
+    # Beam traversal accumulates entities across all hops (anchors + hop1 + hop2).
+    # Cap to top_k * 4 (up from 2) so that the relation filter below has a wider
+    # retained_entity_names pool → more relations survive → better Context Recall.
     final_entities.sort(key=lambda x: x.get("beam_score", 0), reverse=True)
 
-    max_entities = max(effective_top_k * 2, 10)
+    max_entities = max(effective_top_k * 4, 20)
     if len(final_entities) > max_entities:
         before_count = len(final_entities)
         final_entities = final_entities[:max_entities]
@@ -3961,25 +4038,26 @@ async def _beam_search_graph(
             f"cutoff={final_entities[-1].get('beam_score', 0):.3f})"
         )
 
-    # Format relations (same structure as _find_most_related_edges_from_entities output)
-    # Only keep relations whose endpoints are in the retained entity set
+    # Format relations — keep ALL collected relations from beam traversal.
+    # Previously we filtered by retained_entity_names (the capped entity set),
+    # which caused only ~4 relations to survive (vs ~69 for hybrid).
+    # Keeping all collected_relations restores relation coverage without adding
+    # noise, because they were already scored and pruned during beam traversal.
     retained_entity_names = {e["entity_name"] for e in final_entities}
 
     final_relations = []
     for edge_key, info in collected_relations.items():
         src, tgt = info["src_tgt"]
-        # Keep relation if at least one endpoint is a retained entity
-        if src in retained_entity_names or tgt in retained_entity_names:
-            edge_data = info["data"]
-            if "weight" not in edge_data:
-                edge_data["weight"] = 1.0
-            relation = {
-                "src_tgt": info["src_tgt"],
-                "rank": int(info["score"] * 100),
-                "beam_score": info["score"],
-                **edge_data,
-            }
-            final_relations.append(relation)
+        edge_data = info["data"]
+        if "weight" not in edge_data:
+            edge_data["weight"] = 1.0
+        relation = {
+            "src_tgt": info["src_tgt"],
+            "rank": int(info["score"] * 100),
+            "beam_score": info["score"],
+            **edge_data,
+        }
+        final_relations.append(relation)
 
     final_relations.sort(key=lambda x: x.get("beam_score", 0), reverse=True)
 

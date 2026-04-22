@@ -2668,12 +2668,20 @@ async def apply_rerank_if_enabled(
             )
             document_texts.append(content)
 
+        # ⏱ Measure rerank latency separately
+        _rerank_t0 = time.perf_counter()
+
         # Call the new rerank function that returns index-based results
         rerank_results = await rerank_func(
             query=query,
             documents=document_texts,
             top_n=top_n,
         )
+
+        _rerank_ms = (time.perf_counter() - _rerank_t0) * 1000
+        # Accumulate into global_config so operate.py can read it in timing dict
+        global_config["_rerank_ms"] = global_config.get("_rerank_ms", 0.0) + _rerank_ms
+        logger.info(f"⏱ Rerank latency: {_rerank_ms:.1f}ms (total accumulated: {global_config['_rerank_ms']:.1f}ms)")
 
         # Process rerank results based on return format
         if rerank_results and len(rerank_results) > 0:

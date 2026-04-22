@@ -1,0 +1,31 @@
+﻿idx,question,hybrid_n_chunks,hybrid_n_entities,hybrid_n_relations,hybrid_parsed_len,hybrid_ov_ans,hybrid_ov_ctx,hybrid_has_chunks,mix_n_chunks,mix_n_entities,mix_n_relations,mix_parsed_len,mix_ov_ans,mix_ov_ctx,mix_has_chunks,beam_n_chunks,beam_n_entities,beam_n_relations,beam_parsed_len,beam_ov_ans,beam_ov_ctx,beam_has_chunks
+drug_6073,"Biviantac có thể điều trị trướng bụng, đầy hơi không?",0,9,84,22371,0.8947,0.8889,True,0,9,84,22371,0.8947,0.8889,True,0,9,3,11811,0.7895,0.8148,True
+drug_3019,Tại sao phải bảo quản thuốc Aphaxan Armephaco trong bao bì kín?,0,10,114,27018,1.0,0.8214,True,0,9,113,26923,1.0,0.8214,True,0,9,5,11805,1.0,0.7857,True
+drug_3867,Tổng hợp các cách dùng hiệu quả để quản lý Atorvastatin T.V Pharm?,0,12,36,17631,0.8667,0.875,True,0,18,42,17502,0.9333,0.875,True,0,10,5,12972,0.8667,0.875,True
+drug_3301,"Trong quá trình sử dụng Asevictoria Mediplantex, cần lưu ý điều gì?",0,9,27,13598,0.9286,0.6727,True,0,15,26,12752,0.7143,0.6364,True,0,9,4,10952,0.7857,0.6455,True
+drug_2748,Thuốc Ampicillin Vidipha có được dùng theo sự kê đơn của bác sĩ không?,0,11,115,23423,0.9231,0.6951,True,0,14,126,28322,1.0,0.7195,True,0,10,5,5299,0.5385,0.4512,True
+drug_7247,Nhiệt độ tối đa mà thuốc Carsantin có thể chịu đựng là bao nhiêu?,0,15,21,12834,0.6364,0.6026,True,0,17,21,14573,0.6364,0.6026,True,0,10,3,8221,0.6364,0.5,True
+drug_7610,Tại sao Ceftriaxone không nên được sử dụng ở trẻ sơ sinh bị tăng bilirubin - huy,0,13,106,24035,0.9062,0.8077,True,0,11,119,27204,0.9062,0.8269,True,0,9,4,12165,0.8438,0.75,True
+drug_9286,Crotamiton được dùng để điều trị bệnh gì?,0,10,148,20937,1.0,1.0,True,0,10,148,20937,1.0,1.0,True,0,10,4,5648,0.6,0.6923,True
+drug_3381,Các tác dụng phụ thường gặp của thuốc Aspirin 81 là gì?,0,10,121,25401,0.8966,0.7879,True,0,9,121,25159,0.8966,0.8182,True,0,8,5,9813,0.8621,0.7273,True
+drug_3928,Trong những trường hợp nào bệnh nhân không nên dùng thuốc Atussin?,0,17,19,13418,0.7407,0.7619,True,0,13,28,12190,0.7407,0.7619,True,0,10,4,8112,0.8889,0.8095,True
+drug_7005,Captopril là thuốc gì?,-1,-1,-1,0,0.0,0.0,False,0,15,120,26617,0.9545,0.7966,True,0,9,4,11720,0.9091,0.6949,True
+drug_9501,Thuốc Danapha Trihex 2mg còn được gọi là gì?,0,24,103,19669,1.0,0.7442,True,0,27,102,23293,1.0,0.7442,True,0,10,5,4838,1.0,0.6744,True
+drug_2483,"Ông bà nào dễ có triệu chứng buồn nôn, nôn, đau thượng vị, tiêu chảy khi dùng th",0,8,118,28967,1.0,0.8182,True,0,12,119,26581,0.8333,0.8182,True,0,10,5,12769,0.5,0.6364,True
+drug_4824,Nêu ví dụ về hoạt chất của thuốc Bar?,0,20,18,7721,0.6667,0.525,True,0,17,20,7760,0.2222,0.325,True,0,10,5,2380,0.0,0.15,True
+drug_9565,Khi nào nên theo dõi tình trạng sức khỏe khi sử dụng Debby?,0,13,52,17301,0.9,0.7857,True,0,19,51,12273,0.9,0.6905,True,0,8,5,8770,0.8,0.7143,True
+drug_184,Tại  sао không được gấp đôi liều Nếu uống thiếu liều A.t Vildagliptin?,0,14,22,15053,0.6667,0.8378,True,0,13,22,10233,0.6667,0.8649,True,0,10,3,9004,0.6667,0.7297,True
+drug_8975,Cần xử lý như thế nào khi gần sát với thời gian uống liều tiếp theo của Coperil ,0,21,52,17256,0.7727,0.5172,True,0,21,52,17256,0.7727,0.5172,True,0,10,5,8794,0.6818,0.4483,True
+drug_599,Các kháng sinh nào không nên dùng chung với thuốc Acnotin?,0,19,20,13375,0.75,0.4286,True,0,19,17,13226,0.75,0.5325,True,0,10,3,6607,0.75,0.3896,True
+drug_6299,Người dùng thuốc Brexin cần lưu ý điều gì để giảm thiểu nguy cơ xuất hiện các bi,0,7,19,10346,0.8065,0.5401,True,0,7,19,10480,0.8065,0.5401,True,0,8,4,8762,0.7742,0.508,True
+drug_9258,Crinone được sử dụng để điều trị tình trạng gì?,0,8,115,25767,0.9459,0.9107,True,0,8,117,25668,0.9459,0.9107,True,0,10,5,8950,0.7297,0.6964,True
+drug_3643,Nêu một số dạng nhiễm khuẩn được điều trị khi dùng thuốc Aticef?,0,8,121,21180,0.8333,0.7065,True,0,8,117,20883,0.8333,0.7065,True,0,7,5,7563,0.75,0.6087,True
+drug_3436,Thuốc Aspirin STELLA được dùng để điều trị những bệnh lý nào?,0,15,113,26618,0.9688,0.8929,True,0,15,113,28293,0.9688,0.9107,True,0,10,5,5446,0.9688,0.8571,True
+drug_164,"Trong số những tác dụng phụ của A.t Vildagliptin khi phối hợp với sulfonylurea, ",0,12,83,25351,0.8571,0.7727,True,0,9,89,25525,0.9286,0.7727,True,0,10,4,11134,0.7857,0.5,True
+drug_8351,Khi sử dụng thuốc Ciprofloxacin 500mg dạng hỗn dịch người bệnh phải lưu ý gì?,0,9,122,26737,0.6481,0.6395,True,0,12,116,27785,0.6481,0.6259,True,0,8,5,9062,0.5741,0.5646,True
+drug_343,Khi bảo quản thuốc Acemol 325 mg cần chú ý đến yếu tố nào?,0,10,53,18298,0.9412,0.8088,True,0,8,55,18521,0.9412,0.7941,True,0,8,5,12189,0.9412,0.7794,True
+drug_9460,Những loại thuốc nào cần lưu ý khi dùng chung với Daktarin (miconazol)?,0,9,88,16083,0.65,0.4651,True,0,13,75,20452,0.8,0.5233,True,0,10,5,7070,0.6,0.3372,True
+drug_2093,Thuốc Ambroxol có thể làm tăng men trong gan không?,0,11,24,12267,0.75,0.3191,True,0,11,57,16263,0.75,0.3191,True,0,10,3,9796,0.75,0.2979,True
+drug_7854,Có báo cáo nào về các tác dụng phụ khi sử dụng thuốc Cerecaps không?,0,13,18,12672,0.8824,0.9189,True,0,10,18,13637,0.8824,0.9189,True,0,10,5,12049,0.8824,0.9189,True
+drug_4104,"Khi sử dụng thuốc Augmentin, cần ngưng dùng thuốc và báo ngay cho bác sĩ nếu có ",0,7,29,13848,0.7907,0.7253,True,0,13,30,14432,0.7907,0.6484,True,0,10,3,4348,0.5581,0.4176,True
+drug_926,Adrenalin (epinephrin) thường dùng trong những trường hợp nào?,0,10,46,14813,1.0,0.4578,True,0,9,124,25342,1.0,0.6386,True,0,10,5,11213,0.9375,0.4819,True
