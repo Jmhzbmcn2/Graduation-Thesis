@@ -21,6 +21,7 @@ class SearchMode(str, Enum):
     global_ = "global"
     hybrid = "hybrid"
     mix = "mix"
+    focused = "focused"
     bypass = "bypass"
     context = "context"
 

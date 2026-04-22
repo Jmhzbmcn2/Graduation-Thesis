@@ -2538,7 +2538,7 @@ class LightRAG:
                     ]
                 },
                 "metadata": {
-                    "query_mode": str,           # Query mode used ("local", "global", "hybrid", "mix", "naive", "bypass")
+                    "query_mode": str,           # Query mode used ("local", "global", "hybrid", "mix", "focused", "naive", "bypass")
                     "keywords": {
                         "high_level": List[str], # High-level keywords extracted
                         "low_level": List[str]   # Low-level keywords extracted
@@ -2560,6 +2560,7 @@ class LightRAG:
             - **global**: Focuses on relationships and their connected entities based on high-level keywords
             - **hybrid**: Combines local and global results using round-robin merging
             - **mix**: Includes knowledge graph data plus vector-retrieved document chunks
+            - **focused**: Includes knowledge graph data plus vector-retrieved document chunks
             - **naive**: Only vector-retrieved chunks, entities and relationships arrays are empty
             - **bypass**: All data arrays are empty, used for direct LLM queries
 
@@ -2610,7 +2611,7 @@ class LightRAG:
 
         query_result = None
 
-        if data_param.mode in ["local", "global", "hybrid", "mix", "beam"]:
+        if data_param.mode in ["local", "global", "hybrid", "mix", "beam", "focused"]:
             logger.debug(f"[aquery_data] Using kg_query for mode: {data_param.mode}")
             query_result = await kg_query(
                 query.strip(),
@@ -2708,7 +2709,7 @@ class LightRAG:
         try:
             query_result = None
 
-            if param.mode in ["local", "global", "hybrid", "mix", "beam"]:
+            if param.mode in ["local", "global", "hybrid", "mix", "beam", "focused"]:
                 query_result = await kg_query(
                     query.strip(),
                     self.chunk_entity_relation_graph,

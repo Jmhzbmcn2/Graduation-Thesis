@@ -57,7 +57,7 @@ WORKSPACE_ENV_MAP = {
 }
 
 # Query cache modes
-QUERY_MODES = ["mix", "hybrid", "local", "global"]
+QUERY_MODES = ["mix", "hybrid", "local", "global", "focused"]
 
 # Query cache types
 CACHE_TYPES = ["query", "keywords"]

@@ -3080,9 +3080,9 @@ async def kg_query(
     logger.debug(f"Low-level  keywords: {ll_keywords}")
 
     # Handle empty keywords
-    if ll_keywords == [] and query_param.mode in ["local", "hybrid", "mix", "beam"]:
+    if ll_keywords == [] and query_param.mode in ["local", "hybrid", "mix", "beam", "focused"]:
         logger.warning("low_level_keywords is empty")
-    if hl_keywords == [] and query_param.mode in ["global", "hybrid", "mix", "beam"]:
+    if hl_keywords == [] and query_param.mode in ["global", "hybrid", "mix", "beam", "focused"]:
         logger.warning("high_level_keywords is empty")
     if hl_keywords == [] and ll_keywords == []:
         if len(query) < 50:
@@ -4287,8 +4287,8 @@ async def _perform_kg_search(
                 query_param,
             )
 
-        # Get vector chunks for mix mode
-        if query_param.mode == "mix" and chunks_vdb:
+        # Get vector chunks for mix and focused modes
+        if query_param.mode in ["mix", "focused"] and chunks_vdb:
             vector_chunks = await _get_vector_context(
                 query,
                 chunks_vdb,
@@ -4873,7 +4873,7 @@ async def _build_query_context(
     logger.info(f"  ⏱ Stage 2a — Graph Search ({query_param.mode}): {_s1e - _s1:.3f}s")
 
     if not search_result["final_entities"] and not search_result["final_relations"]:
-        if query_param.mode != "mix":
+        if query_param.mode not in ["mix", "focused"]:
             return None
         else:
             if not search_result["chunk_tracking"]:
