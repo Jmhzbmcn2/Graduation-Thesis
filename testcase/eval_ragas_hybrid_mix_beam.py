@@ -43,19 +43,19 @@ LIGHTRAG_URL = "http://localhost:9621"
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_FILE  = os.path.join(_SCRIPT_DIR, "300_case_random.csv")
-OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_ragas_focused.xlsx")
+OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "focused_hyper_param.xlsx")
 
-# RAGAS LLM Judge — OpenRouter
-EVAL_LLM_MODEL = os.getenv("EVAL_LLM_MODEL", "qwen/qwen3-30b-a3b-instruct-2507")
-EVAL_LLM_API_KEY = os.getenv("OPENROUTER_API_KEY", os.getenv("EVAL_LLM_BINDING_API_KEY", ""))
-EVAL_LLM_HOST = os.getenv("EVAL_LLM_BINDING_HOST", "https://openrouter.ai/api/v1")
+# RAGAS LLM Judge — Local vLLM (Qwen2.5-14B-Instruct-AWQ)
+EVAL_LLM_MODEL = os.getenv("EVAL_LLM_MODEL", "Qwen/Qwen2.5-14B-Instruct-AWQ")
+EVAL_LLM_API_KEY = os.getenv("VLLM_API_KEY", "EMPTY")  # vLLM không cần API key thật
+EVAL_LLM_HOST = os.getenv("EVAL_LLM_BINDING_HOST", "http://localhost:8000/v1")  # local vLLM
 
 # RAGAS Embedding — Ollama local
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "embeddinggemma:300m")
 EMBEDDING_HOST  = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
 
 # Số test case (None = tất cả, 3 = 3 câu đầu tiên)
-TEST_LIMIT = 300
+TEST_LIMIT = 40
 
 # Giới hạn độ dài context để tránh vượt token limit của LLM Judge
 MAX_CONTEXT_CHARS = None
@@ -68,7 +68,7 @@ BEAM_MAX_CONTEXT_CHARS = None  # None = không giới hạn (giống các mode k
 # Modes cần đánh giá
 # MODES = ["hybrid", "mix", "beam", "focused"]
 # MODES = ["hybrid","mix","focused"]  # chạy riêng 1 mode
-MODES = ["hybrid","mix","focused"]
+MODES = ["focused"]
 # MODES = ["focused"]
 
 # Batch size cho RAGAS
@@ -97,10 +97,10 @@ BEAM_ENABLE_ANCHOR_RERANK = True  # Bật rerank ở bước anchor entity selec
 # • focused_alpha/beta: trọng số joint scoring Score(e) = α·Sim(Q,A) + β·Sim(Q,e)
 # • focused_max_edges: tổng số cạnh tối đa sau khi gộp pool
 FOCUSED_TOP_K = 10                 # Số anchor nodes
-FOCUSED_EDGE_QUOTA = 5              # Max edges per anchor (5→8: giữ nhiều edge hơn)
-FOCUSED_EDGE_THRESHOLD = 0.4       # Min semantic score (0.3→0.15: nới ngưỡng, giữ edge yếu hơn)
-FOCUSED_ALPHA = 0.4                 # Weight anchor score (0.3→0.4: ưu tiên anchor mạnh)
-FOCUSED_BETA = 0.6                  # Weight edge semantic score (0.7→0.6: cân bằng lại)
+FOCUSED_EDGE_QUOTA = 10             # Max edges per anchor (5→8: giữ nhiều edge hơn)
+FOCUSED_EDGE_THRESHOLD = 0.5       # Min semantic score (0.3→0.15: nới ngưỡng, giữ edge yếu hơn)
+FOCUSED_ALPHA = 0.3                 # Weight anchor score (0.3→0.4: ưu tiên anchor mạnh)
+FOCUSED_BETA = 0.7                  # Weight edge semantic score (0.7→0.6: cân bằng lại)
 FOCUSED_MAX_EDGES = 50             # Global cap (30→50: cho phép nhiều edge hơn)
 FOCUSED_CHUNK_TOP_K = 10            # Direct vector chunks (10→15: bù thêm context)
 
@@ -416,7 +416,7 @@ def query_lightrag_with_timing(question: str, mode: str, retries: int = 3):
 
 
 def run_ragas_evaluation(questions, answers, contexts_list, ground_truths):
-    """Chạy RAGAS evaluation trên dataset — LLM Judge dùng OpenRouter"""
+    """Chạy RAGAS evaluation trên dataset — LLM Judge dùng local vLLM"""
     from datasets import Dataset
     from ragas import evaluate
     from ragas.metrics import Faithfulness, AnswerRelevancy, ContextRecall, ContextPrecision
@@ -425,16 +425,16 @@ def run_ragas_evaluation(questions, answers, contexts_list, ground_truths):
     from langchain_openai import ChatOpenAI
     from langchain_openai import OpenAIEmbeddings
 
-    # LLM Judge — OpenRouter qua OpenAI-compatible endpoint
+    # LLM Judge — Local vLLM qua OpenAI-compatible endpoint
     llm = LangchainLLMWrapper(
         langchain_llm=ChatOpenAI(
             model=EVAL_LLM_MODEL,
             api_key=EVAL_LLM_API_KEY,
             base_url=EVAL_LLM_HOST,
             temperature=0.0,
-            max_tokens=8192,
+            max_tokens=4096,   # local model: 4096 đủ, tiết kiệm VRAM
             max_retries=3,
-            timeout=180.0,
+            timeout=300.0,     # local inference chậm hơn cloud, tăng timeout
         ),
         bypass_n=True,
     )

@@ -20,22 +20,23 @@ tmux new-session -d -s $SESSION_NAME -n 'Ollama'
 tmux send-keys -t $SESSION_NAME:0 'ollama serve' C-m
 
 # Cửa sổ 1: vLLM — LLM Judge
-# [ACTIVE] Qwen3-8B-AWQ (reasoning, 128K context, ~6GB VRAM)
+# [ACTIVE] Qwen2.5-14B-Instruct-AWQ (chat, 32K context, ~10GB VRAM)
 tmux new-window -t $SESSION_NAME -n 'vLLM'
 tmux send-keys -t $SESSION_NAME:1 'source $HOME/miniconda/bin/activate lightrag' C-m
-# tmux send-keys -t $SESSION_NAME:1 'vllm serve Qwen/Qwen3-8B-AWQ --dtype auto --max-model-len 40960 --port 8000' C-m
-# [BACKUP] Qwen2.5-14B-Instruct-AWQ (chat, 32K context, ~10GB VRAM)
 tmux send-keys -t $SESSION_NAME:1 'vllm serve Qwen/Qwen2.5-14B-Instruct-AWQ --dtype auto --max-model-len 32768 --port 8000 --gpu-memory-utilization 0.80' C-m
+# [BACKUP] Qwen2.5-32B-Instruct-AWQ (chat, 20K context, ~22GB — cần Ollama CPU)
+# tmux send-keys -t $SESSION_NAME:1 'vllm serve Qwen/Qwen2.5-32B-Instruct-AWQ --dtype auto --max-model-len 20480 --port 8000 --gpu-memory-utilization 0.94' C-m
+# (Nếu dùng 32B: đổi ollama serve → CUDA_VISIBLE_DEVICES="" ollama serve)
 
 # Cửa sổ 2: LightRAG API Server
 tmux new-window -t $SESSION_NAME -n 'LightRAG_Server'
 tmux send-keys -t $SESSION_NAME:2 'source $HOME/miniconda/bin/activate lightrag' C-m
 tmux send-keys -t $SESSION_NAME:2 'cd /home/Graduation-Thesis && ENABLE_LLM_CACHE=false lightrag-server --workspace /home/Graduation-Thesis/medical_rag/medical_rag_v2' C-m
 
-# Cửa sổ 3: Vietnamese Reranker (GPU)
-tmux new-window -t $SESSION_NAME -n 'Reranker'
-tmux send-keys -t $SESSION_NAME:3 'source $HOME/miniconda/bin/activate lightrag' C-m
-tmux send-keys -t $SESSION_NAME:3 'infinity_emb v2 --model-id AITeamVN/Vietnamese_Reranker --port 7997 --device cuda --batch-size 8 --served-model-name vietnamese-reranker --no-bettertransformer' C-m
+# Cửa sổ 3: Vietnamese Reranker (GPU) — DISABLED (rerank turned off)
+# tmux new-window -t $SESSION_NAME -n 'Reranker'
+# tmux send-keys -t $SESSION_NAME:3 'source $HOME/miniconda/bin/activate lightrag' C-m
+# tmux send-keys -t $SESSION_NAME:3 'infinity_emb v2 --model-id AITeamVN/Vietnamese_Reranker --port 7997 --device cuda --batch-size 8 --served-model-name vietnamese-reranker --no-bettertransformer' C-m
 
 # Cửa sổ 4: Web UI (Bun + Vite)
 tmux new-window -t $SESSION_NAME -n 'WebUI'
@@ -47,7 +48,7 @@ echo "✅ Đã khởi động toàn bộ dịch vụ trong tmux session '$SESSIO
 echo "   [0] Ollama Embedding ($OLLAMA_EMBED_MODEL) -> http://localhost:11434"
 echo "   [1] vLLM Qwen2.5-14B-Instruct-AWQ  -> http://localhost:8000  (32K context, 80% GPU)"
 echo "   [2] LightRAG API Server -> http://localhost:9621"
-echo "   [3] Vietnamese Reranker (GPU) -> http://localhost:7997"
+echo "   [3] Vietnamese Reranker — DISABLED"
 echo "   [4] Web UI              -> http://localhost:5173/webui/"
 echo ""
 echo "👉 Để kiểm tra log, chạy: tmux attach -t $SESSION_NAME"
