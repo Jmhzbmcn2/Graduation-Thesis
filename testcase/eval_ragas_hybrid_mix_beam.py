@@ -43,7 +43,7 @@ LIGHTRAG_URL = "http://localhost:9621"
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_FILE  = os.path.join(_SCRIPT_DIR, "300_case_random.csv")
-OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_ragas_focused_optimize.xlsx")
+OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_ragas_focused.xlsx")
 
 # RAGAS LLM Judge — OpenRouter
 EVAL_LLM_MODEL = os.getenv("EVAL_LLM_MODEL", "qwen/qwen3-30b-a3b-instruct-2507")
@@ -55,7 +55,7 @@ EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "embeddinggemma:300m")
 EMBEDDING_HOST  = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
 
 # Số test case (None = tất cả, 3 = 3 câu đầu tiên)
-TEST_LIMIT = 50
+TEST_LIMIT = 300
 
 # Giới hạn độ dài context để tránh vượt token limit của LLM Judge
 MAX_CONTEXT_CHARS = None
@@ -68,8 +68,8 @@ BEAM_MAX_CONTEXT_CHARS = None  # None = không giới hạn (giống các mode k
 # Modes cần đánh giá
 # MODES = ["hybrid", "mix", "beam", "focused"]
 # MODES = ["hybrid","mix","focused"]  # chạy riêng 1 mode
-# MODES = ["hybrid","mix","focused"]
-MODES = ["focused"]
+MODES = ["hybrid","mix","focused"]
+# MODES = ["focused"]
 
 # Batch size cho RAGAS
 EVAL_BATCH_SIZE = 100
@@ -101,7 +101,7 @@ FOCUSED_EDGE_QUOTA = 5              # Max edges per anchor (5→8: giữ nhiều
 FOCUSED_EDGE_THRESHOLD = 0.4       # Min semantic score (0.3→0.15: nới ngưỡng, giữ edge yếu hơn)
 FOCUSED_ALPHA = 0.4                 # Weight anchor score (0.3→0.4: ưu tiên anchor mạnh)
 FOCUSED_BETA = 0.6                  # Weight edge semantic score (0.7→0.6: cân bằng lại)
-FOCUSED_MAX_EDGES = 30             # Global cap (30→50: cho phép nhiều edge hơn)
+FOCUSED_MAX_EDGES = 50             # Global cap (30→50: cho phép nhiều edge hơn)
 FOCUSED_CHUNK_TOP_K = 10            # Direct vector chunks (10→15: bù thêm context)
 
 # Các mode khác dùng top_k mặc định

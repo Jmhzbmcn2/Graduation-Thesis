@@ -15,17 +15,23 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ============================================================
-# Configuration
+# Configuration — Local LLM (vLLM)
 # ============================================================
-JUDGE_MODEL    = "qwen/qwen3-30b-a3b-instruct-2507"
-JUDGE_BASE_URL = "https://openrouter.ai/api/v1"
-JUDGE_API_KEY  = os.environ.get("OPENROUTER_API_KEY", "")
+JUDGE_MODEL    = os.environ.get("EVAL_LLM_MODEL",        "Qwen/Qwen2.5-14B-Instruct-AWQ")
+JUDGE_BASE_URL = os.environ.get("EVAL_LLM_BINDING_HOST", "http://localhost:8000/v1")
+JUDGE_API_KEY  = os.environ.get("EVAL_LLM_BINDING_API_KEY", "sk-123456")
 
-TEST_LIMIT = 300  # Limit to 20 cases
+TEST_LIMIT = 300  # Limit to 20 cases per comparison
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-INPUT_FILE   = os.path.join(_SCRIPT_DIR, "eval_ragas_beam.xlsx")
-OUTPUT_FILE  = os.path.join(_SCRIPT_DIR, "eval_lightrag_paper_results_mix_vs_beam.xlsx")
+INPUT_FILE   = os.path.join(_SCRIPT_DIR, "eval_ragas_focused.xlsx")
+OUTPUT_FILE  = os.path.join(_SCRIPT_DIR, "eval_lightrag_paper_results_focused_vs_hybrid_mix.xlsx")
+
+# Comparisons to run: (sheet_A, label_A, sheet_B, label_B)
+COMPARISONS = [
+    ("Focused", "Focused", "Hybrid", "Hybrid"),
+    ("Focused", "Focused", "Mix",    "Mix"),
+]
 
 # Prompt
 EVAL_PROMPT_TEMPLATE = """
@@ -128,7 +134,6 @@ def evaluate_pair(client: OpenAI, question: str, response_a: str, response_b: st
                 ],
                 temperature=0.0,
                 max_tokens=1024,
-                extra_headers={"HTTP-Referer": "https://github.com/vuduylinh", "X-Title": "LightRAG-Eval"}
             )
             raw_text = response.choices[0].message.content or ""
             result = extract_json(raw_text)
@@ -144,82 +149,66 @@ def evaluate_pair(client: OpenAI, question: str, response_a: str, response_b: st
                 time.sleep(3 * (attempt + 1))
     return None
 
-def map_winner(raw_winner: str, swapped: bool) -> str:
+def map_winner(raw_winner: str, swapped: bool, label_a: str, label_b: str) -> str:
+    """
+    When NOT swapped: Answer 1 = label_a, Answer 2 = label_b
+    When swapped:     Answer 1 = label_b, Answer 2 = label_a
+    """
     is_answer1 = "1" in raw_winner
     is_answer2 = "2" in raw_winner
 
     if not swapped:
         if is_answer1:
-            return "Mix"
+            return label_a
         elif is_answer2:
-            return "Beam"
+            return label_b
     else:
         if is_answer1:
-            return "Beam"
+            return label_b
         elif is_answer2:
-            return "Mix"
+            return label_a
 
     return "Unclear"
 
-def run_evaluation():
-    if sys.platform == "win32":
-        sys.stdout.reconfigure(encoding='utf-8')
+def run_single_comparison(
+    client: OpenAI,
+    df_a: pd.DataFrame,
+    df_b: pd.DataFrame,
+    label_a: str,
+    label_b: str,
+) -> tuple[list, list]:
+    """Run one comparison between df_a (label_a) and df_b (label_b).
 
-    print("=" * 70)
-    print("📊 RAG Evaluation - Group 1: LightRAG Paper Metrics")
-    print("   Comparing Mix Mode vs Beam Mode")
-    print(f"   LLM Judge: {JUDGE_MODEL} @ {JUDGE_BASE_URL}")
-    print("=" * 70)
+    Returns (results, summary_rows).
+    """
+    n = min(len(df_a), len(df_b), TEST_LIMIT)
+    print(f"\n{'─' * 70}")
+    print(f"🔬 Comparison: {label_a} vs {label_b}  ({n} questions)")
+    print(f"{'─' * 70}")
 
-    if not JUDGE_API_KEY:
-        print("Vui lòng thiết lập OPENROUTER_API_KEY trong file .env")
-        return
-
-    print(f"\n📂 Reading data from: {INPUT_FILE}")
-    try:
-        all_sheets = pd.read_excel(INPUT_FILE, sheet_name=None)
-    except Exception as e:
-        print(f"Lỗi đọc file {INPUT_FILE}: {e}")
-        return
-
-    if "Mix" not in all_sheets or "Beam" not in all_sheets:
-        print("Lỗi: Không tìm thấy sheet 'Mix' hoặc 'Beam' trong file Excel.")
-        return
-
-    df_mix = all_sheets["Mix"].copy()
-    df_beam = all_sheets["Beam"].copy()
-
-    # Get up to 20 cases
-    df_mix = df_mix.head(TEST_LIMIT)
-    df_beam = df_beam.head(TEST_LIMIT)
-
-    print(f"   Tìm thấy {len(df_mix)} câu trong sheet Mix và {len(df_beam)} câu trong sheet Beam")
-
-    client = OpenAI(api_key=JUDGE_API_KEY, base_url=JUDGE_BASE_URL)
     random.seed(42)
-
     results = []
-    start_time = time.time()
     swap_count = 0
+    start_time = time.time()
 
-    for idx in range(min(len(df_mix), len(df_beam))):
-        question = str(df_mix.iloc[idx].get("user_input", ""))
-        mix_resp = str(df_mix.iloc[idx].get("response", ""))
-        beam_resp = str(df_beam.iloc[idx].get("response", ""))
+    for idx in range(n):
+        question  = str(df_a.iloc[idx].get("user_input", ""))
+        resp_a    = str(df_a.iloc[idx].get("response",   ""))
+        resp_b    = str(df_b.iloc[idx].get("response",   ""))
 
         if not question or question == "nan":
             continue
 
         swapped = random.random() < 0.5
         if swapped:
-            answer1, answer2 = beam_resp, mix_resp
+            answer1, answer2 = resp_b, resp_a
             swap_count += 1
         else:
-            answer1, answer2 = mix_resp, beam_resp
+            answer1, answer2 = resp_a, resp_b
 
-        print(f"\n🔍 [{idx+1}/{TEST_LIMIT}] {question[:60]}... {'[SWAPPED]' if swapped else ''}")
+        print(f"\n🔍 [{idx+1}/{n}] {question[:60]}... {'[SWAPPED]' if swapped else ''}")
 
-        eval_result = evaluate_pair(client, question, answer1, answer2, idx+1)
+        eval_result = evaluate_pair(client, question, answer1, answer2, idx + 1)
 
         if eval_result:
             comp_raw    = eval_result.get("Comprehensiveness", {}).get("Winner", "N/A")
@@ -228,25 +217,25 @@ def run_evaluation():
             dir_raw     = eval_result.get("Directness",        {}).get("Winner", "N/A")
             overall_raw = eval_result.get("Overall Winner",    {}).get("Winner", "N/A")
 
-            comp_winner    = map_winner(comp_raw,    swapped)
-            div_winner     = map_winner(div_raw,     swapped)
-            emp_winner     = map_winner(emp_raw,     swapped)
-            dir_winner     = map_winner(dir_raw,     swapped)
-            overall_winner = map_winner(overall_raw, swapped)
+            comp_winner    = map_winner(comp_raw,    swapped, label_a, label_b)
+            div_winner     = map_winner(div_raw,     swapped, label_a, label_b)
+            emp_winner     = map_winner(emp_raw,     swapped, label_a, label_b)
+            dir_winner     = map_winner(dir_raw,     swapped, label_a, label_b)
+            overall_winner = map_winner(overall_raw, swapped, label_a, label_b)
 
             results.append({
-                "question":           question,
-                "swapped":            swapped,
-                "comp_raw":           comp_raw,    "comp_winner":    comp_winner,
-                "comp_explanation":   eval_result.get("Comprehensiveness", {}).get("Explanation", ""),
-                "div_raw":            div_raw,     "div_winner":     div_winner,
-                "div_explanation":    eval_result.get("Diversity",         {}).get("Explanation", ""),
-                "emp_raw":            emp_raw,     "emp_winner":     emp_winner,
-                "emp_explanation":    eval_result.get("Empowerment",       {}).get("Explanation", ""),
-                "dir_raw":            dir_raw,     "dir_winner":     dir_winner,
-                "dir_explanation":    eval_result.get("Directness",        {}).get("Explanation", ""),
-                "overall_raw":        overall_raw, "overall_winner": overall_winner,
-                "overall_explanation":eval_result.get("Overall Winner",    {}).get("Explanation", ""),
+                "question":            question,
+                "swapped":             swapped,
+                "comp_raw":            comp_raw,    "comp_winner":    comp_winner,
+                "comp_explanation":    eval_result.get("Comprehensiveness", {}).get("Explanation", ""),
+                "div_raw":             div_raw,     "div_winner":     div_winner,
+                "div_explanation":     eval_result.get("Diversity",         {}).get("Explanation", ""),
+                "emp_raw":             emp_raw,     "emp_winner":     emp_winner,
+                "emp_explanation":     eval_result.get("Empowerment",       {}).get("Explanation", ""),
+                "dir_raw":             dir_raw,     "dir_winner":     dir_winner,
+                "dir_explanation":     eval_result.get("Directness",        {}).get("Explanation", ""),
+                "overall_raw":         overall_raw, "overall_winner": overall_winner,
+                "overall_explanation": eval_result.get("Overall Winner",    {}).get("Explanation", ""),
             })
 
             print(f"   ✅ Comp: {comp_winner} | Div: {div_winner} | Emp: {emp_winner} | Dir: {dir_winner} | Overall: {overall_winner}")
@@ -266,15 +255,15 @@ def run_evaluation():
     elapsed = time.time() - start_time
     results_df = pd.DataFrame(results)
 
+    # ── Print per-comparison summary ─────────────────────────────────────
     print(f"\n{'=' * 70}")
-    print(f"📊 EVALUATION RESULTS SUMMARY")
+    print(f"📊 SUMMARY: {label_a} vs {label_b}")
     print(f"{'=' * 70}")
-    print(f"Total evaluated: {len(results_df)}")
-    print(f"Swapped positions: {swap_count}/{len(results_df)} ({swap_count/max(len(results_df),1)*100:.0f}%)")
-    print(f"Elapsed time: {elapsed:.1f}s ({elapsed/max(len(results_df),1):.1f}s per question)")
-
-    print(f"\n{'Metric':<20} | {'Mix Wins':<14} | {'Beam Wins':<14} | {'Unclear':<10}")
-    print("-" * 65)
+    print(f"Total evaluated : {len(results_df)}")
+    print(f"Swapped         : {swap_count}/{len(results_df)} ({swap_count/max(len(results_df),1)*100:.0f}%)")
+    print(f"Elapsed         : {elapsed:.1f}s ({elapsed/max(len(results_df),1):.1f}s/question)")
+    print(f"\n{'Metric':<20} | {label_a+' Wins':<16} | {label_b+' Wins':<16} | {'Unclear':<10}")
+    print("-" * 70)
 
     metrics = [
         ("comp_winner",    "Comprehensiveness"),
@@ -286,37 +275,93 @@ def run_evaluation():
 
     summary_rows = []
     for col, name in metrics:
-        mix_wins    = int((results_df[col] == "Mix").sum())
-        beam_wins   = int((results_df[col] == "Beam").sum())
-        unclear     = int(len(results_df) - mix_wins - beam_wins)
-        total_valid = mix_wins + beam_wins
-        beam_rate    = round(beam_wins / total_valid * 100, 1) if total_valid > 0 else 0
+        a_wins      = int((results_df[col] == label_a).sum())
+        b_wins      = int((results_df[col] == label_b).sum())
+        unclear     = int(len(results_df) - a_wins - b_wins)
+        total_valid = a_wins + b_wins
+        a_rate      = round(a_wins / total_valid * 100, 1) if total_valid > 0 else 0
 
-        print(f"{name:<20} | {mix_wins:<14} | {beam_wins:<14} | {unclear:<10}")
+        print(f"{name:<20} | {a_wins:<16} | {b_wins:<16} | {unclear:<10}")
         summary_rows.append({
-            "Metric":        name,
-            "Mix_Wins":      mix_wins,
-            "Beam_Wins":     beam_wins,
-            "Unclear":       unclear,
-            "Beam_Win_Rate_%": beam_rate,
+            "Metric":              name,
+            f"{label_a}_Wins":    a_wins,
+            f"{label_b}_Wins":    b_wins,
+            "Unclear":            unclear,
+            f"{label_a}_Win_Rate_%": a_rate,
         })
 
     print(f"\n{'=' * 70}")
+    return results, summary_rows
 
+
+def run_evaluation():
+    if sys.platform == "win32":
+        sys.stdout.reconfigure(encoding='utf-8')
+
+    print("=" * 70)
+    print("📊 RAG Evaluation - LightRAG Paper Metrics")
+    print("   Focused vs Hybrid  |  Focused vs Mix")
+    print(f"   LLM Judge: {JUDGE_MODEL} @ {JUDGE_BASE_URL}")
+    print("=" * 70)
+
+    if not JUDGE_API_KEY:
+        print("Vui lòng thiết lập EVAL_LLM_BINDING_API_KEY trong file .env")
+        return
+
+    print(f"\n📂 Reading data from: {INPUT_FILE}")
+    try:
+        all_sheets = pd.read_excel(INPUT_FILE, sheet_name=None)
+    except Exception as e:
+        print(f"Lỗi đọc file {INPUT_FILE}: {e}")
+        return
+
+    required = {"Hybrid", "Mix", "Focused"}
+    missing  = required - set(all_sheets.keys())
+    if missing:
+        print(f"Lỗi: Không tìm thấy sheet(s): {missing}")
+        return
+
+    df_hybrid  = all_sheets["Hybrid"].head(TEST_LIMIT).copy()
+    df_mix     = all_sheets["Mix"].head(TEST_LIMIT).copy()
+    df_focused = all_sheets["Focused"].head(TEST_LIMIT).copy()
+
+    print(f"   Focused : {len(df_focused)} rows")
+    print(f"   Hybrid  : {len(df_hybrid)} rows")
+    print(f"   Mix     : {len(df_mix)} rows")
+
+    client = OpenAI(api_key=JUDGE_API_KEY, base_url=JUDGE_BASE_URL)
+
+    # ── Run both comparisons ─────────────────────────────────────────────
+    fh_results, fh_summary = run_single_comparison(
+        client, df_focused, df_hybrid, "Focused", "Hybrid"
+    )
+    fm_results, fm_summary = run_single_comparison(
+        client, df_focused, df_mix, "Focused", "Mix"
+    )
+
+    # ── Save results ─────────────────────────────────────────────────────
     with pd.ExcelWriter(OUTPUT_FILE, engine='openpyxl') as writer:
-        pd.DataFrame(summary_rows).to_excel(writer, sheet_name='Summary', index=False)
-        results_df.to_excel(writer, sheet_name='Detail', index=False)
-        
-        # Thêm dữ liệu gốc
-        df_combined = pd.DataFrame({
-            "question": df_mix["user_input"].values[:len(results_df)],
-            "mix_response": df_mix["response"].values[:len(results_df)],
-            "beam_response": df_beam["response"].values[:len(results_df)],
+        # Focused vs Hybrid
+        pd.DataFrame(fh_summary).to_excel(writer, sheet_name='Summary_Focused_vs_Hybrid', index=False)
+        pd.DataFrame(fh_results).to_excel(writer, sheet_name='Detail_Focused_vs_Hybrid',  index=False)
+
+        # Focused vs Mix
+        pd.DataFrame(fm_summary).to_excel(writer, sheet_name='Summary_Focused_vs_Mix',    index=False)
+        pd.DataFrame(fm_results).to_excel(writer, sheet_name='Detail_Focused_vs_Mix',     index=False)
+
+        # Original data side-by-side
+        n = min(len(df_focused), len(df_hybrid), len(df_mixed := df_mix), TEST_LIMIT)
+        df_orig = pd.DataFrame({
+            "question":        df_focused["user_input"].values[:n],
+            "focused_response": df_focused["response"].values[:n],
+            "hybrid_response":  df_hybrid["response"].values[:n],
+            "mix_response":     df_mix["response"].values[:n],
         })
-        df_combined.to_excel(writer, sheet_name='Original_Data', index=False)
+        df_orig.to_excel(writer, sheet_name='Original_Data', index=False)
 
     print(f"\n💾 Results saved to: {OUTPUT_FILE}")
     print(f"\n✅ Evaluation complete!")
+
 
 if __name__ == "__main__":
     run_evaluation()
