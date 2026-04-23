@@ -43,7 +43,7 @@ LIGHTRAG_URL = "http://localhost:9621"
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_FILE  = os.path.join(_SCRIPT_DIR, "300_case_random.csv")
-OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_ragas_focused.xlsx")
+OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_ragas_focused_optimize.xlsx")
 
 # RAGAS LLM Judge — OpenRouter
 EVAL_LLM_MODEL = os.getenv("EVAL_LLM_MODEL", "qwen/qwen3-30b-a3b-instruct-2507")
@@ -55,7 +55,7 @@ EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "embeddinggemma:300m")
 EMBEDDING_HOST  = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
 
 # Số test case (None = tất cả, 3 = 3 câu đầu tiên)
-TEST_LIMIT = 5
+TEST_LIMIT = 50
 
 # Giới hạn độ dài context để tránh vượt token limit của LLM Judge
 MAX_CONTEXT_CHARS = None
@@ -68,7 +68,9 @@ BEAM_MAX_CONTEXT_CHARS = None  # None = không giới hạn (giống các mode k
 # Modes cần đánh giá
 # MODES = ["hybrid", "mix", "beam", "focused"]
 # MODES = ["hybrid","mix","focused"]  # chạy riêng 1 mode
+# MODES = ["hybrid","mix","focused"]
 MODES = ["focused"]
+
 # Batch size cho RAGAS
 EVAL_BATCH_SIZE = 100
 
@@ -89,18 +91,18 @@ RELATED_CHUNK_NUMBER = 10     # từ 5 → giảm chunk kèm entity
 BEAM_ENABLE_RERANK = True    # Bật rerank sau beam search (chunk-level)
 BEAM_ENABLE_ANCHOR_RERANK = True  # Bật rerank ở bước anchor entity selection
 
-# Focused search: per-anchor quota + semantic threshold
+# Focused search: per-anchor quota + semantic threshold + global search
 # • focused_edge_quota: mỗi anchor chỉ đóng góp tối đa m cạnh liên quan nhất
 # • focused_edge_threshold: ngưỡng cosine tối thiểu giữa query và edge
 # • focused_alpha/beta: trọng số joint scoring Score(e) = α·Sim(Q,A) + β·Sim(Q,e)
 # • focused_max_edges: tổng số cạnh tối đa sau khi gộp pool
-FOCUSED_TOP_K = 10                  # Số anchor nodes
-FOCUSED_EDGE_QUOTA = 5              # Max edges per anchor
-FOCUSED_EDGE_THRESHOLD = 0.3        # Min semantic score để giữ edge
-FOCUSED_ALPHA = 0.3                 # Weight anchor score
-FOCUSED_BETA = 0.7                  # Weight edge semantic score
-FOCUSED_MAX_EDGES = 30              # Global cap
-FOCUSED_CHUNK_TOP_K = 10            # Direct vector chunks
+FOCUSED_TOP_K = 10                 # Số anchor nodes
+FOCUSED_EDGE_QUOTA = 5              # Max edges per anchor (5→8: giữ nhiều edge hơn)
+FOCUSED_EDGE_THRESHOLD = 0.4       # Min semantic score (0.3→0.15: nới ngưỡng, giữ edge yếu hơn)
+FOCUSED_ALPHA = 0.4                 # Weight anchor score (0.3→0.4: ưu tiên anchor mạnh)
+FOCUSED_BETA = 0.6                  # Weight edge semantic score (0.7→0.6: cân bằng lại)
+FOCUSED_MAX_EDGES = 30             # Global cap (30→50: cho phép nhiều edge hơn)
+FOCUSED_CHUNK_TOP_K = 10            # Direct vector chunks (10→15: bù thêm context)
 
 # Các mode khác dùng top_k mặc định
 DEFAULT_TOP_K = 10

@@ -30,7 +30,7 @@ tmux send-keys -t $SESSION_NAME:1 'vllm serve Qwen/Qwen2.5-14B-Instruct-AWQ --dt
 # Cửa sổ 2: LightRAG API Server
 tmux new-window -t $SESSION_NAME -n 'LightRAG_Server'
 tmux send-keys -t $SESSION_NAME:2 'source $HOME/miniconda/bin/activate lightrag' C-m
-tmux send-keys -t $SESSION_NAME:2 'cd /home/Graduation-Thesis && ENABLE_LLM_CACHE=false lightrag-server --workspace ./medical_rag_v2' C-m
+tmux send-keys -t $SESSION_NAME:2 'cd /home/Graduation-Thesis && ENABLE_LLM_CACHE=false lightrag-server --workspace /home/Graduation-Thesis/medical_rag/medical_rag_v2' C-m
 
 # Cửa sổ 3: Vietnamese Reranker (GPU)
 tmux new-window -t $SESSION_NAME -n 'Reranker'

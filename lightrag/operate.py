@@ -4272,10 +4272,12 @@ async def _perform_kg_search(
         return beam_result
 
     elif query_param.mode == "focused":
-        # === Focused Mode: 1-hop semantic edge scoring with per-anchor quota ===
-        # Uses VDB anchor retrieval → 1-hop edge expansion → semantic scoring → quota filtering
+        # === Focused Mode: 1-hop semantic edge scoring + global search ===
+        # Local: VDB anchor retrieval → 1-hop edge expansion → semantic scoring → quota filtering
+        # Global: hl_keywords → relationship VDB search (same as hybrid/mix)
+        # Combined via round-robin merge for balanced local precision + global coverage
 
-        # Step 1: Get anchor nodes with cosine scores (no edge retrieval)
+        # Step 1: Get anchor nodes with cosine scores (local, no edge retrieval)
         if len(ll_keywords) > 0:
             anchor_node_datas, anchor_scores = await _get_anchor_nodes(
                 ll_keywords,
@@ -4303,6 +4305,60 @@ async def _perform_kg_search(
                         "skipping semantic edge scoring"
                     )
 
+        # Step 5b: Global search from hl_keywords (relationship patterns)
+        if len(hl_keywords) > 0:
+            global_relations, global_entities = await _get_edge_data(
+                hl_keywords,
+                knowledge_graph_inst,
+                relationships_vdb,
+                query_param,
+            )
+
+        # Step 5c: Round-robin merge local + global (same strategy as hybrid/mix)
+        final_entities = []
+        seen_entities = set()
+        max_len = max(len(local_entities), len(global_entities))
+        for i in range(max_len):
+            if i < len(local_entities):
+                entity = local_entities[i]
+                entity_name = entity.get("entity_name")
+                if entity_name and entity_name not in seen_entities:
+                    final_entities.append(entity)
+                    seen_entities.add(entity_name)
+            if i < len(global_entities):
+                entity = global_entities[i]
+                entity_name = entity.get("entity_name")
+                if entity_name and entity_name not in seen_entities:
+                    final_entities.append(entity)
+                    seen_entities.add(entity_name)
+
+        final_relations = []
+        seen_relations = set()
+        max_len = max(len(local_relations), len(global_relations))
+        for i in range(max_len):
+            if i < len(local_relations):
+                relation = local_relations[i]
+                if "src_tgt" in relation:
+                    rel_key = tuple(sorted(relation["src_tgt"]))
+                else:
+                    rel_key = tuple(
+                        sorted([relation.get("src_id"), relation.get("tgt_id")])
+                    )
+                if rel_key not in seen_relations:
+                    final_relations.append(relation)
+                    seen_relations.add(rel_key)
+            if i < len(global_relations):
+                relation = global_relations[i]
+                if "src_tgt" in relation:
+                    rel_key = tuple(sorted(relation["src_tgt"]))
+                else:
+                    rel_key = tuple(
+                        sorted([relation.get("src_id"), relation.get("tgt_id")])
+                    )
+                if rel_key not in seen_relations:
+                    final_relations.append(relation)
+                    seen_relations.add(rel_key)
+
         # Step 6: Vector chunks (direct semantic search)
         if chunks_vdb:
             vector_chunks = await _get_vector_context(
@@ -4321,13 +4377,12 @@ async def _perform_kg_search(
                         "order": i + 1,
                     }
 
-        # For focused mode, use local results directly (no global search)
-        final_entities = local_entities
-        final_relations = local_relations
-
         logger.info(
-            f"Focused search results: {len(final_entities)} entities, "
-            f"{len(final_relations)} relations, {len(vector_chunks)} vector chunks"
+            f"Focused search results: {len(final_entities)} entities "
+            f"(local:{len(local_entities)}, global:{len(global_entities)}), "
+            f"{len(final_relations)} relations "
+            f"(local:{len(local_relations)}, global:{len(global_relations)}), "
+            f"{len(vector_chunks)} vector chunks"
         )
 
         return {
@@ -4337,6 +4392,7 @@ async def _perform_kg_search(
             "chunk_tracking": chunk_tracking,
             "query_embedding": query_embedding,
         }
+
 
     else:  # hybrid or mix mode
         if len(ll_keywords) > 0:

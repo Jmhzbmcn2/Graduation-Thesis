@@ -21,7 +21,7 @@ JUDGE_MODEL    = "qwen/qwen3-30b-a3b-instruct-2507"
 JUDGE_BASE_URL = "https://openrouter.ai/api/v1"
 JUDGE_API_KEY  = os.environ.get("OPENROUTER_API_KEY", "")
 
-TEST_LIMIT = 20  # Limit to 20 cases
+TEST_LIMIT = 300  # Limit to 20 cases
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_FILE   = os.path.join(_SCRIPT_DIR, "eval_ragas_beam.xlsx")
