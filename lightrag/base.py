@@ -85,7 +85,7 @@ T = TypeVar("T")
 class QueryParam:
     """Configuration parameters for query execution in LightRAG."""
 
-    mode: Literal["local", "global", "hybrid", "naive", "mix", "bypass", "beam", "focused"] = "mix"
+    mode: Literal["local", "global", "hybrid", "naive", "mix", "bypass", "beam", "focused", "ivf_local", "ivf_focused"] = "mix"
     """Specifies the retrieval mode:
     - "local": Focuses on context-dependent information.
     - "global": Utilizes global knowledge.
@@ -94,6 +94,8 @@ class QueryParam:
     - "mix": Integrates knowledge graph and vector retrieval.
     - "focused": Integrates knowledge graph and vector retrieval.
     - "beam": Semantic Beam Search with Adaptive Pruning (KLTN improvement).
+    - "ivf_local": IVF-accelerated local search using KMeans clustering (KLTN improvement).
+    - "ivf_focused": IVF-accelerated focused search using KMeans clustering (KLTN improvement).
     """
 
     only_need_context: bool = False

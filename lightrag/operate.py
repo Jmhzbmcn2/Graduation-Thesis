@@ -1,4 +1,5 @@
 from __future__ import annotations
+import os
 import math
 from functools import partial
 from pathlib import Path
@@ -3131,11 +3132,33 @@ async def kg_query(
     if context_result.raw_data is not None:
         if "metadata" not in context_result.raw_data:
             context_result.raw_data["metadata"] = {}
+        comparisons = 0
+        total = 0
+        if query_param.mode == "ivf_focused":
+            # read from global cache
+            from lightrag.operate import _ivf_index_cache
+            cache_key = global_config.get("working_dir", ".") if global_config else "."
+            if cache_key in _ivf_index_cache:
+                ivf_idx = _ivf_index_cache[cache_key]
+                if hasattr(ivf_idx, "last_search_stats"):
+                    comparisons = ivf_idx.last_search_stats.get("candidates", 0) + ivf_idx.last_search_stats.get("n_clusters", 0)
+                    total = ivf_idx.last_search_stats.get("total", 0)
+        elif query_param.mode == "focused":
+            try:
+                client = getattr(entities_vdb, "_client", None)
+                if client is not None:
+                    total = len(client)
+            except Exception:
+                pass
+            comparisons = total
+
         context_result.raw_data["metadata"]["timing"] = {
             "keyword_extraction_ms": round((_t1 - _t0) * 1000, 2),
             "graph_search_ms": round(_graph_only_ms, 2),   # Graph thuần, không bao gồm rerank
             "rerank_ms": round(_rerank_ms, 2),              # Rerank riêng
             "retrieval_ms": round(retrieval_ms, 2),
+            "vector_comparisons": comparisons,
+            "total_vectors": total,
         }
 
     # Return different content based on query parameters
@@ -4134,6 +4157,18 @@ async def _perform_kg_search(
             query_param,
         )
 
+    elif query_param.mode == "ivf_local" and len(ll_keywords) > 0:
+        # === IVF-accelerated Local Search (KLTN Improvement) ===
+        # Uses KMeans clustering to narrow entity search space from O(N) to O(C + M).
+        local_entities, local_relations = await _get_node_data_ivf(
+            ll_keywords,
+            knowledge_graph_inst,
+            entities_vdb,
+            query_param,
+            query_embedding=query_embedding,
+            global_config=global_config,
+        )
+
     elif query_param.mode == "global" and len(hl_keywords) > 0:
         global_relations, global_entities = await _get_edge_data(
             hl_keywords,
@@ -4271,7 +4306,7 @@ async def _perform_kg_search(
 
         return beam_result
 
-    elif query_param.mode == "focused":
+    elif query_param.mode in ["focused", "ivf_focused"]:
         # === Focused Mode: 1-hop semantic edge scoring + global search ===
         # Local: VDB anchor retrieval → 1-hop edge expansion → semantic scoring → quota filtering
         # Global: hl_keywords → relationship VDB search (same as hybrid/mix)
@@ -4279,12 +4314,24 @@ async def _perform_kg_search(
 
         # Step 1: Get anchor nodes with cosine scores (local, no edge retrieval)
         if len(ll_keywords) > 0:
-            anchor_node_datas, anchor_scores = await _get_anchor_nodes(
-                ll_keywords,
-                knowledge_graph_inst,
-                entities_vdb,
-                query_param,
-            )
+            if query_param.mode == "ivf_focused":
+                anchor_node_datas, anchor_scores = await _get_anchor_nodes_ivf(
+                    ll_keywords,
+                    knowledge_graph_inst,
+                    entities_vdb,
+                    query_param,
+                    query_embedding=query_embedding,
+                    global_config=global_config,
+                )
+            else:
+                anchor_node_datas, anchor_scores = await _get_anchor_nodes(
+                    ll_keywords,
+                    knowledge_graph_inst,
+                    entities_vdb,
+                    query_param,
+                    global_config=global_config,
+                    text_chunks_db=text_chunks_db,
+                )
 
             if anchor_node_datas and query_embedding is not None:
                 # Step 2-5: Per-anchor quota + semantic edge scoring
@@ -5147,6 +5194,132 @@ async def _get_node_data(
     return node_datas, use_relations
 
 
+# ── IVF Entity Index Cache (module-level singleton) ──
+_ivf_index_cache: dict[str, Any] = {}
+
+
+async def _get_node_data_ivf(
+    query: str,
+    knowledge_graph_inst: BaseGraphStorage,
+    entities_vdb: BaseVectorStorage,
+    query_param: QueryParam,
+    query_embedding=None,
+    global_config: dict = None,
+):
+    """IVF-accelerated version of _get_node_data.
+
+    Uses KMeans clustering to narrow the entity search space before
+    performing cosine similarity comparison. Falls back to exact search
+    if the IVF index is not ready or the dataset is too small.
+
+    The IVF index is built lazily on first call and cached per working_dir.
+    """
+    from lightrag.kg.ivf_entity_index import IVFEntityIndex
+
+    _s = time.perf_counter()
+
+    # ── Lazy-initialize IVF index ──
+    working_dir = global_config.get("working_dir", ".") if global_config else "."
+    cache_key = working_dir
+
+    if cache_key not in _ivf_index_cache:
+        # Read IVF config from global_config
+        ivf_kwargs = {}
+        if global_config:
+            vdb_kwargs = global_config.get("vector_db_storage_cls_kwargs", {})
+            ivf_kwargs = {
+                "n_clusters": vdb_kwargs.get("ivf_n_clusters", 0),
+                "n_probe": vdb_kwargs.get("ivf_n_probe", 5),
+                "max_n_probe": vdb_kwargs.get("ivf_max_n_probe", 20),
+                "cosine_threshold": vdb_kwargs.get(
+                    "cosine_better_than_threshold", 0.2
+                ),
+                "min_vectors_for_index": vdb_kwargs.get(
+                    "ivf_min_vectors_for_index", 1000
+                ),
+                "random_state": vdb_kwargs.get("ivf_random_state", 42),
+                "batch_size": vdb_kwargs.get("ivf_batch_size", 4096),
+            }
+
+        ivf_index = IVFEntityIndex(working_dir=working_dir, **ivf_kwargs)
+
+        # Try loading from disk first
+        if not ivf_index.load():
+            # Build fresh index from NanoVectorDB
+            logger.info("[IVF] Building fresh index from entities_vdb …")
+            await ivf_index.build_index_from_storage(entities_vdb)
+            if ivf_index.is_ready:
+                ivf_index.save()
+
+        _ivf_index_cache[cache_key] = ivf_index
+    else:
+        ivf_index = _ivf_index_cache[cache_key]
+
+    if not ivf_index.is_ready:
+        logger.warning(
+            "[IVF] Index not ready – falling back to exact _get_node_data."
+        )
+        return await _get_node_data(
+            query, knowledge_graph_inst, entities_vdb, query_param
+        )
+
+    # ── Query IVF for anchor entities ──
+    logger.info(
+        f"[IVF] Query anchors: {query} "
+        f"(top_k:{query_param.top_k}, ivf={ivf_index.is_ivf_active})"
+    )
+
+    results = await ivf_index.query_anchors(
+        query=query,
+        query_embedding=query_embedding,
+        embedding_func=entities_vdb.embedding_func,
+        top_k=query_param.top_k,
+    )
+
+    _ivf_time = time.perf_counter() - _s
+    logger.info(f"[IVF] Anchor retrieval took {_ivf_time:.3f}s")
+
+    if not results:
+        return [], []
+
+    # ── Map VDB results to graph node data (same logic as _get_node_data) ──
+    node_ids = [r["entity_name"] for r in results]
+
+    nodes_dict, degrees_dict = await asyncio.gather(
+        knowledge_graph_inst.get_nodes_batch(node_ids),
+        knowledge_graph_inst.node_degrees_batch(node_ids),
+    )
+
+    node_datas = [nodes_dict.get(nid) for nid in node_ids]
+    node_degrees = [degrees_dict.get(nid, 0) for nid in node_ids]
+
+    if not all(n is not None for n in node_datas):
+        logger.warning("[IVF] Some nodes are missing, maybe the storage is damaged")
+
+    node_datas = [
+        {
+            **n,
+            "entity_name": k["entity_name"],
+            "rank": d,
+            "created_at": k.get("created_at"),
+        }
+        for k, n, d in zip(results, node_datas, node_degrees)
+        if n is not None
+    ]
+
+    use_relations = await _find_most_related_edges_from_entities(
+        node_datas,
+        query_param,
+        knowledge_graph_inst,
+    )
+
+    logger.info(
+        f"[IVF] Local query: {len(node_datas)} entities, "
+        f"{len(use_relations)} relations"
+    )
+
+    return node_datas, use_relations
+
 async def _find_most_related_edges_from_entities(
     node_datas: list[dict],
     query_param: QueryParam,
@@ -5208,26 +5381,215 @@ async def _get_anchor_nodes(
     knowledge_graph_inst: BaseGraphStorage,
     entities_vdb: BaseVectorStorage,
     query_param: QueryParam,
+    global_config: dict = None,
+    text_chunks_db=None,
 ) -> tuple[list[dict], dict[str, float]]:
     """
-    Retrieve anchor nodes from VDB without fetching edges.
+    Retrieve anchor nodes using Cascade Lexical-Semantic Retrieval.
+
+    Architecture (Dual-VectorDB & Cascade Filter):
+        Stage 1 (Lexical Filter): BM25 trên entity_name → Top N candidates.
+        Stage 2 (Semantic Re-ranking): Cosine similarity giữa Vector(query)
+            và Vector(entity_name) từ DB phụ (name-only) → Top K anchors.
+        Fallback: Nếu BM25 hoặc Name-only DB không khả dụng, sử dụng
+            phương pháp VDB gốc (Vector Search trên Name+Description).
 
     Returns:
         tuple: (node_datas, anchor_scores)
             - node_datas: list of node data dicts with entity_name, rank, etc.
-            - anchor_scores: dict mapping entity_name to VDB cosine similarity score
+            - anchor_scores: dict mapping entity_name to cosine similarity score
     """
+    CASCADE_BM25_PER_KW = 20  # Số ứng viên BM25 cho MỖI keyword
+
+    # ─── Bước 1: Tách chuỗi keywords thành mảng riêng lẻ ───
+    kw_list = [k.strip() for k in query.split(",") if len(k.strip()) > 1]
+    if not kw_list:
+        kw_list = [query]  # Fallback: dùng nguyên chuỗi nếu không tách được
+
     logger.info(
-        f"Focused anchor query: {query} (top_k:{query_param.top_k}, "
+        f"Focused anchor query (Cascade RR): {len(kw_list)} keywords: "
+        f"{kw_list} (top_k:{query_param.top_k}, "
         f"cosine:{entities_vdb.cosine_better_than_threshold})"
     )
 
-    results = await entities_vdb.query(query, top_k=query_param.top_k)
+    # ─── Try Cascade Retrieval ───
+    cascade_results = None
 
-    if not results:
-        return [], {}
+    try:
+        # Stage 1: BM25 Per-Keyword Lexical Filter (Round-Robin thu thập)
+        from lightrag.bm25_storage import get_bm25_storage_from_config
 
-    node_ids = [r["entity_name"] for r in results]
+        bm25_storage = None
+        if global_config and text_chunks_db:
+            bm25_storage = get_bm25_storage_from_config(
+                global_config, text_chunks_db.workspace
+            )
+
+        if bm25_storage:
+            # Thu thập ứng viên BM25 cho TỪNG keyword, gộp lại bỏ trùng
+            bm25_pool = {}  # entity_name → max bm25_score
+            for kw in kw_list:
+                kw_candidates = bm25_storage.query_entities(
+                    kw, top_k=CASCADE_BM25_PER_KW
+                )
+                for c in kw_candidates:
+                    ename = c["entity_name"]
+                    bm25_pool[ename] = max(
+                        bm25_pool.get(ename, 0.0), c["bm25_score"]
+                    )
+
+            candidate_names = list(bm25_pool.keys())
+
+            if candidate_names:
+                logger.info(
+                    f"Cascade Stage 1 (BM25 RR): {len(candidate_names)} unique "
+                    f"candidates from {len(kw_list)} keywords "
+                    f"({CASCADE_BM25_PER_KW} per kw)"
+                )
+
+                # Stage 2: Multi-Vector Semantic Re-ranking on Name-only vectors
+                import json as _json
+                import base64 as _base64
+                import zlib as _zlib
+
+                working_dir = global_config.get("working_dir", ".")
+                name_only_vdb_path = os.path.join(
+                    working_dir, "vdb_entities_name_only.json"
+                )
+
+                if os.path.exists(name_only_vdb_path):
+                    # Load Name-only DB (cached in module-level dict)
+                    if not hasattr(_get_anchor_nodes, "_name_vdb_cache"):
+                        _get_anchor_nodes._name_vdb_cache = {}
+
+                    if name_only_vdb_path not in _get_anchor_nodes._name_vdb_cache:
+                        logger.info(
+                            f"Loading Name-only VDB from {name_only_vdb_path}..."
+                        )
+                        with open(name_only_vdb_path, "r", encoding="utf-8") as f:
+                            name_vdb_data = _json.load(f)
+
+                        items = name_vdb_data.get("data", [])
+                        name_vector_map = {}
+                        for item in items:
+                            ename = item.get("entity_name", "")
+                            vec_encoded = item.get("vector", "")
+                            if ename and vec_encoded:
+                                decoded = _base64.b64decode(vec_encoded)
+                                decompressed = _zlib.decompress(decoded)
+                                vec = np.frombuffer(
+                                    decompressed, dtype=np.float16
+                                ).astype(np.float32)
+                                name_vector_map[ename] = vec
+
+                        _get_anchor_nodes._name_vdb_cache[
+                            name_only_vdb_path
+                        ] = name_vector_map
+                        logger.info(
+                            f"Name-only VDB cached: {len(name_vector_map)} vectors"
+                        )
+
+                    name_vector_map = _get_anchor_nodes._name_vdb_cache[
+                        name_only_vdb_path
+                    ]
+
+                    # ─── Bước 3: Batch Embedding cho tất cả keywords (1 API call) ───
+                    kw_embs = await entities_vdb.embedding_func(
+                        kw_list, _priority=5
+                    )
+
+                    # ─── Bước 4: Chấm điểm cục bộ theo từng keyword ───
+                    # Tính cosine similarity helper
+                    def _cosine_sim(vec_a, vec_b):
+                        dot = np.dot(vec_a, vec_b)
+                        norm_a = np.linalg.norm(vec_a)
+                        norm_b = np.linalg.norm(vec_b)
+                        if norm_a > 0 and norm_b > 0:
+                            return float(dot / (norm_a * norm_b))
+                        return 0.0
+
+                    # Tạo bảng xếp hạng riêng cho TỪNG keyword
+                    kw_rankings = []  # list of list[(entity_name, cosine_score)]
+                    for kw_idx, kw_vec in enumerate(kw_embs):
+                        kw_scores = []
+                        for cname in candidate_names:
+                            if cname in name_vector_map:
+                                sim = _cosine_sim(kw_vec, name_vector_map[cname])
+                                kw_scores.append((cname, sim))
+                        kw_scores.sort(key=lambda x: x[1], reverse=True)
+                        kw_rankings.append(kw_scores)
+
+                    # ─── Bước 5: Bốc luân phiên Round-Robin ───
+                    top_k = query_param.top_k
+                    cascade_results = []
+                    selected = set()
+
+                    max_depth = max(
+                        (len(r) for r in kw_rankings), default=0
+                    )
+                    for rank_idx in range(max_depth):
+                        if len(cascade_results) >= top_k:
+                            break
+                        for kw_idx, ranking in enumerate(kw_rankings):
+                            if len(cascade_results) >= top_k:
+                                break
+                            if rank_idx < len(ranking):
+                                cname, score = ranking[rank_idx]
+                                if cname not in selected:
+                                    selected.add(cname)
+                                    cascade_results.append((cname, score))
+
+                    # Log kết quả Round-Robin với keyword nguồn
+                    rr_log_parts = []
+                    for cname, score in cascade_results[:5]:
+                        # Tìm keyword nào bốc ra entity này
+                        src_kw = "?"
+                        for kw_idx, ranking in enumerate(kw_rankings):
+                            for rname, _ in ranking:
+                                if rname == cname:
+                                    src_kw = kw_list[kw_idx]
+                                    break
+                            if src_kw != "?":
+                                break
+                        rr_log_parts.append(f"{cname}={score:.3f}[{src_kw}]")
+
+                    logger.info(
+                        f"Cascade Stage 2 (RR Name-only): "
+                        f"{len(candidate_names)} candidates × {len(kw_list)} keywords "
+                        f"→ top {len(cascade_results)} selected. "
+                        f"Anchors: {', '.join(rr_log_parts)}"
+                    )
+                else:
+                    logger.warning(
+                        f"Name-only VDB not found at {name_only_vdb_path}. "
+                        "Run scripts/build_name_only_vdb.py first. "
+                        "Falling back to default VDB search."
+                    )
+            else:
+                logger.debug(
+                    "BM25 returned 0 candidates — falling back to default VDB search"
+                )
+        else:
+            logger.debug(
+                "BM25 index not available — falling back to default VDB search"
+            )
+    except Exception as e:
+        logger.warning(
+            f"Cascade retrieval failed: {e}. Falling back to default VDB search."
+        )
+
+    # ─── Build results from cascade or fallback to original VDB ───
+    if cascade_results:
+        # Cascade succeeded: build node_datas from graph
+        node_ids = [name for name, _ in cascade_results]
+        score_map = {name: score for name, score in cascade_results}
+    else:
+        # Fallback: original VDB search (Name+Description vectors)
+        results = await entities_vdb.query(query, top_k=query_param.top_k)
+        if not results:
+            return [], {}
+        node_ids = [r["entity_name"] for r in results]
+        score_map = {r["entity_name"]: r.get("distance", 0.0) for r in results}
 
     # Batch fetch node data and degrees concurrently
     nodes_dict, degrees_dict = await asyncio.gather(
@@ -5241,8 +5603,104 @@ async def _get_anchor_nodes(
     if not all(n is not None for n in node_datas):
         logger.warning("Some anchor nodes are missing, maybe the storage is damaged")
 
-    # Build anchor_scores from VDB cosine similarity results
-    # VDB results typically have "distance" (cosine similarity) field
+    # Build anchor_scores and node_datas
+    anchor_scores = {}
+    built_node_datas = []
+    for nid, n, d in zip(node_ids, node_datas, node_degrees):
+        if n is not None:
+            built_node_datas.append(
+                {
+                    **n,
+                    "entity_name": nid,
+                    "rank": d,
+                    "created_at": n.get("created_at"),
+                }
+            )
+            anchor_scores[nid] = score_map.get(nid, 0.0)
+
+    mode_label = "Cascade" if cascade_results else "VDB-fallback"
+    logger.info(
+        f"Focused anchors ({mode_label}): {len(built_node_datas)} nodes retrieved, "
+        f"scores: {', '.join(f'{name}={score:.3f}' for name, score in list(anchor_scores.items())[:5])}"
+    )
+
+    return built_node_datas, anchor_scores
+
+
+async def _get_anchor_nodes_ivf(
+    query: str,
+    knowledge_graph_inst: BaseGraphStorage,
+    entities_vdb: BaseVectorStorage,
+    query_param: QueryParam,
+    query_embedding=None,
+    global_config: dict = None,
+) -> tuple[list[dict], dict[str, float]]:
+    """
+    Retrieve anchor nodes using IVF index (focused mode equivalent of _get_node_data_ivf).
+    """
+    from lightrag.kg.ivf_entity_index import IVFEntityIndex
+
+    _s = time.perf_counter()
+
+    # ── Lazy-initialize IVF index ──
+    working_dir = global_config.get("working_dir", ".") if global_config else "."
+    cache_key = working_dir
+
+    if cache_key not in _ivf_index_cache:
+        ivf_kwargs = {}
+        if global_config:
+            vdb_kwargs = global_config.get("vector_db_storage_cls_kwargs", {})
+            ivf_kwargs = {
+                "n_clusters": vdb_kwargs.get("ivf_n_clusters", 0),
+                "n_probe": vdb_kwargs.get("ivf_n_probe", 5),
+                "max_n_probe": vdb_kwargs.get("ivf_max_n_probe", 20),
+                "cosine_threshold": vdb_kwargs.get("cosine_better_than_threshold", 0.2),
+                "min_vectors_for_index": vdb_kwargs.get("ivf_min_vectors_for_index", 1000),
+                "random_state": vdb_kwargs.get("ivf_random_state", 42),
+                "batch_size": vdb_kwargs.get("ivf_batch_size", 4096),
+            }
+
+        ivf_index = IVFEntityIndex(working_dir=working_dir, **ivf_kwargs)
+        if not ivf_index.load():
+            logger.info("[IVF] Building fresh index from entities_vdb …")
+            await ivf_index.build_index_from_storage(entities_vdb)
+            if ivf_index.is_ready:
+                ivf_index.save()
+        _ivf_index_cache[cache_key] = ivf_index
+    else:
+        ivf_index = _ivf_index_cache[cache_key]
+
+    if not ivf_index.is_ready:
+        logger.warning("[IVF] Index not ready – falling back to exact _get_anchor_nodes.")
+        return await _get_anchor_nodes(query, knowledge_graph_inst, entities_vdb, query_param)
+
+    # ── Query IVF for anchor entities ──
+    logger.info(f"[IVF] Focused anchor query: {query} (top_k:{query_param.top_k})")
+    results = await ivf_index.query_anchors(
+        query=query,
+        query_embedding=query_embedding,
+        embedding_func=entities_vdb.embedding_func,
+        top_k=query_param.top_k,
+    )
+
+    _ivf_time = time.perf_counter() - _s
+    logger.info(f"[IVF] Anchor retrieval took {_ivf_time:.3f}s")
+
+    if not results:
+        return [], {}
+
+    node_ids = [r["entity_name"] for r in results]
+    nodes_dict, degrees_dict = await asyncio.gather(
+        knowledge_graph_inst.get_nodes_batch(node_ids),
+        knowledge_graph_inst.node_degrees_batch(node_ids),
+    )
+
+    node_datas = [nodes_dict.get(nid) for nid in node_ids]
+    node_degrees = [degrees_dict.get(nid, 0) for nid in node_ids]
+
+    if not all(n is not None for n in node_datas):
+        logger.warning("[IVF] Some anchor nodes are missing in KV storage")
+
     anchor_scores = {}
     built_node_datas = []
     for k, n, d in zip(results, node_datas, node_degrees):
@@ -5256,13 +5714,16 @@ async def _get_anchor_nodes(
                     "created_at": k.get("created_at"),
                 }
             )
-            # Use "distance" field from VDB result as cosine similarity score
+            # Use distance from IVF result
             anchor_scores[entity_name] = k.get("distance", 0.0)
 
     logger.info(
-        f"Focused anchors: {len(built_node_datas)} nodes retrieved, "
+        f"[IVF] Focused anchors: {len(built_node_datas)} nodes retrieved, "
         f"scores: {', '.join(f'{name}={score:.3f}' for name, score in list(anchor_scores.items())[:5])}"
     )
+
+    if global_config is not None and hasattr(ivf_index, "last_search_stats"):
+        global_config["_ivf_search_stats"] = ivf_index.last_search_stats
 
     return built_node_datas, anchor_scores
 
