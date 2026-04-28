@@ -1,0 +1,236 @@
+# SOURCE_URL: https://youmed.vn/tin-tuc/insulin-ban-da-thuc-su-hieu-ro-hay-chua/
+
+# Insulin: bạn đã thực sự hiểu rõ hay chưa?
+
+Nội dung bài viết
+
+**Cùng với sự phát triển kinh tế xã hội, tỉ lệ mắc bệnh đái tháo đường phát triển nhanh chóng trên thế giới cũng như ở Việt Nam, trở thành vấn đề cấp thiết của toàn nhân loại. Insulin là một trong những thuốc điều trị đái tháo đường hiệu quả nhất, được chỉ định tuyệt đối cho người bệnh đái tháo đường type 1, đái tháo đường thai kỳ, đái tháo đường type 2 (khi người bệnh đã thay đổi chế độ ăn, luyện tập và dùng các thuốc viên điều trị đái tháo đường mà không kiểm soát được đường máu) và một số trường hợp khác. Tuy vậy, bạn đã thực sự hiểu rõ về insulin hay chưa?**
+
+## Lịch sử ra đời của insulin
+
+- 1869: Paul Langerhans đã phát hiện ra một nhóm tế bào đặc biệt ở tuyến tụy và sau này gọi là đảo Langerhans.
+- 1921: Bác sĩ Frederick Banting và nghiên cứu sinh Charles Best đã tiến hành thử nghiệm trên tuyến tụy của chó.
+- 1922: Banting và Best tiếp tục nghiên cứu và cải thiện kĩ thuật để sản xuất insulin và Eli Lilly trở thành nhà sản xuất insulin đầu tiên.
+- 1936: Hans Christan Hagedorn đã khám phá rằng Insulin có thể kéo dài tác dụng khi gắn với protamine.
+- 1950: NPH, insulin tác dụng trung bình đã được đưa ra thị trường bởi công ty Danish Novo Nordisk.
+- 1963: Insulin ở người lần đầu tiên được tổng hợp.
+- 1978: Insulin đã trở thành protein người đầu tiên được sản xuất bằng công nghệ sinh học bởi công ty Genentech.
+- 1982: Insulin tổng hợp có tên là “Human insulin” có những đặc tính khác hơn với insulin có nguồn gốc từ động vật. Loại này có ưu điểm là ít gây dị ứng hơn insulin động vật.
+- 1996: Ra đời một loạt các Insulin anologue.
+
+## Cấu tạo insulin
+
+Insulin trong cơ thể người được tiết ra từ tụy
+
+### Cấu tạo tuyến tụy
+
+Tuyến tụy gồm 2 phần:
+
+- Tụy ngoại tiết (acini): tiết dịch tiêu hóa.
+- Tụy nội tiết (đảo Langerhans): tiết hormon
+**insulin**, glucagon, somatostatin.
+
+**Đảo tụy Langerhans chứa 3 loại tế bào chính:**
+
+- Tế bào beta (60%): insulin.
+- Tế bào alpha (25%): glucagon.
+- Delta (10%): somatostatin.
+
+### Cấu tạo insulin
+
+Sinh tổng hợp hormone do gen ở nhánh ngắn NST 11 quy định:
+
+Sản xuất dưới dạng preproinsulin.
+
+Qua lưới nội sinh chất được cắt thành proinsulin nhờ enzyme ty thể. Proinsulin gồm 3 chuỗi polypeptide A, B, C.
+
+Qua bộ máy Golgi cắt bỏ chuỗi C để tạo hormone hoàn thiện gồm:
+
+- 1 chuỗi A với 21 acid amin.
+- Một chuỗi B với 30 acid amin.
+- Một cầu nối disulfur trong chuỗi A và 2 cầu nối disulfur nối giữa 2 chuỗi A và B.
+
+Peptide C được tiết cùng insulin và dùng để đo nồng độ hormone này gián tiếp trong máu. Vì insulin bị hủy bởi men insulinase ở gan và lưu hành trong máu dưới dạng tự do nên nó có thời gian bán hủy rất ngắn, rất khó đo đạc.
+
+## Vai trò insulin
+
+Mô đích của insulin là toàn bộ các tế bào trong cơ thể. Trong đó 3 mô đích chính yếu là: Gan, mô mỡ, mô cơ vân.
+
+Insulin là hormon duy nhất trong cơ thể các tác dụng làm hạ đường máu.
+
+### Trên chuyển hóa glucid
+
+Tại cơ: đẩy mạnh sử dụng glucose tạo năng lượng, tổng hợp glycogen.
+
+Tại gan: đẩy mạnh sử dụng và dự trữ glucose.
+
+- Tổng hợp glycogen dự trữ sau bữa ăn
+- Chuyển glucose thừa thành acid béo
+- Ức chế tân tạo glucose
+
+Mô mỡ: tổng hợp triglyceride từ glucose.
+
+Tế bào thần kinh: sử dụng glucose không qua trung gian insulin.
+
+### Trên chuyển hóa lipid
+
+Glucose sẽ được sử dụng để cung cấp năng lượng. Khi thiếu insulin, lượng glucose không được sử dụng hết sẽ tổng hợp thành acid béo ở gan và được vận chuyển đến mô mỡ. Gan thu nhận acid béo, tổng hợp thành các lipoprotein – nguyên nhân dễ xơ vữa mạch.
+
+### Trên chuyển hóa protein
+
+Tăng tổng hợp và dự trữ protein ở hầu hết các tế bào.
+
+*Xem thêm*: Xét nghiệm tiểu đường thai kỳ và những điều bạn cần biết
+
+## Sự bài tiết insulin
+
+### Insulin nền
+
+- Được bài tiết liên tục trong ngày. Nồng độ tương đối ổn định. Không có đỉnh.
+- Ức chế sự sản xuất glucose ở gan giữa các bữa ăn và trong khi ngủ. Vậy nên giúp kiểm soát đường huyết đói (FPG).
+- Chiếm 50% tổng nhu cầu insulin hằng ngày.
+
+### Insulin theo bữa ăn
+
+- Được bài tiết để đáp ứng lại với sự tăng glucose máu theo bữa ăn.
+- Ức chế sự tăng cao của glucose máu sau mỗi bữa ăn. Vì vậy giúp kiểm soát glucose máu sau ăn (PPG).
+- Chiếm 10-20% tổng nhu cầu insulin hằng ngày tại mỗi bữa ăn.
+
+## Đái tháo đường và insulin
+
+### Đái tháo đường
+
+- Là bệnh lý chuyển hóa phức tạp.
+- Đặc trưng bởi sự tăng đường huyết mạn tính.
+- Rối loạn chuyển hóa glucid, lipid, protid.
+- Do thiếu insulin hoặc đề kháng insulin hoặc do cả hai.
+
+Có 4 type đái tháo đường theo phân loại ADA 2013:
+
+- Tiểu đường Type 1: do hủy tế bào β tụy, thiếu insulin tuyệt đối.
+- Tiểu đương Type 2: chủ yếu do tình trạng đề kháng insulin.
+- Các type khác: đái tháo đường do khiếm khuyết gen quy định chức năng tế bào β, khiếm khuyết gen quy định hoạt tính insulin, do thuốc, do bệnh tụy ngoại tiết, do bệnh nội tiết khác…
+- Đái tháo đường thai kỳ (GMD: Gestational diabetes mellitus): đái tháo đường được chẩn đoán lần đầu tiên trong thời kỳ mang thai.
+
+#### Đái tháo đường type 1
+
+- Còn gọi là đái tháo đường phụ thuộc Insulin.
+- Chiếm 5-10% tổng số ca đái tháo đường.
+- Có tính chất di truyền rõ rệt, ít phụ thuộc môi trường.
+- Xuất hiện sớm (< 20 tuổi), trên cơ địa gầy.
+- Khởi phát nhanh, cấp tính, rầm rộ (ăn nhiều, tiểu nhiều, uống nhiều, gầy nhiều)
+- Cơ chế: hệ miễn dịch tạo kháng thể tấn công làm hủy hoại tế bào beta tụy, dẫn tới thiếu insulin tuyệt đối.
+- Chẩn đoán: theo ADA + đo Insulin máu
+- Điều trị: tiêm Insulin ngoại sinh
+- Thường gặp biến chứng nhiễm toan ceton.
+
+#### Đái tháo đường type 2
+
+- Còn gọi là đái tháo đường không phụ thuộc Insulin.
+- Chiếm 90% tổng số ca đái tháo đường
+- Phụ thuộc nhiều vào thói quen và môi trường (như chế độ ăn uống, tập luyện thể thao).
+- Xuất hiện muộn (> 40 tuổi), trên cơ địa béo phì.
+- Khởi phát chậm, mạn tính trong nhiều năm.
+- Cơ chế: đề kháng với insulin là chính.
+- Chẩn đoán: theo tiêu chuẩn ADA.
+- Điều trị: thuốc hạ đường huyết uống đơn thuần hoặc kết hợp tiêm insulin.
+- Ít gặp biến chứng nhiễm toan ceton.
+
+## Chế phẩm insulin
+
+Có nhiều cách phân loại khác nhau:
+
+### Theo thời gian tác dụng
+
+- Insulin tác dụng ngắn (Short-acting): Regular.
+- Insulin tác dụng trung bình (intermediate-acting): NPH.
+- Loại tác dụng dài (Long-acting): Detemir, Glargine, Degludec.
+- Insulin tác dụng nhanh (Rapid-acting): Lispro, Aspart, Glulisine, dạng hít (Exubera, Afrezza).
+- Insulin trộn sẵn (Pre-mixed): Mixtard, Novomix.
+- Ngoài ra còn có loại tác dụng siêu ngắn và siêu dài.
+
+### Theo nguồn gốc
+
+- Insulin người: Regular, NPH.
+- Insulin analog: Lispro, Aspart, Glulisine, Levemir, Glargine. Analog là dạng có biến đổi chút ít so với hormone tự nhiên để đem nhiều hiệu quả ưu việt hơn.
+
+### Theo tác dụng
+
+- Insulin nền: NPH, Detemir, Glargine.
+- Insulin theo bữa ăn: Regular, Lispro, Aspart, Glulisine.
+- Loại hỗn hợp (gồm insulin nền và insulin theo bữa ăn): Mixtard, Novomix, Humalog mix, Ryzodeg.
+
+## Đặc điểm của các chế phẩm insulin
+
+### Insulin tác dụng ngắn
+
+Loại insulin này được sử dụng để kiểm soát glucose máu sau ăn.
+
+- Khởi đầu tác dụng sau khoảng 30 phút nên bệnh nhân cần phải tiêm 30 phút trước khi ăn.
+- Đạt nồng độ đỉnh sau 2 – 4 giờ nên chưa phù hợp với nồng độ đỉnh của glucose máu sau ăn. Bệnh nhân cần ăn thêm bữa phụ.
+- Thời gian tác dụng là 6 – 10 giờ nên tác dụng của loại này chưa chấm dứt trước bữa ăn tiếp theo. Do đó có thể gây tích lũy liều và nguy cơ hạ đường huyết.
+
+### Insulin tác dụng nhanh
+
+#### Ưu điểm
+
+- Thuận tiện cho người sử dụng. “Dose and eat”: ăn bữa nào, tiêm bữa đó.
+- Thời gian bắt đầu tác dụng nhanh.
+- Đạt nồng độ đỉnh sau 0.5 – 1 giờ, phù hợp với nồng độ đỉnh glucose máu nên nguy cơ hạ đường huyết sau ăn thấp, không cần thêm bữa ăn phụ.
+- Thời gian tác dụng 3 – 5h, nên tác dụng kết thúc trước bữa ăn tiếp theo, không gây tích lũy liều.
+- Là dạng thuốc tiêm lí tưởng trong các trường hợp: thời gian ăn uống không cố định, ăn thường xuyên, trẻ sơ sinh hay trẻ đang tập đi với lượng tiêu thụ calo không dự đoán được.
+
+#### Nhược điểm
+
+Phải tiêm nhiều lần: Gây khó khăn cho người sử dụng
+
+### Insulin tác dụng trung bình
+
+#### Ưu điểm
+
+Giảm bớt số lượng mũi tiêm so với loại tác dụng nhanh và tác dụng ngắn.
+
+#### Nhược điểm
+
+- Quá trình giải phóng insulin không giống với sự tiết hormone sinh lý. Có thể gây hiện tượng hạ đường huyết về ban đêm.
+- Không thể chỉ tiêm một lần cho cả ngày như loại tác dụng kéo dài.
+
+### Insulin tác dụng kéo dài
+
+#### Glargine (ví dụ Basaglar, Lantus)
+
+Là loại analogue thay thế cho insuline nền. Glargine được sử dụng theo đường tiêm dưới da 1 lần/ngày lúc đi ngủ ở người lớn mắc đái tháo đường type 1 hay type 2 và ở trẻ em từ 6 tuổi trở lên mắc đái tháo đường type 1. Khác với cấu trúc của insuline người ở 3 amino acids. Sự thay đổi cấu trúc đã tạo ra sự bắt đầu tác dụng muộn và tác dụng hằng định, không có đỉnh, kéo dài ít nhất 24 giờ
+
+Ưu điểm:
+
+- Giảm số lần tiêm và nguy cơ hạ đường huyết, đặc biệt là ở người già.
+- Có thể dùng phối hợp với các thuốc hạ glucose đường uống với vai trò là insuline nền mà không làm tăng cân.
+
+#### Detemir
+
+- Tác dụng có thể dự đoán được, kéo dài và hằng định, với ít sự thay đổi trong kiểm soát đường huyết ở bệnh nhân nội trú.
+- Là loại analogue hòa tan tác dụng kéo dài, được acyl hóa bằng 1 acid béo 14 carbon.
+- Gắn kết thuận nghịch với albumin, do đó tạo ra sự hấp thu chậm và tác dụng chuyển hóa kéo dài (trên 24h) ít biến đổi.
+
+### Insulin trộn sẵn
+
+Insulin trộn sẵn gồm 2 loại tác dụng nhanh và tác dụng dài trong một lọ hoặc một bút tiêm. Thuốc sẽ có 2 đỉnh tác dụng. Đỉnh tác dụng nhanh để chuyển hóa carbohydrat trong bữa ăn. Loại tác dụng dài để tạo nồng độ nền giữa các bữa ăn. Hiện có các loại phổ biến:
+
+- Mixtard 30: 70% insulin isophane/30% insulin hòa tan.
+- Novomix 30: gồm 70% Aspart kết tinh với protamin/30% Aspart hòa tan.
+- Humalog Mix 70/30: gồm 70% NPL (neutral protamine lispro)/30% Lispro.
+- Humalog Mix 75/25: gồm 75% NPL (neutral protamine lispro)/25% Lispro.
+- Ryzodeg: gồm 70% Degludec/30% Aspart.
+- Humalog 50/50: gồm 50% NPL (neutral protamine lispro)/50% Lispro.
+
+## Tác dụng phụ của Insulin
+
+Insulin có các tác dụng phụ điển hình như hạ glucose huyết, gây hiện tượng somogyi, dị ứng, loạn dưỡng mô mỡ, tăng cân.
+
+Trong đó, hạ glucose huyết là tác dụng phụ thường gặp nhất khi sử dụng hormone tiêm trực tiếp vào cơ thể. Khi thừa hormone này sẽ gây ức chế sự chuyển hóa glycogen khiến lượng glucose trong máu bị giảm mạnh.
+
+*Xem thêm*: Hạ đường huyết quá mức trong điều trị đái tháo đường: Dấu hiệu và cách xử trí
+
+Hiện tượng somogyi là do việc kiểm soát đường huyết “quá đà”, hay không đúng cách làm hạ đường huyết về đêm. Cơ thể thích ứng bằng cách tăng sản xuất các hormone đối kháng insulin làm tăng đường huyết vào buổi sáng. Nếu không chú ý kĩ, nếu chỉ dựa vào tăng đường huyết sáng để tăng liều thuốc có thể gây hậu quả nghiêm trọng do tụt đường huyết ban đêm.
+
+**Insulin** là một nhân tố không thể thiếu trong quá trình kiểm soát và điều trị bệnh đái tháo đường. Tìm hiểu rõ về loại hormone này không chỉ giúp người bệnh sử dụng nó chính xác, mà còn nhanh chóng phát hiện các thay đổi để kịp thời tham vấn ý kiến bác sĩ.

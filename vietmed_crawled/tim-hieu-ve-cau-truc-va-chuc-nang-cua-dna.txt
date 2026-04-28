@@ -1,0 +1,102 @@
+# SOURCE_URL: https://youmed.vn/tin-tuc/tim-hieu-ve-cau-truc-va-chuc-nang-cua-dna/
+
+# Tìm hiểu về cấu trúc và chức năng của DNA
+
+Nội dung bài viết
+
+**DNA là một cụm từ tương đối quen thuộc với thế hệ trẻ ngày nay. Các bạn đã nghe qua khá nhiều về cụm từ này. DNA là nền tảng căn bản của cơ thể sống, mỗi người có một hệ DNA hoàn toàn khác biệt với người khác. Bài viết hôm nay sẽ nói sơ lược về cấu trúc, vai trò trong sinh học, y học của DNA. Ngoài ra, việc sử dụng các sản phẩm DNA liên quan cũng sẽ được nhắc đến.**
+
+## DNA là gì?
+
+Axit deoxyribonucleic, hay DNA, là một phân tử chứa các thông tin mà một sinh vật cần để phát triển, sống và sinh sản. Những thông tin này được tìm thấy bên trong mỗi tế bào, và được truyền từ cha mẹ cho con cái của họ.
+
+DNA là thứ khiến mỗi con người trở thành một cá thể độc nhất vô nhị trên thế giới.
+
+Một bộ DNA hoàn chỉnh chứa 3 tỷ bazo, 20.000 gen và 23 cặp nhiễm sắc thể. Chúng ta thừa hưởng một nửa DNA từ tinh trùng của cha và một nửa từ trứng của mẹ. Trên thực tế DNA rất dễ bị phá hủy, ước tính có hàng chục ngàn sự kiện gây tổn hại đến DNA xảy hằng ngày trong mỗi tế bào của chúng ta. Các tổn hại này có thể xảy ra do lỗi sao chép DNA, do gốc tự do và do chúng ta tiếp xúc với bức xạ UV. Nhưng may thay, các tế bào của chúng ta lại có những protein chuyên biệt có khả năng phát hiện và sửa chữa nhiều trường hợp DNA bị phá hủy.
+
+*Xem thêm*: Tinh trùng: tế bào sinh dục nam quan trọng.
+
+### Cấu trúc
+
+Các thông tin căn bản cho sự sống (phát triển, sống còn và sinh sản) trên DNA này được lưu trữ trong chuỗi các cặp bazo nucleotide. Các tế bào đọc các thông tin này ở nhiều thời điểm trong cuộc đời để tạo ra các protein cần thiết cho sự tăng trưởng.
+
+Mỗi nhóm bazo nucleotide gồm ba bazo tương ứng với các axit amin cụ thể. Một số kết hợp, như T-A-A, T-A-G và T-G-A cũng chỉ ra sự kết thúc của chuỗi protein. Protein được tạo thành từ sự kết hợp khác nhau của các axit amin. Khi được đặt cùng nhau theo đúng thứ tự, mỗi protein có cấu trúc và chức năng riêng trong cơ thể.
+
+### Số lượng DNA cấu tạo thành cơ thể người
+
+Như hình trên, ta có thể thấy, các bazo nucleotide (Ví dụ: ATGC) là cấu trúc căn bản hình thành chuỗi xoắn DNA (DNA helix). Nhiều chuỗi DNA lại hình thành nên 23 cặp nhiễm sắc thể, mỗi tế bào trong cơ thể đều có 23 cặp này. Và cơ thể có hàng chục ngàn tỷ tế bào!!!.
+
+Do đó, 1 cơ thể sống có vô vàn chuỗi DNA.1
+
+## Xét nghiệm DNA
+
+Xét nghiệm DNA (xét nghiệm di truyền) đóng một vai trò quan trọng trong việc xác định nguy cơ phát triển một số bệnh. Nó còn đóng vai trò như xét nghiệm sàng lọc để có các can thiệp y tế kịp thời. Các loại xét nghiệm di truyền khác nhau được thực hiện vì những lý do khác nhau:
+
+- Xét nghiệm chẩn đoán được thực hiện để xác định các gen đột biến.
+- Xác định các bệnh có khả năng di truyền.
+
+### Xét nghiệm tiền lâm sàng
+
+Nếu gia đình có tiền sử nhiều người cùng mắc một hoặc một nhóm bệnh thì việc xét nghiệm di truyền có thể cho biết chính xác tình trạng bệnh đó như thế nào. Loại xét nghiệm này có thể hữu ích để xác định nguy cơ mắc một số loại ung thư như:
+
+- Ung thư đại trực tràng.
+- Ung thư vú…
+2
+
+### Xét nghiệm người mang bệnh (nhưng không có triệu chứng của bệnh)
+
+Nếu gia đình có tiền sử mắc chứng rối loạn di truyền, chẳng hạn như thiếu máu hồng cầu hình liềm hoặc xơ nang có thể chọn xét nghiệm di truyền trước khi có con. Trong tình trạng mang rối loạn di truyền nhưng ở mức độ nhẹ thì có thể người cha/mẹ không có triệu chứng gì. Tuy nhiên nếu 2 người cùng mang một loại rối loạn di truyền giống nhau có thể sinh ra đứa con bị bệnh di truyền nặng, có thể tử vong. Ví dụ: cha và mẹ cùng bị beta thalassemia.
+
+### Xét nghiệm tiền sản
+
+Nếu bạn đang mang thai, xét nghiệm này có thể phát hiện một số loại bất thường trong gen của em bé. Hội chứng Down và hội chứng trisomy 18 là hai rối loạn di truyền thường thường gặp. Và dĩ nhiên 2 bệnh này được sàng lọc như là một phần của xét nghiệm di truyền trước khi sinh. Truyền thống, bác sĩ xác định chẩn đoán bằng xét nghiệm xâm lấn như chọc ối,… Hiện nay đã ra đời xét nghiệm DNA không xâm lấn (NIPT). Xét nghiệm này có khả năng đánh giá DNA của em bé thông qua xét nghiệm máu được thực hiện trên người mẹ. Và dĩ nhiên giảm tối đa nguy cơ sảy thai. Tuy nhiên NIPT chỉ được xem là xét nghiệm tầm soát.
+
+### Sàng lọc sơ sinh
+
+Đây là loại xét nghiệm di truyền phổ biến nhất, loại xét nghiệm này rất quan trọng để phát hiện có một rối loạn xuất hiện như:
+
+- Suy giáp bẩm sinh.
+- Bệnh hồng cầu hình liềm.
+- Phenylketon niệu (PKU).
+- Suy thượng thận bẩm sinh.
+
+### Thử nghiệm tiền cấy ghép
+
+Cũng được gọi là chẩn đoán di truyền tiền ghép. X ét nghiệm này có thể được sử dụng khi bạn cố gắng mang thai thông qua thụ tinh trong ống nghiệm. Phôi thai trước khi đưa vào tử cung mẹ được sàng lọc các bất thường di truyền. Phôi thai không có bất thường được cấy vào tử cung sẽ có hy vọng mang thai thành công cao.
+
+### Xét nghiệm DNA dấu vân tay
+
+Đây là một xét nghiệm hóa học cho thấy cấu trúc di truyền đặc trưng của một người. Nó được sử dụng làm bằng chứng tại các tòa án. Cũng như để xác định danh tính các thi thể,…
+
+## Thực phẩm dưới dạng DNA, RNA
+
+RNA (axit ribonucleic) và DNA (axit deoxyribonucleic) là các hợp chất hóa học được tạo ra bởi cơ thể. Tuy vậy chúng cũng có thể được thực hiện trong công nghiệp. RNA và DNA đôi khi được dùng làm thuốc.
+
+### Mục đích
+
+Người ta sử dụng RNA và DNA cho các tình trạng như:
+
+- Tăng cường hoạt động thể thao.
+- Hỗ trợ các vấn đề về dạ dày và ruột.
+- Các vấn đề về hệ thống miễn dịch, lão hóa và nhiều bệnh khác.
+
+Tuy nhiên nhưng không có bằng chứng khoa học tốt để hỗ trợ những công dụng này.
+
+### Tác dụng phụ
+
+- Khi dùng bằng đường uống: RNA và DNA AN TOÀN TUYỆT ĐỐI khi được tiêu thụ với lượng có trong thực phẩm. Ngoài ra, RNA an toàn cho hầu hết mọi người khi dùng cùng với axit béo omega-3 và L-arginine. Không có đủ thông tin đáng tin cậy để biết liệu sự kết hợp sử dụng RNA / DNA có an toàn hay không.
+- Khi được tiêm: RNA CÓ THỂ AN TOÀN khi được tiêm dưới da. Tiêm RNA có thể gây ngứa, đỏ và sưng tại chỗ tiêm.
+
+Các biện pháp phòng ngừa và cảnh báo đặc biệt
+
+Đối với trường hợp mang thai và cho con bú:
+
+Việc bổ sung RNA và DNA có thể KHÔNG AN TOÀN nếu bạn đang mang thai. Một số bằng chứng cho thấy DNA có thể đi qua nhau thai và gây ra dị tật bẩm sinh.
+
+Không có đủ thông tin đáng tin cậy để biết liệu RNA và DNA có an toàn để sử dụng khi cho con bú hay không. Do đó nên giữ an toàn và tránh sử dụng.
+
+*Xem thêm: *Sử dụng thuốc khi mang thai có an toàn không?
+
+**DNA** có thể được coi là vật chất căn bản để hình thành nên sự sống. Nó cũng là đặc trưng duy nhất của mỗi cá thể sống trên thế giới này. DNA được tạo thành từ các bazo nucleotide. Nó lại tạo thành chuỗi nhiễm sắc thể, mỗi tế bào có 23 nhiễm sắc thể và cơ thể có hàng chục nghìn tỷ tế bào…
+
+DNA có thể bị phá huỷ nhưng cũng có thể tự xây dựng lại đồng thời. Xét nghiệm DNA càng ngày càng phổ biến ở thời hiện đại. Ngày nay, người ta phát hiện ra rất nhiều bệnh lý liên quan đến gen di truyền. Bệnh liên quan gen di truyền bản chất là các rối loạn DNA, nhiễm sắc thể. Việc xét nghiệm DNA phổ biến nhất là trong các tình huống pháp y và xét nghiệm dị tật thai nhi.

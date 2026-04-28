@@ -1,0 +1,104 @@
+# SOURCE_URL: https://youmed.vn/tin-tuc/te-bao-than-kinh-cau-tao-hoat-dong-va-chuc-nang/
+
+# Tế bào thần kinh: Cấu tạo, hoạt động và chức năng
+
+Nội dung bài viết
+
+**Tế bào thần kinh là một trong các loại tế bào quan trọng nhất của con người. Chúng chịu trách nhiệm nhận và truyền đạt thông tin từ khắp các vùng trên cơ thể. Thông qua các tín hiệu điện và hóa học, tế bào thần kinh đã phối hợp để tạo ra các chức năng cần thiết cho sự sống. Từ đó, nó quyết định các phản ứng của cơ thể và thay đổi trạng thái của các cơ quan nội tạng (ví dụ như thay đổi nhịp tim). Đồng thời hệ thần kinh cũng cho phép con người suy nghĩ và ghi nhớ những gì đang diễn ra. Để làm điều này, hệ thần kinh cần có một mạng lưới tinh vi. Đó là sự kết nối phức tạp giữa các tế bào thần kinh. Cùng Bác sĩ Nguyễn Văn Huấn tìm hiểu về tế bào thần kinh qua bài viết sau.**
+
+## Tế bào thần kinh là gì?
+
+Tế bào thần kinh còn được gọi là neuron (theo tiếng Pháp). Chúng là những tế bào có chức năng dẫn truyền xung điện. Các tế bào thần kinh chiếm khoảng mười phần trăm não bộ. Phần còn lại bao gồm các tế bào thần kinh đệm và tế bào hình sao. Những tế bào này giúp hỗ trợ và nuôi dưỡng tế bào thần kinh.
+
+Người ta ước tính rằng có khoảng 86 tỷ tế bào thần kinh trong não. Để đạt được con số khổng lồ này, một bào thai đang phát triển phải tạo ra khoảng 250.000 tế bào thần kinh mỗi phút. Đây là loại tế bào dài nhất cơ thể và được biệt hóa cao. Vì vậy chúng không có khả năng phân chia. Bù lại chúng có khả năng tái sinh một phần của tế bào nếu bị tổn thương.
+
+Mỗi neuron được kết nối với 1.000 neuron khác, tạo ra một mạng lưới giao tiếp cực kỳ phức tạp. Tế bào thần kinh được xem là đơn vị cơ bản của hệ thống thần kinh.
+
+## Cấu trúc tế bào thần kinh bao gồm những thành phần nào?
+
+Các tế bào thần kinh chỉ có thể được nhìn thấy bằng kính hiển vi, được chia thành ba phần:
+
+- Thân tế bào: là chỗ phình to của neuron. Bao gồm nhân tế bào, lưới nội sinh chất, ty thể, ribosom, lysosom, bộ máy Golgi, tơ thần kinh, ống siêu vi và các bào quan khác. Thân tế bào cung cấp dinh dưỡng cho neuron, có thể phát sinh xung động thần kinh và có thể tiếp nhận xung động thần kinh từ nơi khác truyền tới neuron.
+- Sợi nhánh, còn gọi là đuôi gai: là các tua ngắn mỏng manh mọc ra từ thân tế bào. Mỗi neuron đều có nhiều đuôi gai, mỗi đuôi gai được chia thành nhiều nhánh. Chúng có chức năng tiếp nhận các xung thần kinh từ tế bào khác, truyền chúng tới thân tế bào. Đây là tín hiệu hướng tâm. Tác động của các xung này có thể là kích thích hoặc ức chế.
+- Sợi trục: sợi đơn dài mang thông tin từ thân tế bào và chuyển đến các tế bào khác. Đường kính của các sợi trục thường có kích thước khác nhau, dao động từ từ 0,5 μm – 22 μm. Dọc sợi trục được bao bọc bởi một lớp vỏ myelin, tạo thành bởi các tế bào Schwann. Bao myelin không liền mạch mà được chia thành từng đoạn. Giữa các bao myelin là các eo Ranvier. Khoảng cách giữa 2 eo Ranvier khoảng 1,5 – 2 mm. Còn diện tích tiếp xúc giữa các nhánh nhỏ phân từ cuối sợi trục của nơ-ron này với sợi nhánh của nơ-ron khác hoặc các cơ quan thụ cảm được gọi là Synapse (khớp thần kinh).
+
+Cả sợi nhánh và sợi trục đôi khi được gọi chung là sợi thần kinh.
+
+Chiều dài các sợi trục có sự chênh lệch rất nhiều. Một số sợi có thể rất ngắn, trong khi một số khác có thể dài hơn 1 mét. Các sợi trục dài nhất còn được gọi là hạch rễ lưng. Đây là một cụm các tế bào thần kinh mang thông tin từ da đến não. Ở người cao, một số sợi trục trong hạch rễ lưng xuất phát từ ngón chân cho đến thân não có thể dài tới 2 mét.
+
+## Phân loại các tế bào thần kinh như thế nào?
+
+Các neuron có thể được chia thành các loại khác nhau theo từng cách phân loại.
+
+**Theo hướng dẫn truyền xung thần kinh**
+
+- Các neuron ly tâm. Chúng lấy các thông điệp từ hệ thống thần kinh trung ương (não và tủy sống). Tiếp đó đưa chúng đến các tế bào ở các bộ phận khác của cơ thể.
+- Các neuron hướng tâm. Nhận thông điệp từ phần còn lại của cơ thể và đưa chúng đến hệ thống thần kinh trung ương.
+- Neuron trung gian. Truyền tải những thông điệp chuyển tiếp giữa các tế bào thần kinh trong hệ thống thần kinh trung ương.
+
+**Theo chức năng của tế bào**
+
+- Tế bào thần kinh cảm giác. Mang tín hiệu từ các giác quan đến hệ thống thần kinh trung ương.
+- Loại tế bào chuyển tiếp. Mang tín hiệu từ nơi này đến nơi khác trong hệ thống thần kinh trung ương.
+- Tế bào thần vận động. Mang tín hiệu từ hệ thống thần kinh trung ương đến các cơ.
+
+## Chức năng của tế bào thần kinh là gì?
+
+Chức năng cơ bản của neuron là cảm ứng và dẫn truyền xung thần kinh. Cụ thể:
+
+- Cảm ứng là khả năng tiếp nhận và phản ứng lại các kích thích bằng hình thức phát xung thần kinh.
+- Dẫn truyền là khả năng lan truyền xung thần kinh theo một chiều từ nơi phát sinh. Hay là tiếp nhận về thân nơron và truyền đi theo dọc sợi trục.
+
+## Quá trình dẫn truyền tín hiệu thần kinh như thế nào?
+
+### Quá trình
+
+Một tế bào thần kinh nhận được tín hiệu đầu vào từ các tế bào thần kinh khá. Các tín hiệu này cộng lại cho đến khi chúng vượt quá một ngưỡng cụ thể.
+
+Vượt quá ngưỡng, tế bào thần kinh được kích hoạt, gửi một xung điện dọc theo sợi trục của nó. Quá trình này được gọi là điện thế hoạt động. Một điện thế hoạt động được tạo ra bởi sự chuyển động của các nguyên tử tích điện (ion) trên màng sợi trục.
+
+Các tế bào thần kinh khi nghỉ ngơi, bên trong tích điện âm nhiều hơn bên ngoài màng tế bào. Điều này tạo nên điện thế màng, hoặc là điện thế nghỉ. Độ lớn thường khoảng -70 millivolts (mV).
+
+Khi thân tế bào của một dây thần kinh nhận đủ tín hiệu để kích hoạt, một phần sợi trục gần thân tế bào sẽ khử cực. Điện thế màng nhanh chóng tăng lên và sau đó giảm xuống (trong khoảng 1.000 giây). Sự thay đổi điện thế này kích hoạt quá trình khử cực trong phần sợi trục bên cạnh nó. Và cứ thế tiếp tục, cho đến khi đã đi dọc theo toàn bộ chiều dài của sợi trục.
+
+Sau khi mỗi phần được hoạt hóa, nó đi vào một trạng thái siêu phân cực ngắn. Đây là thời kì trơ, do đó nó ít có khả năng được kích hoạt lại ngay lập tức.
+
+Thông thường, ion kali (K +) và natri (Na +) đóng vai trò chính tạo ra điện thế hoạt động. Các ion di chuyển vào và ra khỏi các sợi trục thông qua kênh và bơm ion có điện thế.
+
+### Đây là mô tả ngắn gọn quá trình điện thế hoạt động
+
+- Các kênh Na + mở cho phép Na + tràn vào tế bào, làm cho điện thế dương hơn.
+- Khi tế bào đạt đến một điện tích nhất định, các kênh K + sẽ mở. Các kênh mở cho phép K + thoát ra khỏi tế bào.
+- Kênh Na + sau đó đóng, kênh K + vẫn mở cho phép điện tích dương rời khỏi tế bào. Điện thế màng giảm dần.
+- Khi điện thế màng trở về trạng thái nghỉ, các kênh K + sẽ đóng lại.
+
+Cuối cùng, bơm natri / kali vận chuyển Na + ra khỏi tế bào và K + trở lại tế bào. Hoạt động này cần thiết để sẵn sàng cho tiềm năng hành động tiếp theo.
+
+Điện thế hoạt động sẽ làm việc theo nguyên tắc “tất cả hoặc là không”. Nếu kích thích trên ngưỡng thì có hiện tượng khử cực, và ngược lại. Ở các kích thích trên ngưỡng, độ lớn kích thích sẽ thể hiện qua tần số phát xung. Kích thích mạnh hơn sẽ có tần số phát sinh xung điện lớn hơn.
+
+## Tín hiệu thần kinh dẫn truyền qua các synapse như thế nào?
+
+Các neuron được kết nối với nhau và liên hệ với mô khác để có thể gửi các tín hiệu. Tuy nhiên, nó không được kết nối bằng cách tiếp xúc trực tiếp. Kết nối luôn thông qua khớp nối giữa các tế bào, được gọi là synape.
+
+Các synapse này có thể là điện hoặc hóa học. Nói cách khác, tín hiệu được truyền từ sợi thần kinh đầu tiên (tế bào thần kinh tiền synapse) đến tế bào thần kinh tiếp theo (tế bào sau synapse) được truyền qua synapse bằng tín hiệu điện hoặc hóa học.
+
+### Synapse hóa học
+
+Một khi tín hiệu dẫn truyền đến đầu tận sợi trục, nó sẽ kích hoạt tế bào thần kinh tiền synapse giải phóng các hóa chất (chất dẫn truyền thần kinh) vào khoảng cách giữa hai tế bào. Khoảng cách này được gọi là khe synapse.
+
+Chất dẫn truyền thần kinh khuếch tán qua khe synap. Chất này tương tác với các thụ thể trên màng tế bào thần kinh sau synapse, gây ra phản ứng.
+
+Các synapse hóa học được phân loại tùy thuộc vào các chất dẫn truyền thần kinh mà chúng giải phóng:
+
+- Glutamergic – giải phóng glutamine. Chúng thường có tính kích thích, có nghĩa là chúng có nhiều khả năng kích hoạt điện thế hoạt động.
+- GABAergic – giải phóng GABA (axit gamma-Aminobutyric). Chúng thường có tính ức chế. Có nghĩa là chúng làm giảm khả năng tế bào thần kinh sau synapse sẽ dẫn truyền xung điện.
+- Cholinergic – giải phóng acetylcholine. Chúng được tìm thấy giữa các tế bào thần kinh vận động và các sợi cơ (synapse thần kinh cơ).
+- Adrenergic – giải phóng norepinephrine (adrenaline).
+
+### Synapse điện
+
+- Synapse điện ít phổ biến hơn, nhưng được tìm thấy trên khắp hệ thống thần kinh trung ương. Trong các synapse điện, các màng sau và trước synapse được đưa lại gần nhau hơn nhiều so với các synapse hóa học, nghĩa là chúng có thể truyền trực tiếp dòng điện.
+- Các synapse điện hoạt động nhanh hơn nhiều so với các khớp thần kinh hóa học. Vì vậy chúng được tìm thấy ở những nơi cần hành động nhanh, ví dụ như trong các phản xạ phòng thủ.
+- Các synapse hóa học có thể kích hoạt các phản ứng phức tạp. Nhưng các khớp thần kinh điện chỉ có thể tạo ra các phản ứng đơn giản. Tuy nhiên, không giống như các khớp thần kinh hóa học, synapse điện có thể dẫn truyền hai chiều – nghĩa là thông tin có thể đi theo một trong hai hướng.
+
+**Tế bào thần kinh** đóng vai trò đặc biệt quan trọng trong điều hòa hoạt động cơ thể. Gần như tất cả hoạt động sống đều chịu sự điều khiển của tế bào này. Đó là cả mạng lưới liên kết phức tạp nhưng nhịp nhàng và có tốc độ dẫn truyền cao. Điều đó đảm bảo cho cơ thể hoạt động đồng bộ và chính xác. Mong rằng những nội dung mà Bác sĩ Nguyễn Văn Huấn đã cung cấp trong bài viết có thể có ích cho bạn!

@@ -1,0 +1,184 @@
+# SOURCE_URL: https://youmed.vn/tin-tuc/biseptol/
+
+# Biseptol là thuốc gì? Công dụng, cách dùng và lưu ý khi dùng
+
+Nội dung bài viết
+
+**Biseptol là thuốc gì? Thuốc có thành phần, công dụng như thế nào và cần lưu ý gì khi sử dụng? Những thắc mắc của bạn sẽ được Dược sĩ Trần Việt Linh giải đáp thông qua bài viết sau.**
+
+*Hoạt chất:* Trimethoprim, sulfamethoxazol.
+
+*Thuốc chứa thành phần tương tự:* Trimeseptol, Cotrimstada,…
+
+## Biseptol là thuốc gì?
+
+Biseptol hay còn gọi là Biseptol 480 là thuốc kê đơn giúp điều trị nhiễm trùng của công ty Cổ phần Dược phẩm Trung Ương 1 – Pharbaco. Thuốc được bào chế dưới dạng viên nén, mỗi hộp gồm 1 vỉ x 20 viên.
+
+## Thành phần và công dụng của các thành phần
+
+### 1. Thành phần
+
+Trong một viên nén có chứa:1
+
+- Trimethoprim: 80 mg.
+- Sulfamethoxazol: 400 mg.
+- Tá dược vừa đủ.
+
+### 2. Công dụng của các thành phần2
+
+Cotrimoxazol là một phối hợp giữa sulfamethoxazol và trimethoprim với tỉ lệ 5:1. Sự phối hợp này giúp ức chế hai giai đoạn liên tiếp của quá trình chuyển hóa acid folic.
+
+- Sulfamethoxazol có tác dụng kìm khuẩn bằng cách ức chế sự tạo thành dihydrofolic acid của vi khuẩn.
+- Trong khi đó, trimethoprim có tác dụng diệt khuẩn bằng cách ức chế enzym dihydrofolat reductase của vi khuẩn, do đó ức chế sự tổng hợp acid tetrahydrofolic từ dihydrofolic acid.
+
+Từ đó, cotrimoxazol giúp ức chế sự tổng hợp thimidin và cuối cùng là DNA của vi khuẩn. Cơ chế hiệp đồng kháng khuẩn này giúp chống lại sự phát triển của vi khuẩn đề kháng và thuốc vẫn có tác dụng khi vi khuẩn đề kháng với từng thành phần của thuốc.
+
+## Chỉ định của Biseptol
+
+Thuốc được chỉ định trong các trường hợp nhiễm khuẩn do các vi khuẩn nhạy cảm với cotrimoxazol:1
+
+- Nhiễm khuẩn đường tiết niệu do
+*E. coli*,*Enterobacter spp.*,*Klebsiella spp., Morganella morganii*,*Proteus mirabilis*và*Proteus vulgaris*. - Viêm tai giữa cấp do
+*Streptococcus pneumoniae*và*H. influenzae*. - Đợt cấp viêm phế quản mạn do
+*Streptococcus pneumoniae*và*H. influenzae*. - Nhiễm khuẩn đường tiêu hoá gây ra bởi
+*Shigella bacilli*. - Viêm phổi do
+*Pneumocystis carinii*và phòng ngừa nhiễm khuẩn ở bệnh nhân mắc chứng suy giảm miễn dịch. - Tiêu chảy ở người lớn do
+*E. coli*.
+
+## Cách dùng và liều dùng của Biseptol
+
+### 1. Cách dùng1
+
+Dùng thuốc bằng đường uống, uống thuốc trong hoặc ngay sau bữa ăn. Nên uống nhiều nước khi dùng thuốc.
+
+### 2. Liều dùng cho từng đối tượng1
+
+#### Nhiễm khuẩn đường tiết niệu, đường tiêu hóa do *Shigella bacilli* và đợt cấp viêm phế quản mạn ở người lớn
+
+- Liều thông thường: 2 viên x 2 lần/ngày.
+- Thời gian dùng thuốc: 10 – 14 ngày đối với nhiễm khuẩn đường tiêu hoá, 14 ngày với đợt cấp viêm phế quản mạn và 5 ngày với nhiễm khuẩn đường tiêu hóa do
+*Shigella bacilli*.
+
+#### Nhiễm khuẩn đường tiết niệu, đường tiêu hóa do *Shigella bacilli* và đợt cấp viêm phế quản mạn ở trẻ em
+
+- Liều thường dùng: 48 mg cotrimoxazol/kg/ngày chia làm 2 lần, không dùng quá liều chỉ định cho người lớn.
+- Thời gian dùng thuốc: 10 ngày với nhiễm khuẩn đường tiêu hoá và viêm tai giữa cấp, 5 ngày với nhiễm khuẩn do
+*Shigella bacilli*.
+
+#### Viêm phổi gây ra bởi *Pneumocystis carinii* ở cả người lớn và trẻ em
+
+- Liều đề xuất: 90 – 120 mg cotrimoxazol/kg/ngày chia làm 4 lần.
+- Thời gian dùng thuốc: 14 – 21 ngày.
+
+#### Phòng ngừa nhiễm khuẩn gây ra bởi *Pneumocystis carinii*
+
+- Người lớn: 2 viên Biseptol x 1 lần/ngày trong 7 ngày.
+- Trẻ em: 24 mg cotrimoxazol/kg/ngày chia làm 2 lần và dùng trong 3 ngày liên tục.
+- Liều tối đa: 1920 mg tương đương 4 viên Biseptol.
+
+#### Tiêu chảy ở người lớn do E. coli
+
+Liều đề xuất là 2 viên Biseptol mỗi 12 giờ.
+
+#### Bệnh nhân suy thận
+
+Độ thanh thải creatinin (ml/phút) |
+Liều khuyên dùng |
+| > 30 | Dùng liều thông thường |
+| 15 – 30 | 1/2 liều thông thường |
+| < 15 | Không dùng |
+
+## Biseptol có giá bao nhiêu?
+
+Trên thị trường, Biseptol có giá khoảng 28.000 VNĐ/hộp. Lưu ý rằng đây chỉ là giá cả tham khảo, giá của sản phẩm còn phụ thuộc vào cơ sở bán và phân phối thuốc.
+
+## Tác dụng không mong muốn của Biseptol
+
+Các tác dụng không mong muốn của Biseptol xảy ra ở khoảng 10% người bệnh, hay gặp nhất trên đường tiêu hoá và da, cụ thể như sau:1
+
+- Hay gặp (ADR > 1/100): Sốt, buồn nôn và nôn, tiêu chảy, viêm lưỡi, ngứa, ngoại ban.
+- Ít gặp (1/1000 < ADR < 1/100): Tăng bạch cầu ưa eosin, giảm bạch cầu trung tính, giảm bạch cầu, ban xuất huyết, mề đay.
+- Hiếm gặp ( ADR < 1/1000): Phản ứng phản vệ, bệnh huyết thanh, hội chứng Lyell, hội chứng Stevens – Johnson, phù mạch, mẫn cảm ánh sáng, vàng da, ứ mật, hoại tử gan, suy thận,…
+
+## Tương tác thuốc
+
+Biseptol có thể gây ra tương tác với một số thuốc khác sau đây, cần lưu ý khi sử dụng:1
+
+- Thuốc lợi tiểu Thiazide: Tăng nguy cơ giảm tiểu cầu và xuất huyết ở người lớn tuổi khi phối hợp thuốc này với Biseptol.
+- Phenytoin, Methotrexate, dẫn xuất sulfonylurea: Biseptol làm tăng tác dụng của các thuốc này.
+- Digoxin: Biseptol làm tăng nồng độ digoxin trong máu ở bệnh nhân cao tuổi.
+- Thuốc chống trầm cảm 3 vòng: Cotrimoxazol làm giảm tác dụng của thuốc này.
+- Pyrimethamine: Dùng đồng thời Biseptol và Pyrimethamine liều lượng 25 mg/tuần làm tăng nguy cơ thiếu máu nguyên hồng cầu khổng lồ.
+- Cyclosporin: Có thể gây rối loạn tạm thời chức năng thận cấy ghép dẫn đến tăng nồng độ creatinin huyết thanh ở bệnh nhân ghép thận khi sử dụng hai thuốc đồng thời.
+- Warfarin: Biseptol có thể kéo dài thời gian prothrombin ở bệnh nhân đang dùng warfarin.
+
+## Đối tượng chống chỉ định dùng Biseptol
+
+Không sử dụng thuốc đối với các đối tượng:1
+
+- Mẫn cảm với hoạt chất hoặc bất kỳ thành phần nào của thuốc.
+- Chẩn đoán có tổn thương nhu mô gan.
+- Suy thận nặng và không giám sát được nồng độ thuốc trong huyết tương.
+- Có bệnh lý nghiêm trọng trên hệ tạo máu.
+- Bệnh nhân thiếu máu nguyên hồng cầu khổng lồ do thiếu acid folic.
+- Bệnh nhân thiếu men G-6PD.
+- Trẻ dưới 2 tháng tuổi do có nguy cơ vàng da nhân.
+
+### Phụ nữ có thai và mẹ cho con bú có uống được Biseptol?1
+
+- Phụ nữ có thai: Cân nhắc giữa lợi ích và nguy cơ khi dùng thuốc cho phụ nữ có thai.
+- Phụ nữ đang cho con bú: Trimethoprim và sulfamethoxazol đều tiết vào sữa mẹ nên không dùng thuốc khi đang cho con bú.
+
+### Thận trọng khi dùng Biseptol1
+
+- Chức năng thận bị suy giảm.
+- Đối tượng dễ thiếu hụt acid folic như người cao tuổi, bệnh nhân dùng Cotrimoxazol liều cao dài ngày.
+- Phụ nữ mang thai, mất nước, suy dinh dưỡng.
+- Ở bệnh nhân thiếu hụt G-6PD, thuốc có thể gây thiếu máu tán huyết.
+
+## Xử trí khi quá liều Biseptol
+
+Triệu chứng quá liều: Chán ăn, buồn nôn, nôn, chóng mặt, sốt, nhức đầu, mất tỉnh táo, ngủ gà, tiểu ra máu hoặc ra tinh thể,…
+
+Xử trí: Đến ngay cơ sở y tế để được xử trí kịp thời.
+
+## Trường hợp quên liều Biseptol
+
+Uống ngay liều bị quên ngay sau khi nhớ ra. Nếu liều bị quên gần với liều kế tiếp, bỏ qua liều đấy và dùng thuốc như lịch trình bình thường. Không được gấp đôi liều để bù cho liều đã quên.
+
+## Lưu ý khi sử dụng
+
+- Biseptol là thuốc kê đơn, chỉ sử dụng khi có sự chỉ định của bác sĩ.
+- Do có cấu trúc hóa học tương tự nhau, nếu bạn mẫn cảm với một số thuốc như thuốc kháng giáp, thuốc lợi tiểu (Acetazolamid và Thiazid), một số thuốc tiểu đường dạng uống thì có thể bạn sẽ mẫn cảm với sulfamethoxazol có trong Biseptol.
+- Lưu ý điều chỉnh liều ở bệnh nhân suy thận.
+- Thông báo cho bác sĩ các tác dụng không mong muốn trong quá trình sử dụng thuốc.
+- Xem hạn dùng của thuốc trước khi sử dụng, không sử dụng thuốc đã hết hạn sử dụng.
+- Đọc kỹ hướng dẫn sử dụng trước khi dùng.
+
+## Cách bảo quản
+
+Bảo quản nơi khô ráo, thoáng mát, nhiệt độ dưới 30°C và tránh ánh sáng. Để xa tầm tay của trẻ em.
+
+Hy vọng qua bài viết trên đây của Dược sĩ Trần Việt Linh đã giúp bạn giải đáp các vấn đề thắc mắc của thuốc **Biseptol**. Nếu bạn cần biết thêm thông tin về sản phẩm, có thể liên hệ với bác sĩ để được tư vấn.
+
+### Câu hỏi thường gặp
+
+#### Biseptol là thuốc kháng sinh thuộc nhóm nào?
+
+
+Biseptol là thuốc kháng sinh kết hợp của sulfamethoxazol (thuộc nhóm sulfonamid) và trimethoprim (dẫn chất của pyrimidin).
+
+#### Biseptol có dùng cho phụ nữ mang thai?
+
+
+Chỉ dùng thuốc khi thật sự cần thiết.
+
+#### Biseptol có dùng được cho phụ nữ cho con bú?
+
+
+Không sử dụng Biseptol đối với phụ nữ đang cho con bú.
+
+#### Biseptol uống trước hay sau khi ăn?
+
+
+Dùng thuốc trong hoặc ngay sau bữa ăn.

@@ -1,0 +1,217 @@
+# SOURCE_URL: https://youmed.vn/tin-tuc/dai-thao-nhat-trung-uong-nguyen-nhan-va-cach-dieu-tri/
+
+# Đái tháo nhạt trung ương: Nguyên nhân và cách điều trị
+
+Nội dung bài viết
+
+**Đái tháo nhạt là tình trạng gây tiểu nhiều, khát nhiều, uống nhiều làm tuy là bệnh lý hiếm gặp nhưng làm giảm đáng kể chất lượng cuộc sống của người bệnh đôi khi đe dọa tử vong nếu không xử trí hợp lý. Vậy đái tháo nhạt mà đặc biệt là đái tháo nhạt trung ương là bệnh lý như thế nào? Mời bạn cùng Bác sĩ Huỳnh Tấn Hùng tìm hiểu về bệnh lý đái tháo nhạt trung ương qua bài viết dưới đây.**
+
+## Tổng quan về bệnh lý đái tháo nhạt
+
+### Định nghĩa
+
+Đái tháo nhạt (Diabetes insipidus) là tình trạng bệnh lý gây tiểu nhiều, với nước tiểu nhược trương do giảm bài tiết hormon kháng lợi niệu (Anti Diuretic Hormone – ADH) hoặc giảm tác động của ADH.1
+
+Tiểu nhiều hay đa niệu (Polyuria) được định nghĩa là thể tích nước tiểu trong 24 giờ lớn hơn 40 – 50 ml/kg cân nặng ở người trưởng thành.2 3
+
+Lượng nước tiểu trung bình chỉ khoảng 1 – 3 lít mỗi ngày ở hầu hết người trưởng thành. Người bị đái tháo nhạt có thể tiểu đến 20 lít/ ngày.4 5
+
+### Vai trò của hormon kháng lợi niệu1
+
+Hormon kháng lợi niệu – ADH còn có tên gọi khác là Arginin Vasopressin (AVP) là một nội tiết tố do vùng dưới đồi sản xuất ra, được vận chuyển tới thùy sau của tuyến yên để dự trữ và bài tiết. ADH được dữ trự tại tuyến yên đủ bài tiết 5 – 10 ngày với liều tối đa, nếu bài tiết lượng trung bình thường đủ 1 tháng.
+
+Tác dụng quan trọng nhất của AVP là ảnh hưởng đến tốc độ bài tiết nước của cơ thể, góp phần gây cô đặc nước tiểu (chống bài niệu) giữ cho lượng nước tiểu tương đối không quá nhiều cũng không quá ít. Tác dụng này chủ yếu xảy ra tại tế bào ống thận xa và ống góp. Ngoài ra AVP còn một số tác dụng khác phụ thuộc vào liều.
+
+Khi lượng AVP bài tiết giảm đi hoặc tác dụng của AVP bị suy giảm (còn gọi là đề kháng tác dụng với AVP), thì thận giảm khả năng cô đặc nước tiểu. Từ đó dẫn đến một lượng lớn nước tiểu bị đào thải ra ngoài, gây tiểu nhiều hay đái tháo nhạt.
+
+### Phân loại đái tháo nhạt1 2 3
+
+Đái tháo nhạt được chia thành 3 loại như sau:
+
+- Đái tháo nhạt trung ương do giảm bài tiết AVP một phần, hay hoàn toàn từ thùy sau tuyến yên.
+- Đái tháo nhạt do thận do giảm tác dụng của AVP trên ống thận một phần hay hoàn toàn.
+- Chứng uống nhiều tiên phát (primary polydipsia) do ức chế bài tiết ADH, bởi uống quá nhiều nước do khiếm khuyết cơ chế khát, hoặc bất thường về nhận thức.
+
+### Đái tháo nhạt và đái tháo đường có giống nhau không?4 5
+
+Đái tháo nhạt không giống hay không liên quan đến đái tháo đường. Mặc dù hai bệnh lý này có thể có một số triệu chứng tương tự như tiểu nhiều, khát nhiều, uống nhiều.
+
+Trong đái tháo đường, mức đường huyết tăng cao (tăng đường huyết). Lượng đường quá cao trong máu vượt quá khả năng tái hấp thu của thận; vì thế xuất hiện đường trong nước tiểu, và thận sẽ bài tiết lượng đường này bằng cách tăng lượng nước tiểu. Đái tháo đường thì phổ biến hơn rất nhiều lần so với đái tháo nhạt. Nếu nếm nước tiểu sẽ có vị ngọt, vì thế bệnh này mới được gọi là đái tháo đường.
+
+Trong đái tháo nhạt, mức đường huyết của người bệnh vẫn bình thường. Nhưng thận không còn đủ khả năng cô đặc nước tiểu do thiếu hormone chống bài niệu, hoặc giảm tác dụng của hormone này. Đái tháo nhạt thì rất hiếm gặp, cứ 25,000 người mới có một người mắc phải.3 Nước tiểu thì có vị rất nhạt và màu sắc cũng rất nhạt, vì thế được gọi là đái tháo nhạt.
+
+### Ai có khả năng mắc đái tháo nhạt?4
+
+Tất cả mọi người ở bất kỳ độ tuổi nào đều có nguy cơ mắc đái tháo nhạt. Một số đối tượng sau đây có khả năng cao mắc đái tháo nhạt hơn so với các đối tượng khác:
+
+- Có tiền sử gia đình bị đái tháo nhạt.
+- Chấn thương đầu nặng hoặc phẫu thuật não.
+- Sử dụng một số thuốc có ảnh hưởng đến khả năng cô đặc nước tiểu của thận như: lithium, rifampin, colchicine, amphotericine B,… hoặc một số thuốc lợi tiểu.
+- Rối loạn điện giải như tăng canxi máu hoặc hạ kali máu,…
+
+Sau đây, chúng ta hãy cùng tìm hiểu về đái tháo nhạt trung ương hay còn gọi là đái tháo nhạt do thiếu AVP.
+
+## Đái tháo nhạt trung ương có phổ biến hay không?
+
+Nhìn chung, đái tháo nhạt trung ương là bệnh lý hiếm gặp với tỷ lệ lưu hành ước tính là 1/25,000 nghĩa là trong 25,000 người sẽ có 1 người bị đái tháo nhạt trung ương.2 3
+
+Hầu hết các trường hợp xảy ra ở giai đoạn trưởng thành. Tuy nhiên, đái tháo nhạt trung ương có tính chất gia đình có thể xuất hiện sớm hơn, từ trong những năm đầu đời.2
+
+Đái tháo nhạt trung ương có thể thoáng qua hoặc vĩnh viễn (kéo dài suốt đời). Có từ 10 – 30% bệnh nhân sau phẫu thuật tuyến yên qua đường xương bướm, 2 – 7% bệnh nhân sẽ bị đái tháo nhạt vĩnh viễn. Khoảng 67,5 – 80% bệnh nhân có bằng chứng đái tháo nhạt sau phẫu thuật cần điều trị với demopressin (chất tương tự AVP) ít nhất một lần.2
+
+## Nguyên nhân của đái tháo nhạt trung ương
+
+Nguyên nhân gây đái tháo nhạt trung ương bao gồm:1 2 3
+
+- Chấn thương đầu, sọ não (có thể hồi phục sau 6 tháng).
+- Sau phẫu thuật vùng hạ đồi – tuyến yên hoặc các tổ chức lân cận (thường bệnh xảy ra 1 – 6 ngày sau phẫu thuật, đái tháo nhạt có thể thoáng qua hoặc mạn tính kéo dài).
+- Các khối u: u sọ hầu, u tuyến yên, u tuyến tùng, u màng não, germinoma, glioma, các u di căn (thường gặp do ung thư vú, ung thư phổi,…) hay lymphoma, leukemia.
+- Tổn thương do nhiễm trùng: lao, giang mai, viêm não, viêm màng não, nấm, toxoplasmosis.
+- Bệnh lý u hạt: sarcoidosis, bệnh mô bào X, bệnh u hạt Wegener.
+- Bệnh mạch máu não: túi phình mạch máu não, hội chứng Sheehan, tai biến mạch máu não.
+- Bệnh bẩm sinh: đái tháo nhạt có tính chất gia đình, thường xuất hiện sớm; dị tật bẩm sinh như loạn sản vách ổ mắt, bất thường đường giữa sọ mặt.
+- Vô căn: chiếm khoảng 30 – 40% các trường hợp.
+- Ngoài ra, trong thời kỳ mang thai cũng có thể xuất hiện đái tháo nhạt, do nhau thai tiết ra chất vasopressinase làm tăng phân hủy AVP; do đó gây giảm AVP.
+
+## Triệu chứng và biến chứng của đái tháo nhạt trung ương
+
+Triệu chứng điển hình của đái tháo nhạt là:1 2 3
+
+- Tiểu nhiều cả về số lượng nước tiểu và số lần đi tiểu, tiểu đêm làm bệnh nhân khó ngủ, mất ngủ, mệt mỏi.
+- Khát nhiều, uống nhiều để bù lại lượng nước mất do đi tiểu. Trong trường hợp bệnh nhân không uống đủ lượng nước để bù lại lượng nước đã mất đó, thì bệnh nhân sẽ có các triệu chứng mất nước như môi khô, niêm mạc lưỡi, họng khô, khát nước, mạch nhanh, huyết áp thấp nặng hơn sẽ dẫn đến trụy tim mạch.
+- Triệu chứng do tăng natri máu do không uống đủ nước như: yếu cơ, mỏi cơ, buồn nôn và nôn, đau đầu, thay đổi tri giác, lơ mơ, co giật, hôn mê nếu không được xử trí kịp thời.
+
+Bên cạnh đó, còn có một số triệu chứng giúp gợi ý nguyên nhân gây bệnh:1 2 3
+
+- Sau chấn thương đầu hoặc phẫu thuật vùng hạ đồi – tuyến yên.
+- Hội chứng khối choáng chỗ: đau đầu, nôn vọt, bán manh, giảm thị lực, suy các chức năng khác của tuyến yên (suy thượng thận, suy giáp,…) gợi ý các nguyên nhân u vùng hạ đồi – tuyến yên, hoặc u não chèn ép vùng hạ đồi tuyến yên.
+- Băng huyết sau sanh gợi ý hội chứng Sheehan.
+- Tiền sử ung thư vú, ung thư phổi, ung thư máu, ung thư hạch gợi ý nguyên nhân ung thư.
+
+Như đã đề cập ở trên, hai biến chứng quan trọng nhất của đái tháo nhạt trung ương là mất nước và tăng natri máu. Hai biến chứng này thường chỉ xảy ra khi bệnh nhân không uống đủ nước.
+
+## Đái tháo nhạt trung ương có xử trí tại nhà được không? Khi nào cần gặp bác sĩ?
+
+Nếu bệnh nhân có các triệu chứng gợi ý đái tháo nhạt như tiểu nhiều (> 40 – 50 ml/kg cân nặng/ngày), tiểu nhiều lần, tiểu đêm; khát nhiều, uống nhiều thì nên đến các cơ sở y tế để được thăm khám; nhằm chẩn đoán xác định có bị đái tháo nhạt hay không.
+
+Nếu được chẩn đoán đái tháo nhạt thì bác sĩ sẽ xác định thuộc đái tháo nhạt loại nào, cũng như tìm kiếm nguyên nhân của đái tháo nhạt. Từ đó sẽ đưa ra cách xử trí thích hợp.
+
+Mỗi loại đái tháo nhạt có cách điều trị khác nhau. Vì thế người có các triệu chứng đái tháo nhạt không nên tự xử trí tại nhà, vì nếu không bù đủ lượng nước cho cơ thể có thể dẫn đến mất nước nặng, tăng natri máu đe dọa tính mạng.
+
+Chỉ khi bệnh nhân được chẩn đoán xác định đái tháo nhạt loại gì, và đã được hướng dẫn cách điều trị thì mới có thể quản lý bệnh tại nhà.
+
+## Chẩn đoán đái tháo nhạt trung ương
+
+Khi bạn có các triệu chứng gợi ý đái tháo nhạt, bác sĩ sẽ tiến hành một số xét nghiệm giúp chẩn đoán và phân loại, cũng như tìm nguyên nhân đái tháo nhạt.
+
+### Chẩn đoán xác định đái tháo nhạt1 2 3
+
+#### Đo tỉ trọng nước tiểu
+
+Tỉ trọng nước tiểu giảm, thường nhỏ hơn 1,001 – 1,010.6
+
+Nước tiểu có màu và vị rất nhạt (nếu nếm thử thì rất nhạt, do đó nên bệnh lý này được gọi là đái tháo nhạt).
+
+#### Đo áp lực thẩm thấu nước tiểu
+
+Áp lực thẩm thấu nước tiểu sẽ giảm nhỏ hơn 300 mOsm/kg H2O.
+
+#### Đo nồng độ natri trong máu
+
+Natri máu tăng > 145 mmol/L, thường chỉ khi bệnh nhân không uống đủ nước thì natri máu mới tăng.
+
+Nếu bệnh nhân uống đủ nước, natri máu sẽ nằm trong giới hạn bình thường.
+
+Chẩn đoán xác định đái tháo nhạt khi bệnh nhân tiểu nhiều (> 40 – 50 ml/kg/ngày) và áp lực thẩm thấu nước tiểu thấp không thích hợp (300 mOsm/kg H2O).2 3
+
+### Xét nghiệm giúp phân loại đái tháo nhạt
+
+#### 1. Đo áp lực thẩm thấu máu
+
+Áp lực thẩm thấu máu tăng cao trên 285 mOsm/kg nước.6
+
+#### 2. Nghiệm pháp nhịn nước1 2 3 6
+
+Đây là nghiệm pháp có giá trị phân loại. Tuy nhiên cũng là nghiệm pháp có nhiều thách thức cho bệnh nhân, vì không được uống nước trong suốt thời gian làm nghiệm pháp. Điều này có thể làm bệnh nhân rất khó chịu do đã quen với việc uống một lượng nước rất lớn ở nhà, thậm chí đến 15 lít nước/ngày. Vì thế, bệnh nhân cần hiểu được tầm quan trọng của việc nhịn uống nước, để đạt được kết quả chính xác nhất sau thi hoàn tất nghiệm pháp.
+
+Phương pháp được thực hiện như sau:
+
+- Không dùng thuốc lá, cà phê, rượu bia ít nhất 24 giờ trước khi tiến hành nghiệm pháp.
+- Bệnh nhân nằm nghỉ tại giường, không uống nước, có thể ăn thức ăn khô trong suốt thời gian làm nghiệm pháp.
+- Bệnh nhân sẽ được đo cân nặng, đếm mạch, đo huyết áp trước khi làm xét nghiệm.
+- Bệnh nhân sẽ được theo dõi lượng nước tiểu, mạch, huyết áp, cân nặng mỗi giờ trong thời gian làm nghiệm pháp.
+- Bệnh nhân sẽ được lấy máu để đo nồng độ natri, áp lực thẩm thấu máu, áp lực thẩm thấu nước tiểu mỗi giờ (có thể thay đổi chút ít tùy vào tình trạng của bệnh nhân).
+
+Ngưng nghiệm pháp khi:
+
+- Cân nặng giảm > 5% so với ban đầu.
+- Bệnh nhân có dấu hiệu mất nước nặng: mạch nhanh, huyết áp tụt.
+- Áp lực thẩm thấu máu > 295 mOsm/kg và Na máu tăng > 145 meq/L.
+- Áp lực thẩm thấu nước tiểu thay đổi < 30 mOsm/kg trong 2 mẫu liên tiếp.
+- Thực hiện nghiệm pháp nhịn nước đủ thời gian là 8 giờ.
+
+Phân tích kết quả sau khi kết thúc nghiệm pháp nhịn nước như sau:
+
+Có đáp ứng (ADH bình thường) |
+Không đáp ứng (thiếu ADH) |
+|
+| Thể tích nước tiểu | Giảm dần | Không giảm |
+| Áp lực thẩm thấu nước tiểu | Tăng gấp 2 – 4 lần áp lực thẩm thấu nước tiểu trước khi nhịn nước | Áp lực thẩm thấu nước tiểu không tăng |
+| Áp lực thẩm thấu máu | Áp lực thẩm thấu nước tiểu > áp lực thẩm thấu máu | Áp lực thẩm thấu nước tiểu < áp lực thẩm thấu máu |
+| Nồng độ ADH | Tăng cao | Không tăng |
+
+Test kích thích bằng ADH: được thực hiện ngay sau khi ngưng nhịn nước, để phân biệt đái tháo nhạt trung ương hay đái nhạt do thận. Bác sĩ chỉ định demopressin 2 ug tiêm bắp hoặc tiêm tĩnh mạch, hoặc demopressin 10 ug xịt mũi. Sau đó, đo áp lực thẩm thấu nước tiểu sau 60 phút. Phân tích kết quả như sau:
+
+- Bình thường: áp lực thẩm thấu nước tiểu sẽ tăng sau xịt demopressin so với trước xịt.
+- Đái tháo nhạt trung ương: áp lực thẩm thấu nước tiểu tăng cao > 10% so với trước xịt.
+- Đái tháo nhạt do thận: áp lực thẩm thấu nước tiểu không tăng so với trước xịt.
+
+### Chẩn đoán nguyên nhân đái tháo nhạt1 2 3
+
+Việc chẩn đoán nguyên nhân dựa vào các xét nghiệm đo áp lực thẩm thấu nước tiểu, áp lực thẩm thấu máu, nghiệm pháp nhịn nước và test kích thích bằng AVP sau khi ngưng nghiệm pháp nhịn nước.
+
+Áp lực thẩm thấu máu (mosmol/kg) |
+Áp lực thẩm thấu nước tiểu (mosmol/kg) |
+Nghiệm pháp nhịn nước |
+Áp lực thẩm thấu nước tiểu sau xịt AVP |
+Nguyên nhân |
+| < 285 | < 300 | Có đáp ứng | Không tăng hoặc tăng < 10% | Uống nhiều tiên phát |
+| Tăng | < 300 | Không đáp ứng | Tăng > 50% | Đái tháo nhạt trung ương hoàn toàn |
+| Tăng | < 300 | Không đáp ứng | Tăng > 10% | Đái tháo nhạt trung ương một phần |
+| Tăng | < 300 | Không đáp ứng | Không tăng | Đái tháo nhạt do thận |
+
+Nếu người bệnh được chẩn đoán là đái tháo nhạt trung ương, thì bác sĩ có thể sẽ làm thêm một số xét nghiệm để tìm nguyên nhân, tùy vào tiền sử và các đặc điểm lâm sàng của người bệnh:1
+
+- Chụp cộng hưởng từ tuyến yên nếu nghi ngờ nguyên nhân tại não.
+- Đo thị trường, thị lực nếu có u chèn giao thoa thị giác.
+- Các xét nghiệm đánh giá chức năng thuỳ trước tuyến yên như Prolactin, TSH, FSH, LH, ACTH, cortisol.
+
+## Điều trị đái tháo nhạt trung ương
+
+Điều trị đái tháo nhạt trung ương chủ yếu phụ thuộc vào số lượng nước tiểu và mức độ nặng của triệu chứng (đái tháo nhạt một phần hay toàn phần).1 2 3
+
+- Nếu lượng nước tiểu từ 2 – 5 lít/ ngày và bệnh nhân uống được nước đủ bù cho lượng nước tiểu mất đi, thì có thể không cần điều trị đặc hiệu bằng thuốc. Người bệnh nên ăn ít muối, ít thực phẩm chứa protein để giảm khả năng tăng natri máu.
+- Nếu lượng nước tiểu trên 5 lít/ ngày hoặc bệnh nhân rất khó chịu với các triệu chứng do đái tháo nhạt gây ra, thì thầy thuốc sẽ sử dụng thuốc cho người bệnh.
+
+Mục đích của điều trị đái tháo nhạt bằng thuốc là để bệnh nhân giảm tiểu đêm và ngủ được. Sau đó, bác sĩ sẽ điều chỉnh liều lượng thuốc để tiến tới kiểm soát lượng nước tiểu cho người bệnh.
+
+Hiện nay, tại thị trường Việt Nam, thuốc điều trị đái tháo nhạt trung ương hiện có là dẫn xuất của hormon chống bài niệu – desmopressin – ở hai dạng là viên uống và dạng xịt vào niêm mạc mũi. Liều lượng và đường dùng tùy vào đặc điểm của bệnh nhân mà bác sĩ sẽ lựa chọn cho thích hợp. Desmopressin cũng được sử dụng điều trị đái tháo nhạt trong thai kỳ, vì thuốc an toàn cho phụ nữ có thai.1 5
+
+Mặc dù thuốc rất an toàn khi sử dụng. Tuy nhiên vẫn có vài tác dụng phụ của desmopressin mà người bệnh cần lưu ý như:5
+
+- Đau đầu.
+- Đau bụng.
+- Nôn ói.
+- Chảy nước mũi hoặc nghẹt mũi.
+- Chảy máu mũi (rất hiếm gặp).
+- Hạ natri máu là tác dụng đáng lo ngại nhất khi dùng desmopressin: thường xảy ra khi bệnh nhân dùng quá liều thuốc hoặc uống quá nhiều nước. Triệu chứng của hạ kali có thể là đau đầu kéo dài; hoặc đau đầu nhiều, buồn nôn, nôn ói, thay đổi tri giác, lơ mơ. Nếu bệnh nhân có các triệu chứng gợi ý hạ natri máu khi dùng desmopressin, thì phải đi khám ngay để được xử trí thích hợp.
+
+Theo dõi: Bệnh nhân cần theo dõi định kỳ natri máu theo lịch hẹn của bác sĩ điều trị, nhằm tránh quá liều desmopressin cũng như các triệu chứng tiểu nhiều, uống nhiều.
+
+## Phòng ngừa đái tháo nhạt trung ương
+
+Thật sự, không có phương pháp nào phòng ngừa đái tháo nhạt trung ương; vì bệnh có thể do di truyền, do bất thường về gen hoặc do hậu quả của các bệnh lý khác.7
+
+Những đối tượng có yếu tố nguy cơ phát triển bệnh, thì nên đi khám nếu xuất hiện các triệu chứng gợi ý đái tháo nhạt như tiểu nhiều, khát nhiều, uống nhiều.
+
+Trên đây là nhưng thông tin về bệnh lý **đái tháo nhạt trung ương**. Đây là bệnh lý hiếm gặp, tuy nhiên lại gây nhiều triệu chứng phiền toái làm giảm chất lượng cuộc sống người bệnh. Đái tháo nhạt trung ương hoàn toàn có thể quản lý hiệu quả bằng thuốc và uống đủ lượng nước mỗi ngày. Đây là bệnh lý điều trị dài hạn, suốt đời trên nền tảng phải cung cấp đủ nước, nhằm tránh biến chứng mất nước, tăng natri máu. Trong quá trình điều trị bằng thuốc, người bệnh cần theo dõi định kỳ natri máu, cũng như các triệu chứng hạ natri máu để tránh quá liều thuốc.

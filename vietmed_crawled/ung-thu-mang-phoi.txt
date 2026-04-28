@@ -1,0 +1,212 @@
+# SOURCE_URL: https://youmed.vn/tin-tuc/ung-thu-mang-phoi/
+
+# Ung thư màng phổi: dấu hiệu, chẩn đoán và cách điều trị
+
+Nội dung bài viết
+
+**Ung thư màng phổi có lẽ vẫn còn là một bệnh lý khá xa lạ với nhiều người. Mọi người vẫn thường hay nghe hoặc nhắc nhiều đến ung thư phổi. Tuy nhiên khi được chẩn đoán mắc ung thư màng phổi thì lại rất ít ai hiểu rõ được căn bệnh này. Vậy ung thư màng phổi có dấu hiệu gì? Và cách chẩn đoán cùng phương pháp điều trị sẽ ra sao? Hãy cùng Bác sĩ chuyên khoa Ung bướu Nguyễn Kinh Kha tìm hiểu trong bài viết dưới đây.**
+
+## Tổng quan về ung thư màng phổi
+
+### Ung thư màng phổi là gì?
+
+U trung biểu mô (mesothelioma) là ung thư xảy ra ở các lớp màng mỏng bao bọc các cơ quan trong cơ thể, bao gồm lớp biểu mô màng bụng, màng ngoài tim và màng phổi, vốn có nguồn gốc phôi thai từ trung bì phổi.
+
+Trong các vị trí trên, ung thư trung biểu mô xảy ra chủ yếu ở màng phổi. Ung thư trung biểu mô màng phổi (maglinant pleural mesothelioma) cũng là loại ung thư duy nhất của màng phổi được biết đến.1
+
+Đây là một loại ung thư hiếm gặp, khó chẩn đoán và tiên lượng tương đối kém. Theo GLOBOCAN 2020 (Dự án báo cáo tình hình ung thư của Cơ quan nghiên cứu Ung thư quốc tế), số ca mắc mới ung thư trung biểu mô màng phổi trong năm 2020 là 30 870 ca, trong đó tử vong lên đến 26 278 ca, tức tỷ lệ tử vong lên đến hơn 85%.2
+
+### Màng phổi là gì?
+
+#### Cấu tạo và chức năng màng phổi
+
+Con người có hai lá phổi, mỗi bên đều được bao bọc bởi hai lớp màng mỏng là màng phổi thành và màng phổi tạng.
+
+Màng phổi tạng bao bọc sát phổi, còn màng phổi thành dính sát thành ngực, tạo thành một khoang “ảo” ở giữa gọi là khoang màng phổi. Gọi là khoang “ảo” vì bình thường khi hít vào, không khí đi vào phổi làm phổi nở ra, hai lớp màng này đè chặt vào nhau, không có khoảng cách ở giữa; nhưng khi thở ra, phổi xẹp lại, tạo ra khoang trống và kín ở giữa hai lớp màng, với mục đích tạo một áp lực âm để hỗ trợ cho phổi nở tiếp vào chu kỳ hô hấp tiếp theo.
+
+#### Dấu hiệu khi màng phổi xảy ra bất thường
+
+Bình thường trong khoang kín này chỉ chứa một ít dịch để giảm ma sát. Nếu có tình trạng bệnh lý xảy ra làm dịch màng phổi tiết ra quá mức (gọi là tràn dịch màng phổi) hoặc màng phổi bị dày dính, thì chức năng hô hấp sẽ bị ảnh hưởng, gây ra tình trạng khó thở – triệu chứng chính khiến người bệnh ung thư màng phổi đến gặp bác sĩ.
+
+## Yếu tố nguy cơ ung thư màng phổi
+
+### Tiếp xúc trực tiếp với amiăng
+
+#### Tiếp xúc trực tiếp amiăng thời gian dài
+
+Yếu tố nguy cơ được cho là có mối liên quan mạnh nhất tới ung thư trung biểu mô màng phổi (ung thư màng phổi) là sự tiếp xúc lâu dài với bụi phổi amiăng. Amiăng là một nhóm các silicat tự nhiên có dạng sợi mỏng, dài, có trong nước, không khí và đất. Tất cả mọi người đều hít thở một lượng nhỏ amiăng trong suốt cuộc đời, nhưng không làm tăng nguy cơ ung thư màng phổi.
+
+Tiếp xúc với bụi nồng độ cao amiăng trong một thời gian dài mới có thể dẫn tới ung thư màng phổi. Amiăng thường được sử dụng nhiều trong ngành công nghiệp vật liệu xây dựng, vật liệu đóng tàu, ngành dệt và phanh ô tô, đặc biệt là trong các tấm lợp fibro-xi măng. Các vật liệu này hiện đã bị cấm sử dụng ở 55 quốc gia trên thế giới.3 Nhưng lại được sử dụng khá phổ biến ở Việt Nam. Đặc biệt ở vùng đồng bào dân tộc thiểu số và miền núi.
+
+#### Ngành nghề thường xuyên tiếp xúc amiăng
+
+Các nghề nghiệp phổ biến có nguy cơ phơi nhiễm cao với amiăng có thể kể đến như:4
+
+- Công nhân sản xuất ô tô, tàu hỏa.
+- Công nhân cải tạo và phá dỡ các tòa nhà cũ.
+- Công nhân xây dựng, đóng tàu.
+- Nhân viên cứu hỏa.
+- Công nhân sản xuất và lắp đặt tấm lợp cách nhiệt.
+- Thợ mỏ.
+- Thợ sửa ống nước.
+
+### Phơi nhiễm với amiăng thông qua đồ đạc
+
+#### Ung thư trung biểu mô tại màng phổi là nguyên nhân chính do phơi nhiễm amiăng
+
+Ngoài ra, các thành viên sống chung trong gia đình của họ cũng có thể phơi nhiễm với amiăng qua bụi bám trên đồ lao động. Các đối tượng trên có khoảng 10% nguy cơ phát triển thành ung thư trung biểu mô màng phổi, với thời gian ủ bệnh trung bình 25 – 30 năm.
+
+Sau khi bị hít phải, amiăng sẽ đến màng phổi gây viêm dính và tạo sẹo, đồng thời kích hoạt các quá trình sinh học dẫn tới tổn thương DNA (vật liệu di truyền của tế bào), từ đó dẫn tới phát triển khối u trung biểu mô tại màng phổi.5
+
+#### Hậu quá khác khi phơi nhiễm amiăng
+
+Ngoài gây ung thư trung biểu mô (mesothelioma) nói chung, hay ung thư trung biểu mô màng phổi nói riêng, phơi nhiễm a-mi-ăng còn gây ra các vấn đề sức khỏe nghiêm trọng khác như:6
+
+- Bệnh bụi phổi (asbestosis): là bệnh phổi mạn tính đặc trưng bởi tình trạng xơ hóa phổi do bụi amiăng, gây triệu chứng chính là khó thở kéo dài.
+- Dày dính màng phổi, tràn dịch màng phổi.
+- Một số loại ung thư khác: ung thư phổi, ung thư thanh quản, ung thư buồng trứng, ung thư tinh hoàn.
+
+Ngoài amiăng thì bức xạ ion hóa, virus *Simian 40*, các yếu tố di truyền liên quan đến gen BAP1 cũng được cho là yếu tố nguy cơ của ung thư màng phổi.7
+
+## Triệu chứng ung thư màng phổi
+
+### Triệu chứng ở giai đoạn khu trú
+
+Cũng như ung thư phổi, ung thư màng phổi có các triệu chứng không đặc hiệu, dễ nhầm lẫn với các bệnh lý đường hô hấp khác. Khi bệnh còn khu trú tại chỗ, người bệnh thường đến gặp bác sĩ với các vấn đề sau:
+
+- Khó thở.
+- Đau ngực.
+- Ho kéo dài.
+- Khối mô dưới da vùng ngực.
+- Sụt cân không rõ nguyên nhân.
+
+Khi khám, người bệnh thường có dấu hiệu của tràn dịch màng phổi. Tình trạng tái lập nhanh chóng sau khi được chọc hút dịch màng phổi sẽ gợi ý nghĩ đến nguyên nhân ác tính.
+
+### Triệu chứng ở giai đoạn muộn
+
+Ở giai đoạn muộn, bệnh có thể di căn gan, xương, não với các triệu chứng của cơ quan di căn tương ứng: đau bụng, đau nhức xương, thay đổi tri giác, đau đầu, yếu liệt,…
+
+## Chẩn đoán ung thư màng phổi như thế nào?
+
+Như đã trình bày, ung thư trung biểu mô màng phổi là một bệnh hiếm gặp và có yếu tố nguy cơ rõ rệt, vì vậy việc khai thác được người bệnh có tiền sử tiếp xúc lâu dài với nồng độ cao amiăng là điều quan trọng hàng đầu trước khi nghĩ đến chẩn đoán này. Hãy báo với bác sĩ điều trị nếu bạn là một trong những đối tượng nguy cơ cao kể trên.
+
+Để xác định chẩn đoán, một hay nhiều phương tiện hình ảnh học có thể được bác sĩ chỉ định.
+
+### X quang ngực phẳng và siêu âm màng phổi
+
+Chụp X quang ngực thẳng và siêu âm màng phổi là hai phương tiện đơn giản nhất đem lại nhiều thông tin có giá trị về tình trạng tràn dịch màng phổi và có thể gợi ý sự hiện diện của u màng phổi.
+
+### Chụp cắt lớp vi tính (CT scan)
+
+Sau đó, chụp cắt lớp vi tính (CT scan), chụp cộng hưởng từ (MRI) ở vùng ngực được chỉ định để xác định chính xác vị trí, tính chất của khối u.
+
+### Sinh thiết xuyên thành ngực
+
+Sinh thiết xuyên thành ngực dưới hướng dẫn siêu âm hoặc CT scan ngực. Đây là phương pháp đơn giản nhất để lấy mẫu mô màng phổi. Một cây kim nhỏ sẽ được đâm xuyên qua thành ngực vào vị trí khối u dưới hướng dẫn trực tiếp của đầu dò siêu âm hoặc máy CT scan nhằm đạt được độ chính xác cao, hạn chế biến chứng chọc kim nhầm vào các cơ quan lành xung quanh. Tuy nhiên phương pháp này bị giới hạn ở một số vị trí nằm sâu hoặc bị xương che khuất, lúc này phẫu thuật sẽ được chỉ định.
+
+### Phẫu thuật sinh thiết
+
+Phẫu thuật sinh thiết bao gồm phẫu thuật lồng ngực có hỗ trợ bằng video (VATS – Video-assisted thoracoscopic surgery) hoặc phẫu thuật mở ngực.
+
+#### Phẫu thuật
+
+Phẫu thuật lồng ngực có hỗ trợ bằng video (giống như kỹ thuật phẫu thuật nội soi) là phương pháp ít xâm lấn hơn giúp quan sát khối u, bấm mẫu sinh thiết cũng như lấy dịch màng phổi xét nghiệm, đồng thời dẫn lưu dịch trong khoang màng phổi để giảm bớt triệu chứng khó thở. Người bệnh chỉ cần rạch một (hoặc một vài) đường nhỏ trên ngực để đưa các dụng cụ nội soi vào. Thay vì phương pháp mở ngực truyền thống, phải rạch đường lớn hơn để vào ngực.
+
+Sau đó, mẫu mô này sẽ được gửi đến bác sĩ Giải phẫu bệnh để tìm tế bào ung thư dưới kính hiển vi nhằm chẩn đoán xác định. Hầu hết kết quả giải phẫu bệnh của ung thư trung biểu mô màng phổi là dạng biểu mô – các tế bào biểu mô sắp xếp cuộn chặt trong các vỏ bao cứng, xoắn ốc, nghĩa là các tế bào ác tính này liên kết chặt với nhau, chính vì thế khả năng rời khỏi vị trí màng phổi ban đầu và di căn đến vị trí khác sẽ thấp và đáp ứng với điều trị cũng tốt hơn, dẫn tới thời gian sống còn sẽ lâu hơn các dạng khác.
+
+#### Xét nghiệm máu
+
+Ngoài ra, xét nghiệm máu để tìm một số dấu ấn sinh học (là các protein liên kết mesothelin như fibulin-3, các peptids mesothelin hòa tan) đang được nghiên cứu để phát hiện và theo dõi bệnh, tuy nhiên độ nhạy còn thấp nên có giá trị hạn chế.8
+
+## Các giai đoạn và tỷ lệ sống
+
+### Giai đoạn và tỷ lệ sống
+
+Theo thống nhất chung toàn thế giới của Ủy ban Ung thư Hoa Kỳ (AJCC – American Joint Committee on Cancer), ung thư màng phổi được phân làm bốn giai đoạn, tương ứng với sự tiến triển và lan rộng dần của bệnh:
+
+- Giai đoạn I và II thể hiện bệnh còn khu trú tại chỗ.
+- Giai đoạn III và IV là bệnh đã lan rộng, di căn đến các hạch bạch huyết hoặc các cơ quan khác trong cơ thể.
+
+Vì vậy, phương pháp điều trị và tiên lượng thời gian sống còn cho từng giai đoạn cũng khác nhau. Tuy vài người bệnh có thể đạt được sống còn lâu dài sau điều trị đặc hiệu, nhưng ung thư màng phổi vẫn được xem là bệnh không chữa được.
+
+Với các người bệnh không được điều trị, thời gian sống trung bình cho mọi giai đoạn là khoảng 6 tháng. Nếu được điều trị, thời gian sống có thể kéo dài trung bình khoảng 18 tháng. Tỉ lệ sống tính bằng năm sau chẩn đoán được thể hiện ở bảng bên dưới.5
+
+| 1 năm sau chẩn đoán | 73% |
+| 3 năm sau chẩn đoán | 23% |
+| 5 năm sau chẩn đoán | 12% |
+| 10 năm sau chẩn đoán | 4,7% |
+
+### Dấu hiệu nhận biết bệnh có tiên lượng xấu
+
+Một số dấu hiệu có thể gợi ý tiên lượng xấu, thời gian sống còn ngắn ở các người bệnh này bao gồm:9
+
+- Lớn hơn 75 tuổi tại thời điểm được chẩn đoán.
+- Thể trạng kém, gầy yếu.
+- Xét nghiệm LDH (Lactate Dehydrogenase) – một chỉ dấu sinh học trong máu tăng cao > 500 đơn vị/L.
+- Số lượng tiểu cầu (một loại tế bào máu có chức năng đông cầm máu) tăng cao.
+- Đau ngực.
+- Giải phẫu bệnh không phải loại biểu mô (như đã giải thích ở trên).
+
+## Điều trị ung thư màng phổi như thế nào?
+
+Cần nhắc lại, không có phương pháp được coi là điều trị triệt để cho ung thư màng phổi. Các lựa chọn điều trị hiện nay chủ yếu với mục đích cải thiện triệu chứng và có thể kéo dài thêm thời gian sống. Điều trị ung thư nói chung và ung thư màng phổi nói riêng là điều trị đa mô thức, tức là kết hợp giữa phẫu thuật, hóa trị, xạ trị và chăm sóc giảm nhẹ, tùy vào giai đoạn bệnh, kích thước khối u, tuổi và thể trạng người bệnh,…
+
+Đối với giai đoạn từ I – III, phẫu thuật có thể là phương pháp điều trị đầu tay được lựa chọn, sau đó hóa trị hoặc xạ trị hỗ trợ để tiêu diệt các tế bào ung thư vi thể còn sót lại nhằm hạn chế khả năng tái phát. Có hai phương pháp phẫu thuật bao gồm:
+
+### Phẫu thuật cắt màng phổi (P/D – Pleurectomy/decortication)10
+
+Với loại phẫu thuật này, phẫu thuật viên sẽ cắt bỏ phần màng phổi mang u (cả màng phổi thành và màng phổi tạng) và chừa lại nhu mô phổi bên trong, đồng thời bơm một số loại hóa chất vào khoang màng phổi để gây xơ hóa, giảm tiết dịch màng phổi – nguyên nhân chính gây ra triệu chứng khó thở cho người bệnh. Vì nhu mô phổi được giữ nguyên nên đây được gọi là phẫu thuật bảo tồn phổi.
+
+Nó có thể được thực hiện qua nội soi hoặc mổ mở, tùy vào kỹ thuật của cơ sở y tế và đánh giá của bác sĩ phẫu thuật.
+
+Đây là một phẫu thuật có độ khó cao, chỉ được thực hiện tại các bệnh viện lớn. Sau mổ, người bệnh cần nằm viện trong khoảng 1 tuần và mất 4-6 tuần sau đó để hồi phục hoàn toàn trước khi có thể bắt đầu các điều trị tiếp theo. Một nghiên cứu lớn tại Vương quốc Anh là MARS-2 đang được thực hiện nhằm khảo sát liệu phẫu thuật này có lợi ích kéo dài sống còn và cải thiện chất lượng cuộc sống hơn so với hóa trị đơn thuần hay không, dự kiến sẽ có kết quả vào năm 2022 hoặc 2023.
+
+### Phẫu thuật cắt phổi kèm màng phổi mở rộng (EPP – Extrapleural pneumoectomy)
+
+Phẫu thuật viên sẽ cắt bỏ một phần nhu mô phổi bị ảnh hưởng, một phần cơ hoành kèm màng phổi và màng ngoài tim xung quanh. Đây là một phẫu thuật lớn, người bệnh cần nằm viện ít nhất 2 tuần và mất 3 đến 4 tháng để hồi phục hoàn toàn.
+
+### Trường hợp không thể phẫu thuật
+
+Đối với người bệnh giai đoạn 4 (di căn các cơ quan trong cơ thể) hoặc giai đoạn sớm nhưng không thể phẫu thuật (vì bệnh lan rộng lan vào các cấu trúc quan trọng trong lồng ngực, hoặc do thể trạng và bệnh nền không cho phép phẫu thuật), hóa trị và xạ trị nhằm giảm nhẹ triệu chứng có thể được chỉ định.
+
+#### Hóa trị
+
+Là phương pháp kết hợp hai loại hóa chất Cisplatin và Pemetrexed (tên thương mại Alimta) nhằm tiêu diệt tế bào ung thư, được chứng minh có thể kéo dài thời gian sống còn thêm 3 tháng so với hóa trị đơn thuần với Cisplatin.11
+
+#### Phương pháp mới
+
+Các phương pháp mới như điều trị nhắm trúng đích (Targeted therapy) hay điều trị với thuốc miễn dịch (Immunotherapy) như Bevacizumab, Nintedanib có thể kéo dài thời gian sống còn cho người bệnh ung thư trung biểu mô màng phổi khi kết hợp với hóa trị thông thường.12 13
+
+#### Xạ trị
+
+Là phương pháp sử dụng tia X năng lượng cao chiếu vào khối u. Nhằm mục đích thu nhỏ kích thước khối u để giảm triệu chứng khó thở hoặc đau. Tuy nhiên do tính chất lan tỏa của bệnh, xạ trị thường ít đạt hiệu quả cao.
+
+### Điều trị hỗ trợ
+
+#### Lựa chọn phương pháp điều trị hỗ trợ
+
+Bên cạnh đó, các phương pháp điều trị hỗ trợ giảm nhẹ như giảm đau, kháng viêm, giảm ho, dinh dưỡng, vật lý trị liệu hô hấp sẽ được bác sĩ cân nhắc để giảm bớt triệu chứng khó chịu và nâng cao chất lượng cuộc sống cho người bệnh, đặc biệt là khi các phương pháp điều trị đặc hiệu trên không còn có thể sử dụng.
+
+Giảm đau hoàn toàn bằng thuốc đường uống thông thường rất khó đạt được. Bác sĩ có thể kết hợp giảm đau bằng miếng dán qua da, hoặc đường tiêm để nâng cao tối đa hiệu quả.
+
+#### Một số yếu tố khác trong quá trình điều trị
+
+Khi lựa chọn các phương pháp điều trị ung thư màng phổi, người bệnh nên cân nhắc kỹ lưỡng về chi phí.
+
+Ví dụ, một lọ biệt dược gốc của Pemetrexed – một trong hai thuốc hóa trị chính ung thư màng phổi, với tên thương mại là Alimta 500 mg có giá trên dưới 26 triệu đồng/lọ (bảo hiểm y tế chỉ chi trả 50%). Để sử dụng hoàn tất một liệu trình điều trị gồm nhiều chu kỳ, số tiền có thể lên đến hàng trăm triệu đồng.
+
+Tuy nhiên gần đây, sự ra đời của thuốc generic (thuốc có hoạt chất tương tự với biệt dược gốc, được chứng minh có hiệu quả tương đương nhưng giá thành rẻ hơn) có thể là cứu cánh cho nhiều trường hợp bệnh nhân không có đủ chi phí điều trị đắt đỏ với “thuốc gốc”. Bạn nên thảo luận với bác sĩ về chi phí phát sinh lâu dài trước khi tiến hành điều trị.
+
+## Tầm soát ung thư màng phổi
+
+Mặc dù tiếp xúc thời gian dài với amiăng được chứng minh là yếu tố nguy cơ của ung thư trung biểu mô màng phổi, tuy nhiên hiện nay không có hướng dẫn sàng lọc nào cho các đối tượng này cũng như dân số chung. Các dấu ấn sinh học như đã trình bày ở trên gần đây nổi lên như một phương pháp tiềm năng để chẩn đoán và theo dõi bệnh, tuy nhiên giá trị của chúng trong sàng lọc cần có nhiều nghiên cứu hơn để đánh giá. Người bệnh không nên ồ ạt xét nghiệm máu để tầm soát ung thư, vừa gây lo lắng không đáng có, vừa tổn thất về tiền bạc.
+
+## Các biện pháp phòng ngừa ung thư màng phổi
+
+Một số biện pháp nên được áp dụng để phòng ngừa căn bệnh hiếm gặp này, bao gồm:
+
+- Hạn chế tiếp xúc, sử dụng, tự ý dỡ bỏ với các vật liệu chứa amiăng, đặc biệt trong bối cảnh chúng còn được sử dụng khá phổ biến ở nước ta mà chưa có biện pháp cấm triệt hiệu quả.
+- Tuân thủ an toàn lao động như đeo khẩu trang, kính bảo hộ, quần áo bảo hộ, găng tay lao động…, đặc biệt là các ngành nghề nguy cơ cao.
+- Khám sức khỏe định kỳ và đến gặp bác sĩ khi có các triệu chứng nghi ngờ ung thư màng phổi.
+
+Ung thư trung biểu mô màng phổi (ung thư màng phổi) là một bệnh lý hiếm gặp nhưng tiên lượng khá xấu. Tiếp xúc thường xuyên và lâu dài (hàng chục năm) với a-mi-ăng (có nhiều trong các tấm lợp fibro-xi măng) là yếu tố nguy cơ quan trọng nhất của ung thư màng phổi. Triệu chứng ban đầu không điển hình: khó thở, đau ngực,… Cần các phương tiện hình ảnh và sinh thiết u để có được chẩn đoán xác định. **Ung thư màng phổi** chưa có phương pháp điều trị triệt để. Các phương pháp điều trị hiện nay chủ yếu nhằm cải thiện triệu chứng. Không có biện pháp tầm soát và phòng ngừa hiệu quả. Hạn chế tiếp xúc với a-mi-ăng là quan trọng nhất.

@@ -1,0 +1,292 @@
+# SOURCE_URL: https://youmed.vn/tin-tuc/suy-ho-hap/
+
+# Suy hô hấp: Nguyên nhân, dấu hiệu và cách điều trị
+
+Nội dung bài viết
+
+**Suy hô hấp là một hội chứng rối loạn chức năng hô hấp. Đây là một trong những tình trạng nguy hiểm xảy ra ở phổi, có thể do nhiều nguyên nhân. Bệnh nhân khi gặp tình trạng này nếu không chẩn đoán và điều trị kịp thời có thể tiến triển nặng. Thậm chí là tử vong. Chính vì vậy, bài viết sau đây của Bác sĩ Nguyễn Lâm Giang sẽ trình bày chi tiết về hội chứng này để bạn đọc tham khảo và hiểu biết sâu rộng hơn.**
+
+## Suy hô hấp là gì và cách phân loại suy hô hấp
+
+### 1. Định nghĩa
+
+Suy hô hấp là trạng thái chức năng thông khí của hệ hô hấp và/hoặc chức năng trao đổi khí của phổi bị suy giảm cấp tính. Chúng ta hít khí ôxy từ không khí vào phổi và thở ra khí cacbonic. Hơi thở là yếu tố rất cần thiết để duy trì sự sống. Oxy phải đi từ phổi vào máu để đến các mô và cơ quan của con người hoạt động bình thường. Sự tích tụ cacbonic có thể làm suy yếu các mô và cơ quan, đồng thời ngăn cản hoặc làm gián đoạn quá trình cung cấp oxy cho cơ thể.1
+
+### 2. Cách phân loại suy hô hấp
+
+Suy giảm hô hấp có nhiều cách phân loại khác nhau:2
+
+#### Theo vị trí
+
+Dựa vào vị trí, người ta chia suy hô hấp thành hai loại là suy hô hấp trên và suy hô hấp dưới.
+
+#### Theo PaCO2 và PaO2
+
+Các tế bào hồng cầu trong máu có vai trò vận chuyển các khí máu như O2 và CO2 đi khắp cơ thể. Bình thường, nồng độ các chất khí sẽ ở mức cân bằng. Tuy nhiên, nồng độ các chất khí này có thể thay đổi khi cơ thể xuất hiện các bệnh lý, hoặc các bất thường ở tim, thận hay phổi.
+
+PaCO2 và PaO2 là các chỉ số khí máu động mạch giúp cung cấp thông tin cụ thể về nồng độ O2 và CO2 trong động mạch. Từ đó giúp chẩn đoán các vấn đề liên quan suy hô hấp.
+
+Dựa vào PaCO2 và PaO2, suy hô hấp được chia thành các loại suy hô hấp:
+
+- Thiếu oxy (khi PaO2 < 60 mmHg).
+- Thừa carbon dioxide (khi PaCO2 > 50 mmHg).
+- Hỗn hợp (Bao gồm cả thiếu oxy và thừa carbon dioxide).
+
+#### Theo cơ chế gây bệnh
+
+- Hệ tuần hoàn: do suy tim trái, thuyên tắc phổi,…
+- Hệ hô hấp: do viêm phổi, phù phổi cấp, tràn khí màng phổi,…
+
+#### Theo thời gian
+
+Xét về yếu tố thời gian, suy hô hấp được chia thành:
+
+- Suy hô hấp cấp tính. Tương ứng với tình trạng khởi phát đột ngột ở đối tượng có chức năng hô hấp bình thường.
+- Suy hô hấp mạn tính. Tương ứng với tình trạng đã tồn tại dai dẳng trong một thời gian ở những bệnh nhân mắc các bệnh hô hấp mãn tính.
+- Suy hô hấp cấp tính trên nền mạn. Điều này tương ứng với sự trầm trọng thêm của suy hô hấp mãn tính mà không thể bù đắp bằng liệu pháp oxy và điều trị bằng thuốc đang diễn ra. Nguyên nhân do tình trạng nặng thêm của bệnh hô hấp mãn tính đã có do nhiễm trùng hoặc viêm cấp tính.
+
+Cả hai bệnh lý cấp và mạn tính đều được chia thành 3 mức độ suy hô hấp:
+
+- Suy hô hấp độ 1: Đây là giai đoạn đầu của bệnh, là mức độ nhẹ nhất. Biểu hiện độ 1 là người bệnh cảm thấy khó thở khi làm việc nặng hoặc quá sức.
+- Suy hô hấp độ 2: Biểu hiện của độ 2 là triệu chứng khó thở diễn ra thường xuyên hơn. Lúc này, môi, đầu ngón tay, ngón chân của người bệnh thường bị tím tái.
+- Suy hô hấp độ 3: Đây là mức độ trầm trọng nhất của bệnh, tương tự như dấu hiệu ở giai đoạn 2. Tuy nhiên, các triệu chứng suy hô hấp đã ở mức độ nặng hơn, tình trạng khó thở xảy ra liên tục. Người bệnh bị rối loạn nhịp thở nặng, tím tái toàn thân.
+
+### 2. Sự nguy hiểm của hội chứng suy hô hấp cấp và mạn tính
+
+Suy hô hấp cấp xảy ra nhanh chóng và tiến triển nặng dần. Tình trạng này thường được gây ra bởi một căn bệnh hoặc chấn thương ảnh hưởng đến hệ hô hấp. Chẳng hạn như: viêm phổi, chấn thương phổi hoặc tủy sống, đột quỵ,… Điều này giúp giải đáp thắc mắc suy hô hấp cấp là gì của nhiều bạn đọc.1
+
+Vậy suy hô hấp mãn tính là gì? Suy hô hấp cũng có thể tiến triển một cách từ từ. Khi nó xảy ra, nó được gọi là suy hô hấp mạn tính. Các triệu chứng bao gồm khó thở hoặc cảm giác như bạn không có đủ không khí, mệt mỏi, không thể vận động bình thường như trước đây, buồn ngủ,…1
+
+Cho dù bệnh là cấp tính hay mạn tính thì đều ảnh hưởng không hề nhỏ đến sức khỏe của chúng ta. Suy hô hấp cấp có thể tiến triển nặng và đe dọa tính mạng. Trong khi bệnh mạn tính có thể làm suy yếu dần chức năng của các cơ quan trong cơ thể. Từ đó làm suy giảm đáng kể chất lượng cuộc sống và làm giảm tuổi thọ.3
+
+## Nguyên nhân gây suy hô hấp
+
+Có nhiều nhóm nguyên nhân gây suy giảm hô hấp. Tuy nhiên, cách phân loại sau đây là đơn giản, dễ hiểu và khá phổ biến:1 3 4
+
+### 1. Nguyên nhân tại phổi
+
+Những nguyên nhân tại phổi gây suy hô hấp ở trẻ em, ở người cao tuổi hoặc hội chứng suy giảm hô hấp cấp ở người lớn bao gồm:
+
+- Bệnh phổi tắc nghẽn mãn tính (COPD).
+- Viêm phổi.
+- Phù phổi.
+- Xơ phổi.
+- Hen suyễn.
+- Tràn khí màng phổi.
+- Thuyên tắc phổi.
+- Hội chứng suy hô hấp cấp tính (ARDS), hay hội chứng suy hô hấp cấp tiến triển. Đây là một tình trạng đe dọa tính mạng, trong đó phổi không thể cung cấp đủ oxy. Nó thường xảy ra như một biến chứng của tình trạng sức khỏe nghiêm trọng hiện có.
+- COVID-19 có thể gây ra các biến chứng liên quan phổi như viêm phổi. Và một trong những trường hợp nghiêm trọng nhất là hội chứng suy hô hấp cấp tính. Bên cạnh đó, COVID-19 cũng có thể gây nhiễm trùng huyết, một biến chứng có thể gây tổn hại lâu dài cho phổi và các cơ quan khác.
+25 - Bệnh suy hô hấp cấp liên quan đến nhiễm HIV.
+
+### 2. Nguyên nhân ngoài phổi
+
+Những nguyên nhân ngoài phổi có thể dẫn đến suy hô hấp sơ sinh, trẻ em, người lớn và người già bao gồm:
+
+- Hen tim.
+- Dùng thuốc quá liều thuốc.
+- Ngộ độc thuốc, hóa chất.
+- Bệnh nhược cơ.
+- Viêm đa dây thần kinh.
+- Bệnh bại liệt.
+- Chấn thương đầu.
+- Chấn thương cột sống cổ.
+- Béo phì.
+- Hội chứng suy hô hấp mạn tính.
+- Suy giáp (trẻ em và người lớn).
+
+### 3. Đối tượng nguy cơ
+
+Những đối tượng nguy cơ cao bị suy hô hấp bao gồm:
+
+- Trẻ sinh non: Trẻ em, đặc biệt là trẻ sinh non do cấu tạo cơ thể chưa hoàn thiện nên có nguy cơ mắc bệnh suy phổi cao hơn những trẻ khác.
+- Hút thuốc lá thường xuyên.
+- Uống rượu quá mức.
+- Có tiền sử gia đình mắc bệnh hoặc tình trạng hô hấp.
+- Bị chấn thương cột sống, não hoặc ngực.
+- Có một hệ thống miễn dịch bị tổn hại (suy giảm miễn dịch bẩm sinh hoặc mắc phải).
+- Mắc các bệnh hô hấp mãn tính, chẳng hạn như ung thư phổi, COPD hoặc hen suyễn.
+
+## Dấu hiệu suy hô hấp
+
+### 1. Triệu chứng phổ biến thường gặp
+
+Các triệu chứng suy hô hấp cấp tính hay mạn tính xuất hiện tùy thuộc vào nguyên nhân cũng như mức độ suy hô hấp:4
+
+- Suy hô hấp do thiếu oxy: Người bệnh thường cảm thấy mệt mỏi, khó thực hiện các hoạt động bình thường như hàng ngày. Do thiếu oxy nên bệnh nhân khó thở, thường xuyên có cảm giác như không có không khí để thở. Bên cạnh đó, người bệnh sẽ cảm thấy buồn ngủ diễn ra vào ban ngày rất thường xuyên. Ngón tay, ngón chân và môi xanh xao, nhợt nhạt.
+- Suy hô hấp do nồng độ CO2 trong máu tăng cao: Giảm thị lực, nhìn mờ, đau đầu, lú lẫn, mạch nhanh, thở gấp. Những biểu hiện suy hô hấp cấp thường diễn ra rầm rộ hơn biểu hiện suy hô hấp mạn. Ở trẻ em, đặc biệt là trẻ sơ sinh, chức năng phổi bị suy giảm có thể có các triệu chứng như thở nhanh, da và môi nhợt nhạt.
+
+### 2. Dấu hiệu suy hô hấp cấp và mạn
+
+#### Những triệu chứng suy hô hấp cấp tính bao gồm:3 6
+
+- Khó thở. Chức năng hô hấp của phổi bị ảnh hưởng nặng dẫn đến tình trạng khó thở, thiếu oxy máu kèm theo tăng hoặc không tăng cacbonic trong máu.
+- Thở nhanh. Tình trạng thở nhanh nhằm bù vào lượng oxy cung cấp thiếu.
+- Rối loạn nhịp thở. Bệnh nhân có thể tăng nhịp thở hoặc giảm nhịp thở cần phải được hỗ trợ hô hấp.
+- Da xanh tím, tím tái. Tình trạng thiếu oxy trong máu sẽ gây xanh tím cơ thể, nếu tăng nhiều PaCO2 trong máu thì người bệnh sẽ trở nên đỏ tía, vã mồ hôi.
+- Rối loạn ý thức. Bệnh nhân có dấu hiệu lơ mơ, phản ứng chậm với các kích thích, li bì hoặc nặng hơn là hôn mê.
+- Rối loạn chức năng hệ tim mạch. Bệnh nhân mắc viêm phổi suy hô hấp cấp tính có thể bị rối loạn nhịp tim, huyết áp không ổn định, thậm chí ngừng tim.
+- Rối loạn chức năng hệ thần kinh. Tình trạng thiếu oxy trong máu sẽ ảnh hưởng đến não ở nhiều mức độ.
+
+#### Những dấu hiệu suy hô hấp mạn tính bao gồm:7
+
+Các triệu chứng của tình trạng mạn tính thường không được chú ý. Vì chúng có diễn tiến chậm trong một khoảng thời gian dài. Khi bệnh tiến triển, các triệu chứng có thể bao gồm:
+
+- Khó thở hoặc thở gấp, đặc biệt là khi bạn vận động.
+- Ho khạc đàm.
+- Thở nhanh.
+- Khò khè.
+- Da, môi, móng tay có màu hơi xanh, tím tái.
+- Mệt mỏi.
+- Lo âu.
+- Lẫn lộn, bứt rứt.
+
+## Phân độ suy hô hấp
+
+### 1. Mức độ nhẹ
+
+Người bệnh chỉ bị giảm nhẹ SpO2 trong máu, khó thở nhẹ và có thể tự phục hồi hoặc được kiểm soát bằng một số loại thuốc. Vậy SpO2 bao nhiêu là suy hô hấp? Theo bệnh học suy hô hấp, chỉ số SpO2 dưới 95% là dấu hiệu của tình trạng suy hô hấp có thể đang tiến triển với người bệnh. Cụ thể như sau:
+
+- Chỉ số SpO2 dao động từ 90 – 93%: Chỉ số oxy trong máu là thấp.
+- SpO2 dưới 92% với người bệnh không thở oxy và dưới 95% với người bệnh đang thở oxy: Đây chính là dấu hiệu của suy hô hấp.
+- Chỉ số SpO2 dưới 90%: người bệnh bị suy hô hấp và cần được cấp cứu trên lâm sàng.
+
+### 2. Mức độ nặng
+
+Trong suy hô hấp bệnh học mức độ nặng¸ bác sĩ có thể kiểm soát bệnh được bằng thuốc và một số thủ thuật không đáng kể. Tuy nhiên cần điều trị sớm kết hợp theo dõi phòng ngừa những biến chứng.
+
+### 3. Mức độ nguy kịch
+
+Yêu cầu phải can thiệp bằng thủ thuật càng sớm càng tốt nhằm cứu sống bệnh nhân. Sau đó mới dùng thuốc hoặc dùng thuốc từ đầu nhằm làm giảm các triệu chứng nặng.
+
+## Điều trị tại nhà có được không?
+
+Vậy liệu rằng suy hô hấp có nguy hiểm không? Có thể xử trí suy hô hấp tại nhà được hay không? Suy hô hấp nói chung là một tình trạng khẩn cấp, có thể tiến triển nặng bất cứ lúc nào và đe dọa tính mạng của người bệnh. Chính vì vậy, các chuyên gia y tế khuyên chúng ta nên xử trí suy hô hấp tại các cơ sở y tế. Đồng thời không nên tự ý điều trị tại nhà bằng các phương pháp hoặc kinh nghiệm dân gian.
+
+## Khi nào cần gặp bác sĩ?
+
+### 1. Thời điểm cần gặp bác sĩ
+
+Người bệnh cần gặp bác sĩ, đặc biệt là các bác sĩ cấp cứu hô hấp khi có các triệu chứng nặng, cần được can thiệp y tế kịp thời. Các triệu chứng nghiêm trọng cần lưu ý để kịp thời đến cơ sở y tế bao gồm:
+
+- Khó thở hoặc thở nhanh.
+- Mệt mỏi, cản trở các hoạt động thường ngày của người bệnh.
+- Luôn trong trạng thái buồn ngủ.
+- Người bệnh xanh xao, nhợt nhạt.
+- Nhịp tim nhanh, thở nhanh.
+- Đau đầu, lú lẫn.
+- Giảm sút thị lực.
+- Bất tỉnh.
+
+### 2. Người bệnh cần làm gì khi có dấu hiệu suy hô hấp cấp?
+
+Khi xuất hiện dấu hiệu suy hô hấp hoặc những tổn thương nguy cơ gây suy hô hấp, người bệnh cần nhanh chóng đến các cơ sở y tế gần nhất. Nếu không thể tự đến thì nhờ người thân đưa đi. Nguyên tắc cấp cứu và điều trị bệnh là đánh giá tình trạng, xác định nguyên nhân. Sau đó là xử trí suy giảm hô hấp cấp bao gồm: thông khí cơ học cùng với chế độ bảo vệ phổi, cân bằng dịch, ngăn ngừa biến chứng.
+
+## Chẩn đoán suy hô hấp như thế nào?
+
+Để chẩn đoán bệnh, các bác sĩ sẽ tiến hành khám bệnh và khai thác bệnh sử của bệnh nhân. Đặc biệt là các bệnh lý về hô hấp. Dựa vào những triệu chứng bất thường ban đầu, các bác sĩ sẽ lập ra bệnh án suy hô hấp. Đồng thời, lập kế hoạch chăm sóc bệnh nhân suy hô hấp.
+
+### 1. Thăm khám
+
+Các bước thăm khám, chẩn đoán bệnh bao gồm:1 4
+
+- Thăm khám màu sắc da, môi, đầu chi của người bệnh;
+- Đo nhịp tim;
+- Nghe phổi và kiểm tra động tác bất thường khi thở;
+- Đo huyết áp, đo thân nhiệt.
+
+### 2. Các xét nghiệm cận lâm sàng
+
+Sau các bước thăm khám sơ bộ, bác sĩ sẽ chỉ định bệnh nhân thực hiện thêm các xét nghiệm cận lâm sàng để chẩn đoán suy hô hấp:1 4
+
+- Xét nghiệm máu. Nhằm phát hiện nguyên nhân gây suy giảm chức năng phổi cũng như rối loạn hoạt động của các cơ quan khác trong cơ thể.
+- Xét nghiệm đàm xem có viêm nhiễm hay không.
+- Nội soi khí phế quản để phát hiện khối u và những nguyên nhân khác gây hẹp hoặc tắc nghẽn đường thở.
+- Chụp x-quang phổi hoặc cắt lớp vi tính lồng ngực.
+- Đo điện tim.
+- Sinh thiết phổi để chẩn đoán ung thư phổi.
+- Xét nghiệm khí máu động mạch để xác định các rối loạn hô hấp, tình trạng toan kiềm trong máu.
+
+Từ những kết quả thăm khám lâm sàng, cận lâm sàng kết hợp với tiêu chuẩn chẩn đoán suy hô hấp, các bác sĩ sẽ đưa ra chẩn đoán xác định. Đồng thời lập kế hoạch chăm sóc người bệnh suy hô hấp.
+
+## Điều trị suy hô hấp
+
+### 1. Mục tiêu của việc điều trị
+
+Mục đích chính của việc điều trị suy giảm hệ hô hấp chính là đưa oxy đến phổi và các cơ quan khác, đồng thời loại bỏ carbon dioxide ra khỏi cơ thể người bệnh. Bên cạnh đó, các phương pháp điều trị còn giúp loại bỏ các tác nhân gây bệnh, hạn chế những biến chứng nguy hiểm, nâng cao chất lượng cuộc sống của người bệnh.
+
+### 2. Phác đồ điều trị
+
+Phác đồ điều trị suy hô hấp cấp là tăng cường lượng O2 vào phổi, hỗ trợ phổi hoạt động tốt hơn. Các phương pháp hỗ trợ điều trị suy hô hấp bao gồm thở oxy mũi, thở oxy qua mask, qua nội khí quản. Kết hợp với các biện pháp khác như:3 4
+
+- Thuốc điều trị suy hô hấp. Điển hình như: Điều trị nhiễm khuẩn bằng thuốc kháng sinh, giảm sự tích tụ dịch trong phổi bằng thuốc lợi tiểu.
+- Hỗ trợ hô hấp đối với những trường hợp bị giảm thông khí.
+- Vỗ, rung vùng ngực, kích thích ho để giải thoát đàm ứ đọng trong phổi. Đây là một trong những biện pháp tiếp cận bệnh nhân suy giảm hô hấp khá đơn giản và dễ thực hiện.
+- Áp dụng phương pháp ECMO hay còn gọi là oxy hóa màng ngoài cơ thể. Mục đích nhằm hỗ trợ chức năng sống của bệnh nhân suy hô hấp ở mức nặng.
+
+### 3. Điều trị suy hô hấp cấp
+
+Xử trí ban đầu: Việc xử trí ban đầu suy hô hấp cấp là phải hướng tới đảm bảo thông khí giúp thông thoáng đường thở, cung cấp oxy, thải CO2. Và điều quan trọng nhất là cần tìm nguyên nhân và xử trí nguyên nhân. Nếu có các dấu hiệu đầu tiên của suy hô hấp thì mọi người cần liên hệ ngay các cơ sở y tế gần nhất để có hướng xử trí kịp thời, giúp ngăn ngừa bệnh nặng hơn.
+
+Trong tiếp cận suy hô hấp cấp, vấn đề điều trị được đặt lên hàng đầu nhằm cứu sống bệnh nhân, hạn chế tối những biến chứng nếu có thể. Các bước điều trị bao gồm:4
+
+- Hỗ trợ hô hấp bằng liệu pháp oxy.
+- Điều trị bằng các loại thuốc hô hấp. Điển hình là thuốc kháng sinh, thuốc giãn phế quản và các thuốc kháng viêm Corticoide. Tùy theo trạng thái tỉnh táo của người bệnh mà các loại thuốc này có thể sử dụng đường uống, đường phun khí dung hoặc đường tĩnh mạch.
+
+### 4. Điều trị suy hô hấp mạn
+
+Điều trị suy hô hấp mạn bằng các biện pháp hỗ trợ lâu dài, đồng thời phòng ngừa những đợt cấp. Tình trạng này có thể được kiểm soát tại nhà. Một số biện pháp giúp điều trị suy hô hấp mạn bao gồm:4
+
+- Hỗ trợ dinh dưỡng: Đảm bảo cơ thể nhận đủ các chất dinh dưỡng cần thiết, tăng cường sức đề kháng.
+- Vật lý trị liệu: Phương pháp này giúp duy trì sức mạnh cơ thể, thúc đẩy nhanh quá trình hồi phục hô hấp của người bệnh.
+- Phục hồi chức năng phổi: Người bệnh sẽ được bác sĩ hướng dẫn các bài tập cải thiện mức oxy, phục hồi chức năng phổi.
+- Thực hiện tiêm ngừa đầy đủ các vắc xin phòng ngừa cúm, vắc xin phế cầu hàng năm.
+
+Trong trường hợp, suy hô hấp mạn trở nên nghiêm trọng, các phương pháp điều trị có thể bao gồm:7
+
+- Điều trị nguyên nhân gây suy hô hấp (có thể được chỉ định dùng thuốc).
+- Loại bỏ CO2 dư thừa trong máu.
+- Tăng nồng độ oxy trong máu.
+
+### 5. Điều trị nguyên nhân
+
+Trong chăm sóc bệnh nhân suy hô hấp, việc tìm và điều trị nguyên nhân là rất cần thiết đối với cả suy hô hấp cấp và mạn tính. Việc điều trị nhằm vào giải quyết triệt để nguyên nhân, hoặc làm giảm tối đa sự ảnh hưởng của bệnh nguyên gây suy hô hấp. Điển hình như:
+
+- Điều trị các bệnh lý hô hấp: viêm phổi, lao phổi, tràn khí màng phổi, u phổi,…
+- Các bệnh lý ngoài hệ hô hấp: nhược cơ, suy tim, bệnh van tim, nhiễm trùng huyết,…
+- Bệnh lý hệ thần kinh: đột quỵ, chấn thương sọ não, tủy sống,…
+
+## Chăm sóc người bệnh như thế nào?
+
+Bác sĩ cần tư vấn người bệnh tuân thủ những biện pháp điều trị, cũng như kế hoạch tự chăm sóc, theo dõi tại nhà. Người bệnh cần ghi nhớ một số lưu ý sau để việc phục hồi chức năng phổi được hiệu quả hơn:4
+
+- Mức oxy và cacbonic cần một thời gian dài mới khôi phục về trạng thái bình thường. Do đó, người bệnh cần thực hiện các hoạt động sinh hoạt hàng ngày một cách từ từ, chậm rãi hơn; tránh làm các triệu chứng khó thở tái diễn.
+- Tập bỏ thói quen hút thuốc lá là cách giúp phòng tránh các bệnh lý đường hô hấp cho bản thân, gia đình và những người xung quanh.
+- Hạn chế hoặc tránh sử dụng các chất kích thích, rượu bia,…
+- Thực hiện tiêm ngừa đầy đủ các vắc xin phòng ngừa cúm, phế cầu hàng năm theo khuyến cáo của Bộ Y tế.
+- Khi có các triệu chứng bất thường, cần đến ngay cơ sở y tế để được thăm khám, chẩn đoán chính xác và can thiệp kịp thời.
+
+## Biến chứng của suy hô hấp
+
+Suy giảm hệ hô hấp là một bệnh lý có thể dẫn đến các biến chứng nguy hiểm. Thậm chí là đe dọa tính mạng người bệnh nếu không được cấp cứu và điều trị kịp thời, đúng cách. Do đó, các chuyên gia khuyến cáo người bệnh cần đến ngay các cơ sở y tế gần nhất để được thăm khám, chẩn đoán chính xác tình trạng và điều trị kịp thời.
+
+Các biến chứng nguy hiểm của tình trạng suy giảm chức năng hô hấp gồm:3 4
+
+- Các biến chứng ở phổi như: thuyên tắc phổi, xơ phổi, viêm phổi, tràn khí màng phổi…
+- Xuất huyết tiêu hóa.
+- Rối loạn nhịp tim.
+- Chấn thương, tổn thương não.
+- Suy gan.
+- Suy thận.
+- Đe dọa tính mạng gây tử vong.
+
+## Cách phòng ngừa hội chứng suy hô hấp
+
+Tất cả nguyên nhân dẫn đến tình trạng không thể được phòng ngừa 100%. Tuy nhiên, để phòng ngừa viêm phổi và một số căn bệnh liên quan hô hấp khác, bạn có thể thực hiện một số phương pháp sau:
+
+- Bỏ hút thuốc lá không chỉ bảo vệ bản thân mà còn cho gia đình và những người xung quanh.
+- Luyện tập thể dục thể thao thường xuyên để tăng cường chức năng hệ hô hấp.
+- Thiết lập thực đơn ăn uống khoa học, bổ sung đầy đủ chất dinh dưỡng cần thiết, kiểm soát cân nặng, cân bằng cảm xúc.
+- Tuân thủ đúng phác đồ điều trị của bác sĩ khi mắc bệnh phổi mạn tính hoặc các bệnh lý khác có thể ảnh hưởng đến hệ hô hấp.
+- Tiêm vắc xin phòng viêm phổi do phế cầu khuẩn, não mô cầu khuẩn, vi khuẩn Hib và biến chứng viêm phổi do cúm. Đây là một trong những nguyên nhân hàng đầu gây biến chứng suy hô hấp.
+
+Nói tóm lại, **suy hô hấp** là một tình trạng cấp tính và tiến triển nhanh chóng. Biến chứng nặng nhất là đe dọa tính mạng và dẫn đến tử vong. Vì vậy, mỗi người chúng ta nên trang bị tốt kiến thức về hội chứng này. Mục đích là để bảo vệ bản thân, bảo vệ gia đình. Cũng như để điều trị kịp thời khi có suy giảm hô hấp xảy ra, hạn chế tối đa những biến chứng và di chứng về sau.

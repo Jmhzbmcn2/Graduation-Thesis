@@ -1,0 +1,192 @@
+# SOURCE_URL: https://youmed.vn/tin-tuc/benh-khong-lo/
+
+# Bệnh khổng lồ: Nguyên nhân, dấu hiệu và cách điều trị
+
+Nội dung bài viết
+
+**Bệnh khổng lồ (gigantism) là một bệnh lý hiếm gặp, xảy ra khi trẻ nhỏ hay trẻ vị thành niên có nồng độ hormone tăng trưởng (GH – Growth hormone) tăng cao lưu hành trong máu. Gây ra sự tăng trưởng chiều cao quá mức và nhiều bất thường khác đi kèm. Tuy hiếm gặp, nhưng đây là một bệnh có thể chữa được. Vì vậy, việc phát hiện và điều trị sớm là rất quan trọng để tránh tăng trưởng chiều cao quá mức và những biến chứng khác của bệnh. Trong bài viết sau đây, mời bạn cùng Bác sĩ Nguyễn Vũ Nhật Phong tìm hiểu về bệnh khổng lồ nhé!**
+
+## Tổng quan về bệnh khổng lồ
+
+### Bệnh khổng lồ là gì?
+
+Bệnh khổng lồ được đặc trưng bởi sự tăng trưởng chiều cao nhanh bất thường và quá mức ở trẻ nhỏ hay trẻ vị thành niên, xảy ra khi nồng độ hormone tăng trưởng tăng cao trong máu. Ở độ tuổi này, các sụn tiếp hợp đầu xương của trẻ vẫn còn mở, nên chiều cao sẽ không ngừng tăng khi các hormone tăng trưởng trong máu vẫn cao kéo dài.
+
+### Hormone tăng trưởng là gì và vai trò của nó?1
+
+Hormone tăng trưởng (GH) hay còn gọi là hGH (human growth hormone) và somatotropin, là một chuỗi polypeptide gồm 191 acid amin và có tính chất đặc trưng cho loài.
+
+Chúng được tiết ra từ các tế bào ái toan chế tiết GH ở thùy trước tuyến yên – tuyến nội tiết nhỏ nằm ở phần nền sọ của chúng ta. Hormone được phóng thích theo xung khoảng 4 – 11 xung trong 24 giờ, đặc biệt số xung về đêm cao hơn ban ngày.
+
+Nồng độ GH nền giữa các xung rất thấp và hầu như không thể đo được. Vì vậy, việc dùng một mẫu xét nghiệm GH bất kỳ trong ngày không phản ảnh chính xác được mức độ tiết trong 24 giờ, và hoàn toàn không có giá trị trên lâm sàng để đánh giá tình trạng tăng tiết hay giảm tiết hormone. Hormone tăng trưởng được tiết ra nhiều nhất ở độ tuổi thiếu niên, đạt đỉnh xung quanh lứa tuổi dậy thì và giảm dần theo tuổi.
+
+Bình thường, vùng hạ đồi sẽ phát tín hiệu kích thích tiết GH đến tuyến yên thông qua hormone GHRH (Growth hormone releasing hormone), hoặc ức chế tuyến yên tiết GH thông qua somatostatin. Hormone tăng trưởng được tiết ra sẽ kích thích sản xuất IGF-1 từ tế bào gan và nồng độ IGF-1 sẽ ức chế tiết GH và GHRH theo cơ chế phản hồi ngược. Bên cạnh đó, một peptide dạ dày là ghrelin cũng kích thích tiết GH và hoạt động cộng hưởng với đỉnh tiết GHRH từ vùng hạ đồi. Các yếu tố sinh lý khác kích thích tiết GH bao gồm tình trạng stress, vận động thể lực và tình trạng hạ đường huyết.
+
+Hormone tăng trưởng giúp tăng trưởng hầu hết các mô trong cơ thể, chủ yếu là mô sụn và mô xương. GH có thể tác động theo cơ chế trực tiếp thông qua việc gắn kết trên thụ thể đặc hiệu và gián tiếp thông qua IGF-1. Các nguyên bào xương và tế bào sụn sẽ gia tăng quá trình phân bào dưới sự kích thích gián tiếp của GH thông qua IGF-1 làm tăng chiều dài của các xương và thúc đẩy sự phát triển thể chất. IGF-1 gắn kết trên thụ thể IGF-1R còn ức chế quá trình chết theo chu trình (apoptosis) của các tế bào sụn và tế bào xương giúp gia tăng hoạt động và kéo dài đời sống của các tế bào này.
+
+Trong bệnh khổng lồ, sự tăng quá mức hormone tăng trưởng trong máu; do nhiều nguyên nhân khác nhau, đa số là do adenoma thùy trước tuyến yên, ngoài ra còn có u tuyến hạ đồi, u tuyến nội tiết lạc chỗ, adenoma tuyến yên lạc chỗ; sẽ đẩy nhanh tốc độ tăng trưởng của cơ, xương và các mô liên kết. Điều này dẫn đến sự tăng trưởng chiều cao bất thường cũng như gây ra các thay đổi của các mô mềm khác. Nếu không điều trị hoặc không kiểm soát, nhiều người với bệnh khổng lồ có thể đạt chiều cao gần 2,5 m.2
+
+### Bệnh khổng lồ có giống với bệnh to đầu chi (acromegaly)?2
+
+Cả 2 tình trạng nói trên đều là hậu quả của việc dư thừa hormone tăng trưởng (GH) lưu hành trong máu. Sự khác biệt chỉ là giai đoạn khởi phát bệnh.
+
+- Người trưởng thành chỉ có khả năng bị bệnh to đầu chi do các sụn tiếp hợp đầu xương đã đóng, họ không thể cao thêm nữa.
+- Trong khi đó, trẻ em hoặc trẻ vị thành niên (trước khi kết thúc dậy thì) với sụn tiếp hợp đầu xương còn mở sẽ bị bệnh khổng lồ khi nồng độ GH trong máu tăng cao.
+
+Một khi sụn tiếp hợp đầu xương đã đóng, sự tăng quá mức GH trong máu sẽ gây ra bệnh cảnh của to đầu chi. Trong tình huống này, người bệnh sẽ không phát triển về mặt chiều cao, mà GH dư thừa trong máu sẽ gây biến đổi hình dạng xương, tăng thể tích các cơ quan nội tạng trong cơ thể, cũng như gây ra một loạt các biến chứng khác như:1
+
+- Bệnh tim mạch.
+- Bệnh chuyển hóa.
+- Đái tháo đường.
+- Rối loạn hô hấp.
+- Ngưng thở khi ngủ.
+- Bệnh cơ xương khớp.
+- Hội chứng ống cổ tay.
+- Polyp đại trực tràng.
+- Tăng nguy cơ ung thư đại trực tràng.
+- Rối loạn chức năng sinh dục…
+
+Bên cạnh đó, bệnh khổng lồ hiếm gặp hơn bệnh to đầu chi.
+
+## Nguyên nhân gây bệnh khổng lồ
+
+Nguyên nhân của bệnh khổng lồ có thể chia thành 3 nhóm:
+
+- Tăng tiết GH.
+- Tăng tiết GHRH.
+- Tăng sản xuất protein gắn kết với IGF-1 (IGF-binding protein), làm tăng thời gian lưu hành của IGF-1 trong máu (thường không gây ra triệu chứng nặng như hai nguyên nhân đầu).
+
+Tính tới thời điểm này, đa số những người bị bệnh khổng lồ hay to đầu chi đều do u (adenoma) tuyến yên tiết GH (thường lành tính). Những nguyên nhân khác đều rất hiếm gặp (u vùng hạ đồi tăng tiết GHRH, u thần kinh nội tiết tiết GH hoặc tiết GHRH).
+
+U lạc chỗ tiết GH hay GHRH thường là u ác tính. U lạc chỗ tiết GHRH thường thấy ở phổi hoặc tụy, thỉnh thoảng ở những nơi khác như ở tá tràng.
+
+Mặc dù bệnh khổng lồ thường gặp trên lâm sàng là một rối loạn đơn độc. Tuy nhiên cũng có những trường hợp hiếm xảy ra kèm theo các bệnh khác, trong một hội chứng di truyền, ví dụ như:2
+
+- Bệnh đa u tuyến nội tiết type I – Multiple endocrine neoplasia (MEN) type I: Đây là tình trạng di truyền xảy ra khi có nhiều khối u trong hệ nội tiết tăng tiết quá mức các hormone, trong đó có thể có u tuyến yên tăng tiết GH. Ngoài ra, trong hội chứng còn có thể có cường cận giáp, u tân sinh đường tiêu hóa (thường tuyến tụy), adenoma tuyến thượng thận.
+- Hội chứng McCune-Albright: Đây là hội chứng di truyền ảnh hưởng đến xương, da và hệ nội tiết trong cơ thể, gây nên những đốm tăng sắc tố màu café sữa (café-au-lait skin pigmentation), những mô sẹo hình thành trên xương, dậy thì sớm. Đặc biệt, bệnh khổng lồ hay bệnh to đầu chi thường gặp (20-30%) ở những người có hội chứng McCune-Albright.
+4Nguyên nhân gây tăng tiết GH trong hội chứng này thường do tăng sản tuyến yên quá mức, hoặc cũng có thể do adenoma tuyến yên. - U sợi thần kinh (Neurofibromatosis): đây là tình trạng di truyền ảnh hưởng đến da và hệ thần kinh. Rối loạn chủ yếu do sự tăng phát triển tế bào một cách bất thường, điều này dẫn đến tạo thành những khối u khắp cơ thể người bệnh, trong số đó có thể có những khối u tăng tiết GH.
+- Phức hợp Carney (Carney complex): Đây là một hội chứng di truyền ảnh hưởng đến sắc tố da và gây nên những khối u lành tính trên da, tim và hệ nội tiết trong cơ thể. Adenoma tuyến yên tiết GH xuất hiện khoảng 10-13% các trường hợp phức hợp Carney và thường có diễn tiến chậm.
+- Adenoma tuyến yên đơn độc có tính gia đình (Familial isolated pituitary adenomas): Đây là một tình trạng di truyền đặc trưng bởi việc phát triển các adenoma tuyến yên, trong đó có thể có adenoma tuyến yên tăng tiết GH.
+
+Vì vậy, khi có những hội chứng di truyền này, việc nghĩ đến và phát hiện sớm để điều trị bệnh khổng lồ/bệnh to đầu chi có ý nghĩa tiên lượng tốt cho người bệnh.
+
+## Triệu chứng của bệnh khổng lồ
+
+Biểu hiện của người bệnh khổng lồ thường rất đột ngột, không như diễn tiến âm ỉ của bệnh to đầu chi ở người lớn. Những đứa trẻ bị bệnh khổng lồ cũng thường ít có các triệu chứng liên quan tới mô mềm (ví dụ như phù ngoại biên, biến dạng khuôn mặt…) vì khả năng tăng trưởng nhanh về chiều cao của chúng. Triệu chứng có thể bao gồm:3
+
+- Chiều cao vượt trội so với dân số chung cùng độ tuổi.
+- Béo phì nhẹ đến trung bình.
+- Đầu to (có thể trước khi tăng chiều cao nhanh).
+- Hiệu ứng do khối u chèn ép: đau đầu, thay đổi thị lực, thị trường, suy tuyến yên (do u lớn chèn ép các mô lành tuyến yên còn lại).
+- Trán vồ, cằm nhô, tăng khoảng cách giữa các răng.
+- Tay chân to với ngón dày và dài.
+- Tăng tiết mồ hôi quá mức.
+- Đau xương, đau khớp, yếu cơ, biến dạng xương.
+- Triệu chứng bệnh thần kinh ngoại biên (hội chứng ống cổ tay).
+- Bệnh tim mạch, tăng huyết áp, tim to, tăng thể tích các cơ quan khác trong cơ thể.
+- Ngưng thở khi ngủ.
+- Tăng prolactin máu thường gặp do adenoma tiết GH thường đồng tiết prolactin, biểu hiện có thể gặp vô kinh, chảy sữa, rối loạn kinh nguyệt.
+- Các khối u lành tính (u xơ tử cung, tăng sản tuyến tiền liệt, polyp đại tràng, u da…) thường gặp ở bệnh to đầu chi hơn.
+- Các rối loạn nội tiết khác: suy sinh dục, đái tháo đường hay tiền đái tháo đường.
+
+## Biến chứng của bệnh khổng lồ
+
+Biến chứng về lâu dài mà người bệnh có thể gặp bao gồm:2
+
+- Vận động khó khăn do chiều cao quá mức, đau xương khớp và yếu cơ.
+- Viêm khớp.
+- Bệnh thần kinh ngoại biên: thường nhất là hội chứng ống cổ tay, gây giảm chất lượng cuộc sống.
+- Hội chứng ngưng thở khi ngủ.
+- Phì đại cơ tim và bệnh lý van tim.
+- Rối loạn chuyển hóa như bệnh đái tháo đường type 2.
+- Những vấn đề khác không liên quan sức khỏe, nhưng gây giảm chất lượng cuộc sống như: khó khăn trong việc mua quần áo, giày dép, khó khăn trong việc di chuyển bằng tàu xe do chiều cao quá cỡ. Lâu dần có thể dẫn đến những vấn đề về tâm lý, tâm thần (trầm cảm).
+
+## Chẩn đoán bệnh khổng lồ
+
+Bệnh khổng lồ có thể khó được phát hiện do hiếm gặp. Điều này dẫn đến việc các nhà lâm sàng thiếu kinh nghiệm. Mặt khác, tốt độ tăng trưởng chiều cao có thể dao động khác nhau giữa đứa trẻ này so với đứa trẻ khác, tùy vào yếu tố di truyền và môi trường.
+
+Thông thường, các bác sĩ sẽ nghi ngờ bệnh khổng lồ khi chiều cao của một đứa trẻ nằm ở trên mức +3 độ lệch chuẩn (+3 SD – three standard deviations) so với chiều cao trung bình theo tuổi và giới; hoặc trên mức +2 độ lệch chuẩn (+2 SD) so với chiều cao trung bình tính dựa theo chiều cao của cha mẹ trẻ.2
+
+Khi đứa trẻ bị nghi ngờ mắc bệnh khổng lồ, ba mẹ nên đưa con đến khám với bác sĩ chuyên khoa Nội Tiết có uy tín, người chuyên về các bệnh lý liên quan tới hormone, để có thể được thăm hỏi, điều tra về tiền sử gia đình, khám và làm các test chẩn đoán chuyên sâu; cũng như là các phương pháp hình ảnh học (ví dụ MRI tuyến yên) để tìm ra nguyên nhân gây bệnh.
+
+Các cận lâm sàng chẩn đoán bệnh khổng lồ bao gồm:
+
+### Nồng độ IGF-1 trong máu
+
+Đây được xem là xét nghiệm tầm soát bệnh. IGF-1 có thời gian bán hủy 18-20 giờ, vì vậy ổn định hơn GH. Trong một số tình huống, khi triệu chứng lâm sàng đã quá điển hình, có thể dùng IGF-1 làm xét nghiệm chẩn đoán mà không cần làm test chẩn đoán khác. Tuy nhiên, nồng độ IGF-1 chịu ảnh hưởng của tuổi và giới, đồng thời sẽ giảm khoảng 15% sau mỗi 10 năm. Các bệnh lý gan, suy dinh dưỡng, kém hấp thu, chán ăn tâm thần cũng có thể gây giảm nồng độ IGF-1.1
+
+### Hormone tăng trưởng (GH)
+
+Điều cần lưu ý là GH được tiết ra theo xung. Do đó, không bao giờ định lượng một mẫu xét nghiệm duy nhất (đói/bất kỳ) để chẩn đoán bệnh khổng lồ. Việc đo nồng độ GH trung bình trong 24 giờ cũng gây nhiều khó khăn và có sự chồng lấp với người khỏe mạnh bình thường.
+
+Để chẩn đoán xác định cần tiến hành nghiệm pháp động ức chế GH. Nghiệm pháp dung nạp 75 g glucose được xem là tiêu chuẩn vàng hiện nay để chẩn đoán xác định bệnh khổng lồ hay bệnh to đầu chi.1
+
+Nghiệm pháp dung nạp 75 g glucose: thường thực hiện vào buổi sáng (từ 8 giờ). Đứa trẻ sẽ được lấy máu xét nghiệm các chỉ số nền trong máu, sau đó được cho uống một dung dịch bao gồm 75 g glucose. Tiếp theo, cứ mỗi 30 phút trong vòng 2 giờ, điều dưỡng sẽ lấy máu xét nghiệm. Bình thường, nồng độ glucose tăng cao trong máu sẽ ức chế nồng độ GH trong máu trẻ. Khi trẻ có bệnh khổng lồ, nồng độ GH trong vòng 120 phút sau uống dung dịch glucose sẽ có ít nhất một mẫu cao hơn ngưỡng chẩn đoán (GH không bị ức chế).
+
+### Chụp cộng hưởng từ (MRI) có chất cản từ
+
+Đây là chẩn đoán hình ảnh ưu tiên được chọn trong bệnh khổng lồ/bệnh to đầu chi nói riêng và bệnh lý tuyến yên nói chung. Sau khi kết quả xét nghiệm máu khẳng định bệnh khổng lồ, bác sĩ sẽ chỉ định chụp MRI tuyến yên cho trẻ. Vào thời điểm chẩn đoán, đa số các trường hợp đã xuất hiện các khối u tuyến yên > 10 mm.
+
+Hình ảnh cộng hưởng từ còn cho phép đánh giá mức độ xâm lấn của khối u vào các cấu trúc lân cận, cũng như thành phần và bản chất khối u. U hạ đồi tiết GHRH và u lạc chỗ tiết GH/GHRH rất hiếm gặp, có thể được nghĩ đến sau khi hình ảnh MRI tuyến yên bình thường, hay chỉ tăng sản nhẹ mà không ghi nhận khối u. Chụp cắt lớp vi tính vùng ngực (MSCT) có cản quang có thể được chỉ định trong tình huống này.1
+
+### Các xét nghiệm cận lâm sàng khác
+
+Ngoài ra, khi đã khẳng định bệnh khổng lồ, bác sĩ còn có thể chỉ định một số cận lâm sàng khác để tầm soát bệnh đồng mắc cho trẻ:2
+
+- Siêu âm tim: đánh giá bệnh tim, van tim đi kèm.
+- Đo đa ký giấc ngủ: tầm soát bệnh ngưng thở khi ngủ.
+- Chụp X-quang xương hay đo độ loãng xương (DEXA scan) để đánh giá sức khỏe xương.
+- Các xét nghiệm hormone khác: loại trừ suy tuyến yên do u lớn chèn ép; đo đường huyết.
+
+## Điều trị bệnh khổng lồ
+
+Khi đã được xác định bệnh khổng lồ và tìm ra nguyên nhân, người bệnh nên được nhập viện để thực hiện các phương pháp điều trị phù hợp.
+
+### Mục tiêu điều trị2
+
+- Bình thường hóa GH và IGF-1 trong giới hạn bình thường.
+- Giảm kích thước khối u.
+- Giảm triệu chứng.
+- Kiểm soát và cải thiện biến chứng.
+- Giảm tỉ lệ tử vong.
+
+### Các phương pháp điều trị
+
+#### 1. Phẫu thuật nội soi qua xương bướm1 2
+
+Chỉ định: Đây được xem là chỉ định đầu tay trong điều trị u tuyến yên tiết GH, là phương thức trị liệu khả dĩ có thể chữa lành bệnh khổng lồ nếu khối u được giải quyết triệt để. Đối với những bệnh nhân có tổn thương xâm lấn phía trên tuyến yên gây khó khăn trong việc phẫu thuật cắt toàn bộ khối u, phẫu thuật viên sẽ phẫu thuật một phần để cải thiện đáp ứng với điều trị nội khoa sau này.
+
+Kết quả phẫu thuật phụ thuộc vào kích thước khối u, mức độ xâm lấn và kinh nghiệm phẫu thuật viên.
+
+Biến chứng:
+
+- Chảy máu.
+- Rò dịch não tủy qua đường mũi, tăng nguy cơ viêm màng não.
+- Suy tuyến yên.
+- Đái tháo nhạt sau phẫu thuật.
+
+#### 2. Điều trị nội khoa1
+
+Các thuốc trong điều trị bệnh khổng lồ bao gồm đồng vận thụ thể somatostatin, đối vận thụ thể GH ở ngoại biên (pegvisomant), đồng vận thụ thể dopaminergic. Đa số các loại thuốc đều an toàn ở trẻ em.
+
+Điều trị nội khoa được xem là phương án trị liệu thứ hai nếu sau phẫu thuật mà vẫn chưa kiểm soát được GH và IGF-1. Bác sĩ có thể dùng đơn trị hay kết hợp đa trị liệu cho bệnh nhân tùy theo nguyên tắc cá thể hóa điều trị.
+
+Tác dụng phụ: tùy loại thuốc, đa số là tác dụng phụ trên đường tiêu hóa.
+
+Hiệu quả của việc điều trị nội khoa từ 30-90%, tùy loại thuốc.5 6 7
+
+#### 3. Xạ trị1 2
+
+Xạ trị được xem là phương thức điều trị thứ ba khi cả điều trị ngoại khoa và nội khoa thất bại. Xạ phẫu bằng dao gamma được cho là có hiệu quả tốt hơn xạ trị theo quy ước, đồng thời giảm nguy cơ suy tuyến yên sau xạ trị.
+
+Tác dụng phụ:
+
+- Tổn thương thần kinh sọ.
+- Ảnh hưởng khả năng sinh sản.
+- Tạo thành khối u mới sau xạ trị.
+
+## Phòng ngừa bệnh khổng lồ như thế nào?
+
+Vì đây không phải là bệnh truyền nhiễm hay bệnh có liên quan đến lối sống, nên thật không may, không có cách nào giúp bạn có thể phòng ngừa bệnh khổng lồ. Do đó, việc chẩn đoán sớm là rất quan trọng. Hơn nữa, việc điều trị sớm và phù hợp cũng có thể giúp ngăn ngừa và làm chậm quá trình thay đổi về chiều cao, và xuất hiện các biến chứng khác của bệnh.
+
+Trên đây là những thông tin về **bệnh khổng lồ**. Hi vọng bài viết đã cung cấp cho bạn đọc những thông tin bổ ích về căn bệnh này. Từ đó có những kiến thức, cũng như biết cách xử trí khi gặp phải tình trạng này.

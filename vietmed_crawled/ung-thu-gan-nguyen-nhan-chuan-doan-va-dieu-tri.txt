@@ -1,0 +1,324 @@
+# SOURCE_URL: https://youmed.vn/tin-tuc/ung-thu-gan-nguyen-nhan-chuan-doan-va-dieu-tri/
+
+# Ung thư gan: Nguyên nhân, chuẩn đoán và điều trị
+
+Nội dung bài viết
+
+**Khi nhắc đến bệnh ung thư, hầu hết mọi người đều lo sợ về những gánh nặng mà nó mang lại, kể cả các y bác sĩ. Ung thư biểu mô tế bào gan là một trong số đó. Việt Nam là vùng dịch tễ viêm gan siêu vi B và C, vốn là những yếu tố nguy cơ trực tiếp của căn bệnh này. Qua bài viết dưới đây, Bác sĩ Huỳnh Quang Nghệ muốn chia sẻ với bạn đọc những kiến thức chung về ung thư gan cũng như các phương pháp điều trị, phòng ngừa và chiến lược tầm soát cho người bệnh có yếu tố nguy cơ.**
+
+## Ung thư gan là gì?
+
+Ung thư gan là một bệnh lý ác tính chủ yếu xảy ra trên người bệnh có bệnh gan nền mạn tính và xơ gan.1
+
+Gan thì được cấu tạo nên từ nhiều loại tế bào khác nhau, cũng chính vì thế có nhiều loại ung thư khác nhau có thể hình thành tại gan. Trong đó thường gặp nhất là ung thư biểu mô tế bào gan (hepatocellular carcinoma HCC ), xuất phát từ các tế bào gan, chiếm đến 90% ung thư nguyên phát tại gan.2 3 4 5
+
+Chính vì vậy khi nhắc đến ung thư gan, chúng ta ngầm hiểu rằng đang nói đến ung thư biểu mô tế bào gan (HCC). Tuy nhiên ngoài ra có một số loại ung thư nguyên phát tại gan khác sẽ được đề cập sau (phần Chẩn đoán phân biệt).
+
+Ung thư “nguyên phát” của gan được hiểu là ung thư xuất phát đầu tiên tại gan. Nếu ung thư xuất hiện từ một vị trí khác và lan tới gan, thì được gọi là ung thư gan “thứ phát” và khi đó sẽ có những phương pháp điều trị chuyên biệt cho ung thư thứ phát (sẽ không đề cập trong bài viết này).2 3 4 5
+
+## Nguyên nhân và yếu tố nguy cơ gây ung thư gan?
+
+Nguyên nhân và cơ chế chính xác gây nên ung thư biểu mô tế bào gan hiện vẫn chưa được hiểu biết một cách đầy đủ. Tuy nhiên, có nhiều yếu tố nguy cơ đã được nghiên cứu cho thấy có liên quan đến sự hình thành ung thư gồm:1 2
+
+- Xơ gan.
+- Viêm gan siêu vi B, viêm gan siêu vi C.
+- Bệnh rối loạn chuyển hóa: béo phì, đái tháo đường, bệnh gan nhiễm mỡ không do rượu (nonalcoholic fatty liver disease NAFLD), viêm gan nhiễm mỡ không do rượu (nonalcoholic steatohepatitis NASH), bệnh ứ sắt (hemochromatosis).
+- Đồ uống có cồn (rượu bia), hút thuốc lá.
+- Aflatoxin (độc tố từ nấm mốc trong thức ăn).
+- Yếu tố gen hay hệ gen của người bệnh.
+- Một số yếu tố nguy cơ và các bệnh lý hiếm gặp khác: xơ gan ứ mật nguyên phát, viêm đường mật xơ hóa nguyên phát, sử dụng hormone sinh dục hay steroid, thuốc tránh thai đường uống, thiếu hụt men Alpha1-antitrypsin, chụp cản quang với chất phóng xạ Thorotrast, bệnh porphyrin da, hội chứng Budd-Chiari.
+
+Các tình trạng bệnh lý kể trên, qua nhiều con đường và nhiều cơ chế khác nhau, gồm cả sự tương tác với các yếu tố ngoại cảnh hay từ môi trường bên ngoài, đã gây ra hiện tượng rối loạn chuyển hóa của tế bào theo hướng làm chậm quá trình chết có lập trình và song song đó thúc đẩy tăng sinh tế bào dẫn đến sự hình thành ung thư. Nói các khác, các quá trình viêm nhiễm, hoại tử, xơ hóa, xơ gan tiến triển và tái tạo liên tục đều góp phần hình thành nên ung thư biểu mô tế bào gan.1
+
+## Triệu chứng của bệnh ung thư gan?
+
+Ở giai đoạn sớm, người bệnh có thể hoàn toàn không có triệu chứng ung thư gan. Và phát hiện bệnh nhờ được tầm soát hoặc phát hiện một cách tình cờ. Khi ung thư diễn tiến, người bệnh có thể có các triệu chứng được đề cập dưới đây. Trong đó thường là các triệu chứng của xơ gan tiến triển:3
+
+- Vàng da vàng mắt.
+- Ngứa.
+- Sờ thấy khối ở vùng bụng.
+- Ói ra máu, tiêu phân đen hay tiêu ra máu.
+- Tiêu phân bạc màu, tiểu sậm màu.
+- Chán ăn, sụt cân, yếu cơ, mệt mỏi.
+- Bụng to, nổi gân xanh.
+- Rối loạn tri giác, suy giảm nhận thức, ngủ gà, lú lẫn, lơ mơ, hôn mê.
+- Đau bụng vùng hạ sườn phải hay vùng ¼ trên phải.
+- Đầy bụng, khó tiêu.
+- Buồn nôn, nôn ói.
+- Sốt.
+
+## Dấu hiệu nhận biết ung thư gan?
+
+Bên cạnh các triệu chứng hay than phiền từ phía người bệnh, một số dấu hiệu bác sĩ thăm khám thực hiện cũng gợi ý đến ung thư gan:3
+
+- Vàng da tắc mật.
+- Gan to, lách to, khối u vùng bụng.
+- Dấu sao mạch, co thắt hay co rút Dupuytren.
+- Dấu run vẩy, bệnh não gan.
+- Phù chân.
+- Báng bụng, tuần hoàn bàng hệ quanh rốn.
+- Xuất huyết tiêu hóa do vỡ dãn tĩnh mạch thực quản hay tĩnh mạch phình vị.
+- Dãn tĩnh mạch trĩ (sa búi trĩ).
+- Suy kiệt, suy dinh dưỡng.
+- Ấn đau bụng vùng hạ sườn phải hay ¼ trên phải.
+
+## Các phương pháp chẩn đoán bệnh?
+
+### 1. Hình ảnh học
+
+#### Siêu âm ổ bụng có hay không dùng chất cản quang tăng cường5
+
+Siêu âm ổ bụng đơn thuần là một phương tiện tầm soát tốt nhưng không phải là một phương tiện để chẩn đoán xác định.
+
+Siêu âm ổ bụng có dùng chất cản quang tăng cường có thể đánh giá được các đặc điểm của các nốt gan phát hiện qua siêu âm đơn thuần và có thể dùng chẩn đoán ung thư gan với độ nhạy tương tự chụp cắt lớp vi tính (CT) hay chụp cộng hưởng (MRI) động học (tuy nhiên phương tiện này không thực sự phổ biến tại Việt Nam).
+
+#### Chụp cắt lớp vi tính (CT) và chụp cộng hưởng từ (MRI) ổ bụng
+
+Chụp CT, MRI động học hay MRI với chất cản từ đặc hiệu cho gan là những phương tiện tiêu chuẩn hàng đầu để chẩn đoán xác định ung thư biểu mô tế bào gan sau khi các phương tiện tầm soát (như siêu âm) cho thấy kết quả bất thường. Hình ảnh điển hình của ung thư biểu mô tế bào gan trên CT hay MRI động học là một khối u tăng bắt thuốc cản quang thì động mạch và thải thuốc ở các thì sau .5
+
+Chụp CT có thể cho thấy được khối u và hệ thống mạch máu quanh u. CT cũng cho phép khảo sát các cơ quan lân cận để tìm sự lan tràn của ung thư đến các vị trí khác (hay gọi là di căn) như đến hạch bạch huyết hay các cơ quan khác. Người bệnh có thể được tiêm một loại thuốc gọi là thuốc cản quang để hình ảnh khảo sát được trên CT trở nên rõ nét hơn. Chụp MRI cũng có thể cung cấp các thông tin tương tự như CT. Thuốc cản quang dùng trong MRI thì an toàn hơn cho người có bệnh thận hay dị ứng với iốt.6
+
+### 2. Dấu ấn ung thư
+
+Xét nghiệm CA 19-9, CEA, AFP là một số ví dụ thường gặp về dấu ấn ung thư thường được tạo ra bởi các khối u và có thể phát hiện trong máu. Xét nghiệm những dấu ấn này có thể góp phần hỗ trợ chẩn đoán, theo dõi đáp ứng điều trị và giám sát theo dõi về lâu dài.7
+
+Trong ung thư biểu mô tế bào gan (HCC) thường nhắc đến AFP do chỉ số này có thể tăng trong máu người bệnh. Tuy nhiên một số trường hợp AFP cũng có thể không tăng. Ngoài ra, AFP cũng có thể tăng trong những tình trạng khác chẳng hạn như xơ gan, viêm gan. Chính vì thế, chỉ số AFP đơn thuần không dùng để chẩn đoán xác định mà cần phối hợp nhiều yếu tố khác.8
+
+Một số dấu ấn ung thư khác: DCP, AFP-L3, GPC3, GP73, osteoponitin, ccfDNA, microRNAs.5
+
+### 3. Sinh thiết gan
+
+Sinh thiết là một thủ thuật lấy một mẫu dịch hay mô từ cơ thể đem đi xử lý và xét nghiệm để chẩn đoán ung thư. Nếu người bệnh thuộc nhóm nguy cơ cao mắc ung thư gan thì những đặc điểm hình ảnh khảo sát được trên CT hay MRI đôi khi là đủ để chẩn đoán xác định và việc sinh thiết gan lúc này không còn cần thiết nữa.
+
+Sinh thiết gan có thể được cân nhắc trong những tình huống như khối u trên một người bệnh không thuộc nhóm nguy cơ cao (không có xơ gan hay viêm gan siêu vi) hoặc khi kết quả hình ảnh học không điển hình hay chưa rõ ràng. Sinh thiết cũng có thể được tiến hành trong tình huống ung thư đã lan tới những vị trí khác của cơ thể, hay còn gọi là ung thư di căn. Lúc này kết quả sinh thiết sẽ cho biết chính xác loại tế bào ung thư hỗ trợ bác sĩ về định hướng điều trị.7
+
+Phương pháp sinh thiết có thể tiến hành qua các đường khác nhau: sinh thiết gan qua da, qua đường tĩnh mạch cảnh trong hay qua nội soi ổ bụng.6
+
+Sinh thiết gan có thể cần thiết trong một vài trường hợp nhưng không phải là bắt buộc trên tất cả người bệnh. Sinh thiết là một thủ thuật xâm lấn nên có những nguy cơ về chảy máu, gieo rắc khối u theo đường sinh thiết và vẫn có khả năng cho kết quả không như mong muốn (chẳng hạn như tình huống khó tiếp cận khối u, lấy mẫu không đúng vị trí,…).9
+
+### 4. Xét nghiệm máu và sinh hóa
+
+Các xét nghiệm cho người bệnh mới được chẩn đoán ung thư biểu mô tế bào gan gồm các xét nghiệm cơ bản, trong đó cần bổ sung thêm các xét nghiệm đánh giá chức năng gan cũng như bệnh gan nền mạn tính của người bệnh. Bao gồm:1 7
+
+- Tổng phân tích tế bào máu.
+- Điện giải đồ.
+- Khảo sát chức năng thận: BUN (Ure máu), Creatinin.
+- Khảo sát chức năng gan: AST (SGOT), ALT (SGPT), TQ (INR), TCK, Albumin, Bilirubin toàn phần, Bilirubin trực tiếp, ALP.
+- Khảo sát bệnh gan nền mạn tính: HbsAg, anti-HBc, anti-HCV, ferritin, transferrin, sắt huyết thanh, α1-antitrypsin,…
+
+## Về chiến lược chẩn đoán
+
+Ung thư gan điển hình có thể được chẩn đoán qua hình ảnh học, bất kể kích thước, nếu hình ảnh tưới máu khối u có các đặc điểm điển hình ghi nhận được qua chụp CT hay MRI động học hoặc với siêu âm có dùng chất cản quang tăng cường.5
+
+Các nốt tổn thương gan với hình ảnh học không điển hình cần được đánh giá phối hợp với các yếu tố khác và cần các phương tiện khảo sát chuyên sâu hơn (như sinh thiết gan) để chẩn đoán.5
+
+## Phân giai đoạn ung thư
+
+Trước khi tiến hành điều trị, bác sĩ sẽ phân loại và xếp giai đoạn bệnh lý ung thư. Có rất nhiều hệ thống phân loại khác nhau nhưng nhìn chung sẽ dựa trên các tính chất sau của bệnh:6
+
+- Vị trí khối u và loại tế bào ung thư.
+- Kích thước khối u.
+- Mức độ di căn hạch, và di căn xa của khối u (sự hiện diện của các khối u thứ phát ở vị trí khác).
+- Mức độ biệt hóa tế bào u (mức độ dị dạng của tế bào).
+
+Hiện tại có rất nhiều hệ thống phân giai đoạn cho ung thư gan được sử dụng. Chẳng hạn như Tiêu chuẩn Milan là một hệ thống phân loại về ghép gan. Hệ thống phân loại TNM dựa vào 3 yếu tố:6
+
+- T: Mô tả số lượng và kích thước u nguyên phát (có thể có nhiều hơn một khối u), mức độ xâm lấn đến mạch máu và cơ quan lân cận.
+- N: Mức độ di căn đến các hạch bạch huyết.
+- M: Mức độ di căn xa đến các cơ quan khác của cơ thể (ví dụ như phổi và xương).
+
+Một số thang điểm hỗ trợ cho các hệ thống phân loại này là thang điểm MELD và thang điểm Child-Pugh. Thang điểm MELD được tính toán dựa trên kết quả xét nghiệm sinh hóa máu hỗ trợ tiên lượng bệnh và đánh giá khả năng ghép gan. Người bệnh ung thư gan thường kèm theo xơ gan và trước khi điều trị khối u ở gan, các bác sĩ sẽ dùng thang điểm Child-Pugh để đánh giá chức năng gan và phân độ xơ gan trên người bệnh. Mức độ xơ gan từ nhẹ, trung bình, nặng tương ứng với 3 mức độ A, B, C.6
+
+Bên cạnh đó, chức năng sống và sinh hoạt của người bệnh cũng là một yếu tố cần cân nhắc trong vấn đề điều trị. Điều này sẽ được đánh giá dựa trên chỉ số tổng trạng (PST) của người bệnh với số điểm từ 0-4 tương ứng từ khỏe mạnh đến yếu liệt cần chăm sóc tại giường.6
+
+Kết hợp các yếu tố trên, Hệ thống phân loại ung thư gan Barcelona là một hệ thống được nghiên cứu tổng hợp dùng trong phân loại ung thư gan và hướng dẫn định hướng điều trị dựa trên tính chất khối u, chức năng gan và tổng trạng người bệnh được thể hiện qua sơ đồ dưới (dành cho bác sĩ).6
+
+## Chẩn đoán phân biệt
+
+Một số tình huống cần chẩn đoán phân biệt với ung thư biểu mô tế bào gan:1 3 5
+
+### 1. Các tổn thương lành tính
+
+- Nang gan.
+- Tăng sản khu trú dạng nốt.
+- Các nốt loạn sản trong bệnh xơ gan.
+- U tuyến tế bào gan.
+
+### 2. Các tổn thương ác tính
+
+- Ung thư đường mật trong gan (cholangiocarcinoma, từ tế bào ống dẫn mật trong gan).
+- Ung thư biểu mô tế bào gan dạng xơ sợi (fibrolamellar hepatocellular carcinoma, một dạng ung thư biểu mô tế bào gan hiếm gặp).
+- Ung thư nội mạc mạch máu trong gan (hemangiosarcoma và angiosarcoma, từ mạch máu trong gan).
+- Ung thư nguyên bào gan (hepatoblastoma, từ nguyên bào gan ở trẻ nhỏ, thường dưới 3 tuổi).
+- Ung thư hạch bạch huyết ở gan (lymphoma, từ hệ bạch huyết của gan).
+- Ung thư thứ phát di căn đến gan (ung thư từ nơi khác di căn đến gan).
+
+## Về biến chứng và diễn tiến của bệnh?
+
+Các biến chứng từ ung thư biểu mô tế bào gan đa số là hậu quả của suy giảm chức năng gan bao gồm:1
+
+- Suy kiệt.
+- Xuất huyết tiêu hóa do vỡ dãn tĩnh mạch thực quản hay tĩnh mạch phình vị.
+- Viêm phúc mạc nhiễm khuẩn nguyên phát, nhiễm trùng máu.
+- Bệnh não gan và hôn mê gan.
+- Xuất huyết nội trong ổ bụng do khối u gan vỡ.
+- Tử vong (hậu quả cuối cùng từ các biến chứng kể trên).
+
+Về diễn tiến, ung thư gan có thể lan tràn trong cơ thể theo nhiều cách. Khối u có thể xâm lấn trực tiếp từ gan đến cơ quan lân cận như các mạch máu, đường mật. Cấu trúc gan còn có hệ thống mạch máu và mạch bạch huyết, ưng thư có thể di căn qua các hệ thống này. Ung thư cũng có thể đi đến một vị trí khác xa hơn (di căn xa), thường gặp là di căn đến phổi và xương.7
+
+## Khi nào cần gặp bác sĩ?
+
+Người bệnh nên đến gặp bác sĩ khi có các triệu chứng gợi ý hay nghi ngờ về ung thư biểu mô tế bào gan (như trên). Các triệu chứng có thể bắt nguồn từ một nguyên nhân khác hay một bệnh lý khác không phải ung thư. Tuy nhiên, nếu là ung thư được phát hiện và chẩn đoán xác định sớm, cơ hội điều trị thành công sẽ cao hơn so với giai đoạn muộn.10
+
+Một số tình huống người bệnh được tầm soát hoặc phát hiện tình cờ qua những xét nghiệm (chẳng hạn như siêu âm phát hiện một khối bất thường ở gan), người bệnh cũng có thể đến gặp bác sĩ để khám, chẩn đoán và tư vấn về vấn đề theo dõi hay điều trị.
+
+## Các phương pháp điều trị ung thư biểu mô tế bào gan
+
+Phương pháp tiếp cận quản lý điều trị ung thư biểu mô tế bào gan tốt nhất là đặt trong bối cảnh phối hợp điều trị liên chuyên khoa, đa mô thức. Người bệnh sẽ được thảo luận về phương pháp điều trị với sự hợp tác giữa các bác sĩ và các chuyên gia về chuyên khoa gan, ghép tạng, phẫu thuật gan, ung thư học, hình ảnh học can thiệp và chăm sóc giảm nhẹ.1
+
+Lựa chọn phương pháp điều trị tối ưu cho người bệnh phụ thuộc vào rất nhiều yếu tố, chẳng hạn như:1
+
+- Kích thước, số lượng và vị trí khối u.
+- Có hay không tình trạng báng bụng.
+- Nguy cơ và rủi ro phẫu thuật do bệnh nền kèm theo hay hậu quả của xơ gan.
+- Tổng trạng của người bệnh.
+- Tình trạng của hệ tĩnh mạch cửa.
+- Có hay không tình trạng di căn xa.
+
+Theo các hướng dẫn của Hiệp hội nghiên cứu bệnh gan Hoa Kỳ, các phương pháp điều trị được chia thành 2 nhóm chính và cuối cùng là điều trị chăm sóc giảm nhẹ:1 9
+
+### 1. Điều trị chăm sóc giảm nhẹ
+
+#### Điều trị triệt để thường có cơ hội đáp ứng điều trị về lâu dài, tăng tỷ lệ sống còn
+
+- Phẫu thuật cắt gan.
+- Phẫu thuật ghép gan.
+- Đốt u gan (bằng nhiệt, sóng cao tần hay hóa chất).
+
+#### Điều trị kéo dài sự sống bằng cách làm chậm diễn tiến của khối u
+
+- Nút mạch máu nuôi khối u (bằng các hạt có hoặc không có phóng xạ hay hóa chất).
+- Xạ trị.
+- Liệu pháp điều trị hệ thống hay toàn thân (gồm hóa trị, liệu pháp trúng đích, liệu pháp miễn dịch).
+
+#### Chăm sóc giảm nhẹ
+
+### 2. Phẫu thuật
+
+#### Phẫu thuật cắt gan
+
+Đây là một phẫu thuật nhằm cắt bỏ một phần gan kèm khối u chứa tế bào ung thư. Phần gan còn lại sẽ tiếp tục hoạt động về mặt chức năng, và phần gan bị cắt bỏ có thể sẽ hồi phục trở lại (đây là một đặc tính của tế bào gan). Tuy nhiên, phẫu thuật cắt gan không phải là lựa chọn khả thi cho hầu hết người bệnh. Khối u thường được phát hiện với kích thước lớn hoặc nhiều khối u ở nhiều vị trí khác nhau của gan nên việc cắt bỏ khối u có thể dẫn đến phần gan còn lại không đủ chức năng để hoạt động (suy chức năng gan sau mổ). Phẫu thuật cũng có thể không phải lựa chọn phù hợp trong tình huống ung thư đã di căn xa, chức năng gan không đủ tốt để thực hiện phẫu thuật hoặc người bệnh có nhiều tình trạng bệnh lý kèm theo.6 7
+
+#### Phẫu thuật ghép gan
+
+Với phẫu thuật ghép gan, toàn bộ gan của người bệnh sẽ được cắt bỏ kèm khối u và được ghép thay thế bởi một lá gan khỏe mạnh được hiến tặng bởi một người khác. Phẫu thuật ghép gan có thể là một lựa chọn cho những người bệnh không thể cắt gan. Trong thời gian chờ đợi ghép gan, những liệu pháp điều trị khác có thể phối hợp và tiến hành trước như đốt u gan, nút mạch máu hay xạ trị. Cũng cần lưu ý rằng, nếu ghép gan thành công, người bệnh vẫn có khả năng bị mắc ung thư gan trở lại nếu không có biện pháp phòng ngừa và can thiệp kiểm soát tốt các yếu tố nguy cơ đã đề cập trước đó.6 7
+
+Tuy nhiên, không phải người bệnh nào cũng có thể tiến hành ghép gan do nhiều yếu tố khác nhau, chẳng hạn như khả năng tìm được người hiến tặng tương thích để ghép gan, một số vấn đề khác về y đức và chi phí cho cuộc phẫu thuật.,…
+
+### 3. Thủ thuật
+
+#### Đốt u gan
+
+Đốt u gan được xem như là một thủ thuật điều trị tại chỗ hơn là một cuộc phẫu thuật.
+
+Các bác sĩ sẽ dùng một loại kim đốt luồn xuyên qua da với sự hỗ trợ của đầu dò siêu âm để đến tiếp cận khối u sau đó dùng nhiệt, sóng cao tần hay hóa chất để tiêu diệt các tế bào ung thư. Tuy nhiên đốt u gan thường chỉ dùng trên các khối u có kích thước nhỏ hơn 3 cm và ở vị trí tiếp cận thuận lợi, không nằm sát ống mật, các mạch máu lớn hay các cơ quan khác.6 7
+
+#### Nút mạch máu nuôi khối u
+
+Đây cũng là một thủ thuật dùng trong điều trị ung thư biểu mô tế bào gan.
+
+Các bác sĩ sẽ dùng một loại kim luồn đặc biệt đặt theo đường động mạch (thường chọn động mạch đùi) và đi đến vị trí khối u sau đó bơm những hạt nhỏ kèm chất phóng xạ hay hóa chất gây tắc các mạch máu nuôi khối u và gây chết các tế bào ung thư.6 7
+
+#### Sau phẫu thuật/thủ thuật bao lâu thì có thể phục hồi lại bình thường?
+
+Có nhiều phương pháp phẫu thuật/thủ thuật khác nhau để điều trị ung thư biểu mô tế bào gan và khả năng hồi phục của người bệnh sẽ khác nhau tùy thuộc vào nhiều yếu tố như giai đoạn ung thư, mức độ cuộc phẫu thuật, bệnh nền kèm theo,…6
+
+Nhìn chung, người bệnh trải qua phẫu thuật mổ mở cắt gan thường cần theo dõi sau mổ tại bệnh viện 5-10 ngày và cần đến 6-8 tuần mới có thể trở lại hoạt động thể lực như trước. Người bệnh được phẫu thuật nội soi cắt gan thường có thời gian theo dõi ngắn hơn khoảng 3-5 ngày sau mổ và cần 3-6 tuần để có thể trở lại hoạt động thể lực như trước.
+
+Tương tự với phẫu thuật ghép gan, người bệnh cần được theo dõi tại bệnh viện ít nhất 5-7 ngày sau mổ.
+
+Với các phương pháp điều trị khác như đốt u gan, nút mạch có thể thực hiện ngoại trú (về trong ngày) hoặc nằm theo dõi tại bệnh viện ít nhất 1 ngày và xuất viện vào ngày hôm sau.
+
+### 4. Xạ trị
+
+Với ung thư biểu mô tế bào gan, các bác sĩ sẽ dùng liệu pháp xạ trị ngoài cơ thể, tức là dùng một loại máy chiếu tia xạ từ bên ngoài nhắm vào vị trí khối u để tiêu diệt các tế bào ung thư.6 7
+
+### 5. Thuốc
+
+Trong khuôn khổ điều trị ung thư gan, nhắc đến thuốc chúng ta ngầm hiểu là dùng liệu pháp điều trị hệ thống hay toàn thân gồm hóa trị, liệu pháp trúng đích, liệu pháp miễn dịch. Các phương pháp này có thể là phương pháp điều trị chính hoặc phối hợp với các phương pháp điều trị khác.6 7
+
+#### Hóa trị
+
+Hóa trị là dùng thuốc hay các hóa chất truyền vào cơ thể qua đường tĩnh mạch. Các hóa chất này có độc tính và sẽ tiêu diệt các tế bào tăng trưởng nhanh (gồm cả tế bào ung thư và tế bào lành tính). Ví dụ về một liệu trình hóa trị FOLFOX (gồm các thuốc fluorouracil, leucovorin, oxaliplatin) có thể dùng trong điều trị ung thư gan.
+
+#### Liệu pháp trúng đích
+
+Đây là một phương pháp điều trị nhắm vào một hay một vài đặc tính cụ thể của tế bào ung thư. Các loại thuốc này sẽ can thiệp gây chết hoặc ngăn chặn sự tăng sinh không kiểm soát của các tế bào này. Ngoài ra, liệu pháp điều trị này có thể dùng trong những tình huống ung thư có liên quan đến đột biến gen. Sorafenib (hay Nexavar ®) là tên một loại thuốc thường được dùng trong liệu pháp này.
+
+#### Liệu pháp miễn dịch
+
+Liệu pháp miễn dịch là một dạng điều trị trúng đích dựa trên hệ miễn dịch của cơ thể. Các loại thuốc này sẽ kích thích hệ miễn dịch người bệnh tạo ra các thành phần có chức năng tìm và diệt các tế bào ung thư. Một số loại thuốc dùng trong liệu pháp này: Atezolizumab, Ipilimumab, Nivolumab, Pembrolizumab.
+
+Ngoài những liệu pháp kể trên, người bệnh cũng sẽ được các bác sĩ cho sử dụng một số loại thuốc khác nhằm mục đích kiểm soát các triệu chứng (chống ói, giảm đau, điều hòa chức năng gan,…) hay điều trị các bệnh gan nền mạn tính kèm theo.
+
+### 6. Chăm sóc giảm nhẹ
+
+Chăm sóc giảm nhẹ là một liệu pháp điều trị phối hợp nhằm giảm bớt các triệu chứng và cải thiện chất lượng cuộc sống của người bệnh gồm điều trị các triệu chứng, biến chứng, chăm sóc về chế độ dinh dưỡng, giảm đau, hỗ trợ người bệnh về thể chất, cảm xúc, tinh thần, tài chính và gia đình. Chăm sóc giảm nhẹ là cần thiết trong mọi giai đoạn điều trị của ung thư gan, đặc biệt là ở giai đoạn tiến triển, di căn hay không còn khả năng điều trị triệt để.
+
+## Phòng bệnh ung thư gan như thế nào?
+
+Không có biện pháp nào có thể phòng ngừa không mắc phải ung thư biểu mô tế bào gan một cách tuyệt đối. Tuy nhiên, có nhiều biện pháp dự phòng khác nhau có thể thực hiện nhằm giảm thiểu khả năng mắc phải loại ung thư này, đó là can thiệp kiểm soát các yếu tố nguy cơ:1 5 6 7 11
+
+- Tiêm ngừa viêm gan siêu vi B.
+- Hạn chế sử dụng đồ uống có cồn, không hút thuốc lá (kể cả hút thụ động khói thuốc lá từ người khác).
+- Chẩn đoán và điều trị sớm các bệnh gan nền mạn tính như viêm gan siêu vi B, C, bệnh gan nhiễm mỡ không do rượu, viêm gan nhiễm mỡ không do rượu, bệnh ứ sắt,…
+- Thực hành quan hệ tình dục an toàn.
+- Không dùng chung bơm kim tiêm với người khác.
+- Chế độ ăn lành mạnh, kiểm soát cân nặng, hạn chế béo phì và điều trị kiểm soát ổn định bệnh đái tháo đường.
+- Thực hiện các thủ thuật như xăm mình, tạo hình thẩm mỹ,… tại các cơ sở được cấp phép và chứng nhận an toàn.
+
+Về phía nhân viên y tế và các cơ sở y tế cần bổ sung thêm:
+
+- Thực hành an toàn trong tiêm truyền, các thủ thuật, phẫu thuật trên người bệnh.
+- Tầm soát kiểm tra các chế phẩm hiến tặng như máu, mô, cơ quan nội tạng.
+
+## Chiến lược tầm soát ung thư gan
+
+Chiến lược tầm soát cũng đóng vai trò quan trọng không kém song song với việc dự phòng ung thư. Bệnh lý ung thư biểu mô tế bào gan đã thay đổi theo chiều hướng tích cực trong vài thập kỷ qua. Trước đây, người bệnh thường đến gặp bác sĩ khi bệnh đã diễn tiến xa hay ở giai đoạn muộn. Ngày nay, ung thư biểu mô tế bào gan có thể được phát hiện sớm hơn nhờ quy trình tầm soát thường quy trên những người bệnh có yếu tố nguy cơ bằng các phương tiện hình ảnh học như siêu âm và các marker ung thư như AFP.1
+
+Hiệp hội Gan mật Nhật Bản (Japan Society of Hepatology JSH) năm 2007 đã đề ra chiến lược phân loại và tầm soát ung thư gan trên người bệnh có yếu tố nguy cơ như sau:12
+
+### Phân loại người bệnh
+
+#### 1. Nhóm nguy cơ rất cao
+
+- Xơ gan do viêm gan siêu vi B.
+- Xơ gan do viêm gan siêu vi C.
+
+#### 2. Nhóm nguy cơ cao
+
+- Viêm gan siêu vi B mạn tính.
+- Viêm gan siêu vi C mạn tính.
+- Xơ gan do các nguyên nhân khác (không phải do viêm gan siêu vi B, C).
+
+### Chiến lược tầm soát
+
+#### 1. Cho nhóm nguy cơ rất cao
+
+Mỗi 3-4 tháng:
+
+- Siêu âm ổ bụng.
+- Dấu ấn ung thư: AFP/PIVKA-II/AFP-L3.
+
+Mỗi 6-12 tháng:
+
+- Chụp CT hay MRI động học.
+
+#### 2. Cho nhóm nguy cơ cao
+
+Mỗi 6 tháng:
+
+- Siêu âm ổ bụng.
+- Dấu ấn ung thư: AFP/PIVKA-II/AFP-L3.
+
+Trên đây là những chia sẻ của bác sĩ về **ung thư gan** và những điều bạn nên biết. Ung thư là một chủ đề khó, các bệnh lý ung thư hiện tại vẫn còn đang trong quá trình nghiên cứu chưa được hiểu biết một cách cặn kẽ. Hy vọng qua bài viết trên, bạn đọc có thể tích lũy thêm kiến thức cho bản thân, chia sẻ với gia đình, bạn bè về căn bệnh này cũng như các biện pháp phòng ngừa và chiến lược tầm soát nhằm chẩn đoán và điều trị sớm để đạt được kết quả tốt nhất.

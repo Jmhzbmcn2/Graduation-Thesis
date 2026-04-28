@@ -79,7 +79,7 @@ fi
 step "BƯỚC 1: Cài đặt Git & system packages"
 
 $SUDO apt-get update -qq
-$SUDO apt-get install -y -qq git curl wget tmux build-essential > /dev/null 2>&1
+$SUDO apt-get install -y -qq git curl wget tmux build-essential unzip > /dev/null 2>&1
 
 if command -v git &> /dev/null; then
     success "Git đã được cài: $(git --version)"

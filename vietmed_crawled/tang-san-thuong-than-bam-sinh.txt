@@ -1,0 +1,227 @@
+# SOURCE_URL: https://youmed.vn/tin-tuc/tang-san-thuong-than-bam-sinh/
+
+# Tăng sản thượng thận bẩm sinh và những điều bạn cần biết
+
+Nội dung bài viết
+
+**Tăng sản thượng thận bẩm sinh là một rối loạn di truyền của tuyến thượng thận có thể ảnh hưởng lên cả bé trai và bé gái từ lúc mới sinh cho đến khi trưởng thành. Vậy tăng sản thượng thận bẩm sinh là gì, nguyên nhân và cách điều trị bệnh lý này như thế nào? Mời bạn cùng Thạc sĩ, Bác sĩ Nguyễn Đinh Tuấn tìm hiểu về bệnh lý này thông qua bài viết dưới đây nhé!**
+
+## Tổng quan về tăng sản thượng thận bẩm sinh
+
+### Cơ chế bệnh sinh
+
+Tuyến thượng thận là các tuyến nội tiết nằm ở cực trên của thận. Mỗi tuyến bao gồm hai phần: phần vỏ và phần tủy. Trong đó, vỏ thượng thận tiết ra các nội tiết tố như:1
+
+#### Cortisol
+
+Cortisol là một hormone glucocorticoid giúp kiểm soát việc sử dụng chất béo, protein và carbohydrate của cơ thể, ngăn chặn tình trạng viêm, điều hòa huyết áp, làm tăng lượng đường trong máu.1 Từ đó, giúp cơ thể đối phó với những tình trạng căng thẳng một cách tốt hơn. Bên cạnh đó, hormone này cũng kiểm soát chu kỳ thức – ngủ của cơ thể.
+
+#### Aldosterone
+
+Aldosterone là hormone mineralocorticoid, đóng vai trò trung tâm trong việc điều hòa huyết áp và một số chất điện giải (như natri và kali). Aldosterone sẽ gửi tín hiệu đến thận và kết quả là thận sẽ hấp thụ nhiều natri hơn vào máu, đồng thời giải phóng kali vào nước tiểu.
+
+DHEA và Androgen
+
+DHEA và androgen là những tiền chất sẽ được chuyển hóa thành hormone nữ (estrogen) trong buồng trứng, và hormone nam (testosterone) trong tinh hoàn. Các hormone này sau đó góp phần quan trọng vào sự phát triển giới tính ở cả bé gái và bé trai.
+
+Các nội tiết tố kể trên đều được tổng hợp tại tuyến thượng thận từ nguồn nguyên liệu là cholesterone, dưới sự xúc tác của các enzyme theo 3 con đường được thể hiện trong sơ đồ dưới đây.
+
+Việc sản xuất cortisol ở vỏ thượng thận xảy ra theo 5 bước chính qua trung gian enzyme (sơ đồ ở trên). Tăng sản thượng thận bẩm sinh là kết quả của sự thiếu hụt bất kỳ một trong các enzyme này. Suy giảm tổng hợp cortisol dẫn đến sự tăng tiết ACTH (nội tiết tố điều hòa quá trình tổng hợp cortisol) từ tuyến yên thông qua cơ chế điều hòa ngược; từ đó gây kích thích vỏ thượng thận và dẫn đến tăng sản thượng thận cũng như bài tiết quá mức các tiền chất khác như 17-OH progesterone (17-OHP: xét nghiệm dùng để tầm soát) DHEA và androgen.2
+
+### Định nghĩa
+
+Tăng sản thượng thận bẩm sinh là một nhóm các rối loạn di truyền lặn, gây khiếm khuyết một trong năm loại enzyme chịu trách nhiệm sinh tổng hợp cortisol ở vỏ thượng thận.2 Bên cạnh đó, bệnh nhân còn có thể biểu hiện sự thiếu hụt aldosterone hoặc dư thừa androgen.
+
+### Phân loại
+
+Tăng sản thượng thận bẩm sinh được phân thành 2 thể chính, dựa vào tình trạng thiếu hụt của các hormone và mức độ nặng trên lâm sàng:3
+
+#### 1. Thể cổ điển
+
+Đây là dạng bệnh nặng và ít phổ biến hơn. Ở những bệnh nhân này, cơ thể hoàn toàn không thể sản xuất cortisol. Do đó không có đủ cortisol cần thiết để điều chỉnh huyết áp, lượng đường trong máu và giúp cơ thể đáp ứng với bệnh tật hoặc chấn thương. Từ đó, bệnh nhân có thể biểu hiện các biến chứng nặng nề như sốc, hôn mê, thậm chí tử vong nếu không được phát hiện và điều trị sớm. Thể bệnh này thường được chẩn đoán ở thời kỳ sơ sinh và được phân thành 2 loại nhỏ hơn:4
+
+- Thể mất muối: Đây là dạng tăng sản thượng thận bẩm sinh nghiêm trọng nhất do tuyến thượng thận sản xuất quá ít aldosterone. Nếu không có đủ aldosterone, cơ thể sẽ mất nhiều muối natri qua nước tiểu.
+- Thể nam hóa: Tình trạng thiếu hụt aldosterone ở thể bệnh này ít nghiêm trọng hơn. Tuy không có bất kỳ triệu chứng đe dọa tính mạng nào, nhưng cơ thể vẫn không sản xuất đủ cortisol và tạo ra quá nhiều androgen. Sự gia tăng nội tiết tố androgen có thể gây ra các triệu chứng liên quan đến phát triển sinh dục và gây nam hóa ở nữ.
+
+#### 2. Thể không cổ điển
+
+Đây là dạng bệnh phổ biến và có biểu hiện nhẹ hơn. Nó có thể không được chẩn đoán cho đến khi trẻ trưởng thành. Ở những bệnh nhân này, cơ thể tạo ra tương đối đủ cortisol, nhưng lại có sự tăng tiết quá mức nội tiết tố androgen.
+
+## Biến chứng tăng sản thượng thận bẩm sinh
+
+### 1. Thể cổ điển
+
+Suy thượng thận cấp: Đây là một trường hợp đe dọa tính mạng có thể xảy ra trong vài ngày đầu sau khi sinh và cần được cấp cứu y tế ngay lập tức. Nó cũng có thể xảy ra ở mọi lứa tuổi do các bệnh lý nhiễm trùng hoặc do phẫu thuật.5
+
+Rối loạn điện giải: Thiếu aldosterone khiến cơ thể mất quá nhiều nước và muối qua nước tiểu. Do đó, bệnh nhân có nguy cơ mắc các biến chứng nghiêm trọng do mất cân bằng các chất điện giải như kali. Nếu không được điều trị, những rối loạn này có thể dẫn đến rối loạn nhịp tim, hoặc thậm chí tử vong.4
+
+### 2. Thể không cổ điển4
+
+Các biến chứng có thể xảy ra đối với nam giới là:
+
+- Dậy thì sớm.
+- Chiều cao thấp dưới mức bình thường.
+
+Các biến chứng ở nữ bao gồm:
+
+- Nam hóa.
+- Kinh nguyệt không đều.
+- Khô âm đạo.
+
+## Nguyên nhân tăng sản tuyến thượng thận
+
+Tăng sản thượng thận bẩm sinh là một rối loạn di truyền do đột biến gen lặn. Nếu một trẻ em sinh ra mắc bệnh lý này, cả cha và mẹ đều phải là người mang gen đột biến và truyền nó cho con của họ.3 Bệnh nhân thường mắc đột biến gen CYP21A2 và từ đó gây ra nhiều thể lâm sàng khác nhau.2
+
+Sự thiếu hụt enzyme 21-hydroxylase là nguyên nhân phổ biến nhất của tăng sản thượng thận bẩm sinh, chiếm hơn 90% trường hợp.6 Dạng nhẹ của thiếu hụt 21-hydroxylase (thể không cổ điển) không nguy hiểm đến tính mạng, và thường không được phát hiện trong các chương trình sàng lọc sơ sinh, cũng như hiếm khi cần điều trị sớm. Các triệu chứng ở bé có thể bao gồm mọc lông sớm trên cơ thể, mụn trứng cá, hoặc kinh nguyệt không đều. Đồng thời, cả hai giới đều có bộ phận sinh dục bình thường. Những bệnh nhân này có thể cần hoặc không cần điều trị để cải thiện chất lượng cuộc sống.7
+
+Các dạng tăng sản thượng thận hiếm gặp:7
+
+- Thiếu 11-beta hydroxylase: các bệnh nhân này thường chỉ biểu hiện tăng huyết áp do giữ muối nước, cơ quan sinh dục không rõ ràng ở phụ nữ và đặc biệt ít khi có biến chứng suy thượng thận cấp.
+- Thiếu 17a-hydroxylase: cơ quan sinh dục ngoài thường không rõ ràng ở nam giới, kèm với sự phát triển không đầy đủ các đặc điểm giới tính ở tuổi dậy thì; hoặc rối loạn kinh nguyệt ở nữ.
+- Thiếu 3-beta-hydroxysteroid dehydrogenase: dẫn đến cơ quan sinh dục ngoài không rõ ràng ở nam và nữ. Cả hai giới đều có thể biểu hiện những triệu chứng của việc mất muối.
+- Tăng sản tuyến thượng thận dạng lipoid bẩm sinh: có thể gây tử vong sớm do biến chứng suy thượng thận cấp. Cả hai giới đều có khả năng bị vô sinh nếu sống sót qua giai đoạn sơ sinh.
+- Thiếu P450 oxidoreductase: biểu hiện các triệu chứng có thể giống như thiếu hụt 21-hydroxylase, hoặc 17-hydroxylase, hoặc cả hai. Một số trường hợp có liên quan đến chứng rối loạn xương được gọi là hội chứng Antley-Bixler.
+
+## Triệu chứng tăng sản thượng thận bẩm sinh
+
+Các biểu hiện của bệnh lý này khác nhau tùy thuộc vào gen nào bị ảnh hưởng và mức độ thiếu hụt của các enzyme. Sự mất cân bằng của các hormone do sản xuất quá ít cortisol, quá ít aldosterone, dư thừa nội tiết tố androgen hoặc sự kết hợp của những rối loạn này.5
+
+### 1. Thể cổ điển
+
+Các triệu chứng do sự thiếu hụt cortisol tuyến thượng thận:4
+
+- Nôn ói.
+- Tiêu chảy.
+- Mất nước.
+- Hạ natri máu.
+- Hạ huyết áp.
+- Hạ đường huyết.
+- Rối loạn nhịp tim.
+- Nhiễm toan (acid).
+- Sụt cân.
+- Sốc.
+- Suy thượng thận cấp: đây là một biến chứng đe dọa đến tính mạng và cần được điều trị kịp thời.
+5
+
+Các triệu chứng do tăng nồng độ androgen bao gồm:5
+
+- Cơ quan sinh dục không điển hình: trẻ sơ sinh nữ có thể có những bất thường về hình dạng cơ quan sinh dục ngoài, chẳng hạn như âm vật lớn và giống dương vật; hoặc môi âm hộ đóng một phần giống như bìu. Niệu đạo và âm đạo có thể chỉ là một lỗ thay vì hai lỗ riêng biệt. Tử cung, ống dẫn trứng và buồng trứng thường phát triển bình thường. Trong khi đó, trẻ sơ sinh nam lại thường không có thay đổi về bộ phận sinh dục ngoài.
+- Dậy thì sớm xảy ra ở cả nam và nữ. Lông mu và các dấu hiệu dậy thì khác có thể xuất hiện từ rất sớm.
+- Chiều cao thấp.
+- Rậm lông.
+- Mụn trứng cá nặng.
+- Các vấn đề về khả năng sinh sản: bao gồm kinh nguyệt không đều, hoặc không có kinh nguyệt và vô sinh ở nữ giới. Các vấn đề về khả năng sinh sản đôi khi cũng có thể xảy ra ở nam giới.
+
+### 2. Thể không cổ điển
+
+Đây là một thể bệnh nhẹ hơn. Do đó, bệnh nhân có thể có hoặc không có biểu hiện các triệu chứng.5
+
+Phụ nữ mắc thể không cổ điển thường không có biến đổi bộ phận sinh dục khi sinh. Khi đến tuổi dậy thì, các triệu chứng sau đây có thể xuất hiện:
+
+- Kinh nguyệt không đều, hoặc hoàn toàn không có kinh nguyệt và gặp khó khăn trong việc mang thai.
+- Các đặc điểm nam hóa như: nhiều râu trên mặt, rậm lông, và giọng nói trầm.
+
+Ở cả nam và nữ, có thể biểu hiện:
+
+- Dậy thì sớm.
+- Chiều cao thấp hơn bình thường.
+- Dương vật to nhưng tinh hoàn nhỏ.
+- Mụn trứng cá nặng.
+
+## Người bệnh có thể tự điều trị tại nhà được không?
+
+Ở các thể bệnh nhẹ và không triệu chứng, bệnh nhân có thể không cần thực hiện các biện pháp điều trị đặc hiệu. Tuy nhiên, ở các thể bệnh nặng hơn, người bệnh cần đến gặp các bác sĩ để được tư vấn các biện pháp điều trị thay thế hormone, hoặc phẫu thuật để đảm bảo tuổi thọ và chất lượng cuộc sống.
+
+## Khi nào cần gặp bác sĩ?
+
+Tăng sản thượng thận bẩm sinh thể cổ điển thường được phát hiện khi sinh, thông qua sàng lọc sơ sinh, hoặc khi trẻ có cơ quan sinh dục không điển hình. Bệnh lý này cũng có thể được xác định khi trẻ sơ sinh nam hoặc nữ có các dấu hiệu nặng do nồng độ thấp của cortisol, hoặc aldosterone hoặc cả hai.
+
+Ở những trẻ mắc thể không cổ điển, các dấu hiệu và triệu chứng của dậy thì sớm có thể xuất hiện. Nếu ba mẹ lo lắng về sự tăng trưởng hoặc phát triển của con mình, hãy đặt lịch hẹn với các bác sĩ để được thăm khám và phát hiện kịp thời.
+
+Ngoài ra, nếu đang mang thai và có nguy cơ mắc tăng sản thượng thận bẩm sinh do tiền sử bệnh của bạn hoặc của gia đình, hãy gặp bác sĩ để được tư vấn về di truyền trước sinh.
+
+## Chẩn đoán tăng sản thượng thận bẩm sinh
+
+Tăng sản thượng thận bẩm sinh có thể được chẩn đoán trước khi trẻ được sinh ra, ngay sau khi sinh, trong thời thơ ấu hoặc ở độ tuổi trưởng thành.
+
+### 1. Kiểm tra trước sinh
+
+Các xét nghiệm được sử dụng để xác định ở thai nhi có nguy cơ mắc những rối loạn này bao gồm:8
+
+- Chọc ối: các bác sĩ sẽ rút một mẫu nước ối từ bụng mẹ và sau đó đem đi xét nghiệm.
+- Sinh thiết gai nhau: thử nghiệm này bao gồm việc rút các tế bào từ nhau thai, để tiến hành kiểm tra từ tuần thứ 10-12 của thai kỳ.
+
+Tuy nhiên, các biện pháp này hiện nay không được khuyến cáo sử dụng để tầm soát bệnh lý này, do gây nhiều biến chứng lên thai nhi như nhiễm trùng, sẩy thai, chuyển dạ sinh non…9
+
+### 2. Thời kỳ sơ sinh
+
+Hiện nay, Hội Nội tiết Hoa Kỳ khuyến cáo tầm soát tăng sản thượng thận bẩm sinh do thiếu hụt 21-hydroxylase cho mọi trẻ sơ sinh. Bé sẽ được rút máu ở gót chân và đo nồng độ 17-OHP để tầm soát bệnh lý này.10
+
+Nồng độ bình thường của 17-OHP thay đổi theo lứa tuổi:11
+
+- Trẻ sơ sinh: < 400 – 600 ng/dL hoặc 12,12 – 18,18 nmol/L.
+- Trẻ em trước tuổi dậy thì: < 100 ng/dL hoặc 3,03 nmol/L.
+- Người lớn: < 200 ng/dL hoặc 6,06 nmol/L.
+
+Ở trẻ sơ sinh nữ có cơ quan sinh dục không điển hình, các xét nghiệm nhiễm sắc thể có thể được thực hiện để xác định giới tính thật. Ngoài ra, siêu âm vùng chậu dùng để xác định sự hiện diện của các cấu trúc sinh sản nữ như tử cung và buồng trứng.8
+
+### 3. Trẻ em và thanh thiếu niên
+
+Khi có các dấu hiệu gợi ý tăng sản thượng thận bẩm sinh ở trẻ lớn, các bác sĩ sẽ tiến hành xét nghiệm máu để đo nồng độ 17-OHP, cũng như xét nghiệm kiểm tra các bất thường về nồng độ điện giải trong cơ thể.
+
+Các xét nghiệm về gen có thể được thực hiện với mục đích xác định chẩn đoán ở những trường hợp khó hoặc dùng để tư vấn di truyền.10
+
+## Điều trị tăng sản thượng thận bẩm sinh
+
+Việc điều trị bệnh có thể bao gồm thuốc, phẫu thuật tạo hình và hỗ trợ tâm lý.
+
+### 1. Thuốc
+
+Mục tiêu của điều trị tăng sản thượng thận bẩm sinh là giảm sản xuất androgen dư thừa và thay thế các hormone bị thiếu hụt.8
+
+Các bệnh nhân thể cổ điển có thể kiểm soát thành công tình trạng bệnh, bằng cách dùng thuốc thay thế nội tiết tố trong suốt cuộc đời của họ.
+
+Những người mắc thể không cổ điển có thể không cần điều trị hoặc có thể chỉ cần dùng liều nhỏ corticosteroid.
+
+Các loại thuốc bao gồm:
+
+- Corticosteroid để thay thế cortisol. Lưu ý: bệnh nhân có thể cần tăng liều thuốc này khi cơ thể gặp các tình trạng bệnh lý hoặc cần phẫu thuật.
+- Mineralocorticoid để thay thế aldosterone giúp giữ muối và loại bỏ kali dư thừa.
+- Bổ sung muối để làm cân bằng lượng muối mất.
+
+Để đánh giá hiệu quả điều trị của thuốc, các bệnh nhân cần:8
+
+- Tái khám thường xuyên: các bác sĩ sẽ kiểm tra sự tăng trưởng và phát triển của trẻ qua những lần khám. Bao gồm theo dõi những thay đổi về chiều cao, cân nặng, huyết áp và sự phát triển của xương.
+- Theo dõi các tác dụng phụ: nếu sử dụng liều cao và lâu dài corticosteroid sẽ gây nhiều tác hại như giữ nước, mất khối lượng xương, suy giảm sự phát triển chiều cao…
+- Xét nghiệm máu để kiểm tra nồng độ hormone: điều này đặc biệt quan trọng để đảm bảo rằng mức độ hormone được cân bằng. Trẻ em chưa đến tuổi dậy thì cần đủ cortisol để ức chế nội tiết tố androgen và giúp bé phát triển đến một chiều cao lý tưởng. Đối với phụ nữ mắc tăng sản thượng thận bẩm sinh, điều quan trọng là phải ngăn chặn nội tiết tố androgen để giảm thiểu các đặc điểm nam tính không mong muốn. Mặt khác, quá nhiều cortisol có thể gây ra hội chứng Cushing.
+8
+
+### 2. Phẫu thuật tạo hình cơ quan sinh dục8
+
+Ở một số trẻ sơ sinh nữ có cơ quan sinh dục không điển do tăng sản thượng thận bẩm sinh thể cổ điển, các bác sĩ có thể đề nghị phẫu thuật tái tạo để cải thiện chức năng sinh dục và mang lại vẻ ngoài giống như bình thường.
+
+Phẫu thuật có thể liên quan đến việc giảm kích thước của âm vật và tái tạo lại cửa âm đạo. Thời điểm thực hiện phẫu thuật thường từ 2 đến 6 tháng tuổi. Những phụ nữ được phẫu thuật tạo hình bộ phận sinh dục có thể cần phẫu thuật nhiều hơn sau này.
+
+Phẫu thuật bộ phận sinh dục dễ thực hiện hơn khi trẻ còn rất nhỏ. Tuy nhiên, một số cha mẹ chọn cách chờ đợi cho đến khi con họ đủ lớn để hiểu những rủi ro và đưa ra lựa chọn giới tính của mình.
+
+Trước khi đưa ra quyết định về phương pháp điều trị tốt nhất cho con bạn, hãy nói chuyện và thảo luận với các chuyên gia y tế để đưa ra những lựa chọn sáng suốt giúp con bạn phát triển toàn diện.
+
+### 3. Hỗ trợ tâm lý
+
+Hỗ trợ tâm lý giúp giải quyết những vấn đề về tâm lý và cảm xúc của trẻ em, cũng như người lớn gặp phải trong quá trình mắc bệnh như sự mặc cảm, hay sự đánh giá của xã hội.
+
+### 4. Điều trị trước sinh
+
+Điều trị trước khi sinh bằng corticosteroid tổng hợp truyền qua nhau thai còn gây nhiều tranh cãi và vẫn trong giai đoạn thử nghiệm. Cần có thêm nhiều nghiên cứu để xác định mức độ an toàn lâu dài, và ảnh hưởng của phương pháp điều trị này đối với sự phát triển não bộ của thai nhi.8
+
+Do đó, Hiệp hội Nội Tiết Hoa Kỳ vẫn tiếp tục khuyến cáo không nên sử dụng liệu pháp điều trị này đối với thai nhi ở thời điểm hiện tại.10
+
+## Cách phòng ngừa tăng sản thượng thận bẩm sinh
+
+Bạn không thể phòng ngừa bệnh tăng sản thượng thận bẩm sinh cho bản thân vì đây là một tình trạng di truyền. Tuy nhiên, nếu bạn có tiền sử gia đình hoặc bản thân mắc bệnh lý này, và muốn ngăn ngừa tình trạng này cho con của mình. Bạn có thể liên hệ với các chuyên gia để được tư vấn di truyền trước khi có con.
+
+## Tiên lượng bệnh
+
+Với điều trị thích hợp, trẻ bị tăng sản thượng thận bẩm sinh có thể sống cuộc sống bình thường và tham gia đầy đủ vào việc học tập và các hoạt động khác. Các bé gái mắc bệnh lý này vẫn có thể phát triển bình thường, có chu kỳ kinh nguyệt đều đặn và có thể có con.3
+
+Tóm lại, **tăng sản thượng thận bẩm sinh** là một rối loạn di truyền làm ảnh hưởng đến quá trình tổng hợp các hormone ở vỏ thượng thận. Bệnh đặc trưng bởi sự thiếu hụt của cortisol, thiếu hụt aldosterone, dư thừa androgen hoặc sự kết hợp của các bất thường này. Có 2 phân loại chính gồm thể cổ điển (thường biểu hiện rõ và nặng nề hơn) và thể không cổ điển (thường có triệu chứng nhẹ). Phương pháp điều trị bao gồm việc sử dụng thuốc, phẫu thuật tạo hình cơ quan sinh dục và các liệu pháp tâm lý. Bạn nên liên hệ với bác sĩ để được điều trị phù hợp cũng như tư vấn di truyền trước khi có con.

@@ -1,0 +1,110 @@
+# SOURCE_URL: https://youmed.vn/tin-tuc/gen-apc-co-tac-dong-nhu-the-nao-den-co-the/
+
+# Gen APC là gì? Có tác động như thế nào đến cơ thể?
+
+Nội dung bài viết
+
+**Gen APC từ lâu đã được biết đến rộng rãi như một gen ức chế khối u đột biến cao trong ung thư đại trực tràng (CRC). Protein APC được tạo bởi gen là một chất điều hòa âm tính kiểm soát nồng độ beta-catenin. Bên cạnh đó còn tương tác với E-cadherin, có liên quan đến sự kết dính của tế bào. Các đột biến trong gen APC có thể dẫn đến ung thư đại trực tràng. Những thay đổi trong gen APC tạo ra các sản phẩm gen bị cắt ngắn. Điều này dẫn đến việc kích hoạt con đường tín hiệu Wnt và thay đổi hoạt động của nhiều quá trình tế bào khác. Theo dõi bài viết sau đây của bác sĩ Phan Văn Giáo để tìm hiểu về những tác động của gen APC đối với cơ thể.**
+
+## Gen APC là gì?
+
+### APC là viết tắt của từ Adenomatous polyposis coli
+
+APC được phân loại là gen ức chế khối u. Các gen ức chế khối u ngăn chặn sự phát triển không kiểm soát của các tế bào có thể dẫn đến các khối u.
+
+Gen APC của con người nằm trên nhánh dài (q) của nhiễm sắc thể số 5; trong dải q22.2 (5q22.2). Gen APC đã được chứng minh là có chứa vị trí xâm nhập bên trong ribosome. Các biến chỉnh của gen APC cũng đã được xác định ở tất cả các loài động vật có vú có dữ liệu bộ gen hoàn chỉnh.
+
+### Vị trí phân tử
+
+Cặp bazơ 112,707,498 đến 112,846,239; trên nhiễm sắc thể số 5
+
+### Các tên gọi khác
+
+- APC_HUMAN
+- DP2
+- DP2,5
+- DP3
+- FAP
+- FPC
+- GS
+- PPP1R46
+- Bộ điều chỉnh lộ trình báo hiệu WNT
+
+## Chức năng của Protein APC
+
+Protein được tạo ra bởi gen APC đóng một vai trò quan trọng trong một số quá trình tế bào. Nó giúp xác định liệu một tế bào có thể phát triển thành khối u hay không?
+
+Protein APC giúp kiểm soát:
+
+- Tần suất phân chia của một tế bào.
+- Cách nó gắn vào các tế bào khác trong mô.
+- Cách tế bào phân cực.
+- Hình thái của cấu trúc 3D.
+- Liệu một tế bào di chuyển trong hay ra khỏi mô.
+
+Protein này cũng giúp đảm bảo số lượng nhiễm sắc thể trong tế bào được tạo ra là chính xác. Protein APC hoàn thành các nhiệm vụ này chủ yếu thông qua liên kết với các protein khác. Đặc biệt là những protein liên quan đến quá trình gắn và tham gia tín hiệu tế bào. Hoạt động của một loại protein cụ thể là beta-catenin được kiểm soát bởi protein APC. Việc điều tiết beta-catenin ngăn chặn các gen kích thích phân chia tế bào bị bật quá thường xuyên và ngăn tế bào phát triển quá mức.
+
+## Các tình trạng sức khỏe liên quan đến thay đổi di truyền ở gen APC
+
+### Bướu sợi bó (Desmoid Tumor)
+
+Một số đột biến trong gen APC đã được tìm thấy ở những người có khối u lành tính được gọi là khối u desmoid. Những khối u hiếm gặp này phát sinh từ mô liên kết. Chúng cung cấp sức mạnh và tính linh hoạt cho các cấu trúc như : xương, dây chằng và cơ.
+
+Đột biến gen APC thường gây ra sự hình thành các khối u desmoid ở bụng. Nhưng những khối u này cũng có thể xuất hiện ở các bộ phận khác của cơ thể. Mặc dù các khối u desmoid liên quan đến APC thường liên quan đến một dạng ung thư đại tràng được gọi là đa polyp tuyến gia đình (FAP). Đột biến gen APC có thể gây ra khối u ở những người không mắc bệnh di truyền này. Đột biến gen APC được tìm thấy trong khoảng 10 -15 % các khối u desmoid không di truyền (lẻ tẻ).
+
+Hầu hết các đột biến gen APC gây ra các khối u desmoid lẻ tẻ dẫn đến một protein APC ngắn bất thường. Protein rút gọn không thể tương tác với protein beta-catenin. Do đó ngăn cản sự phân hủy beta-catenin khi không còn cần thiết. Beta-catenin dư thừa thúc đẩy sự phát triển và phân chia không kiểm soát của tế bào. Từ đó cho phép hình thành các khối u desmoid.
+
+### Bệnh đa polyp tuyến gia đình
+
+Hơn 700 đột biến trong gen APC đã được xác định trong các gia đình mắc các dạng bệnh đa polyp tuyến gia đình. Hầu hết các đột biến này dẫn đến việc sản xuất một phiên bản ngắn bất thường, không có chức năng của protein APC. Loại protein ngắn này không thể ngăn chặn sự phát triển quá mức của tế bào. Do đó dẫn đến hình thành các khối u bất thường (polyp) trong ruột kết, có thể trở thành ung thư. Đột biến phổ biến nhất trong FAP là mất 5 nucleotide trong gen APC. Đột biến này làm thay đổi trình tự của các axit amin trong protein APC.
+
+Hầu hết những người bị FAP sẽ phát triển ung thư đại trực tràng. Nhưng số lượng polyp và khung thời gian mà chúng trở thành ung thư phụ thuộc vào vị trí của đột biến trong gen APC. Vị trí của đột biến cũng xác định: liệu một cá nhân bị FAP có khuynh hướng phát triển các khối u desmoid hay không?
+
+### Hội chứng Turcot
+
+Các đột biến trong gen APC cũng là nguyên nhân gây ra một chứng rối loạn ; được gọi là hội chứng Turcot. Nó có liên quan chặt chẽ đến bệnh đa polyp tuyến gia đình. Hội chứng Turcot là sự kết hợp của ung thư đại trực tràng với một loại khối u não được gọi là u nguyên bào tủy. Khoảng 2/3 số người mắc hội chứng Turcot có đột biến gen APC.
+
+Một đột biến nhất định trong gen APC (không liên quan đến hội chứng Turcot) được tìm thấy ở khoảng 6 % những người có di sản Do Thái Ashkenazi (đông và trung Âu). Đột biến này thay thế axit amin isoleucine bằng axit amin lysine ở vị trí 1307 trong protein APC. Thay đổi này ban đầu được cho là vô hại. Tuy nhiên hiện đã được chứng minh là có liên quan đến việc tăng 10% đến 20% nguy cơ ung thư ruột kết.
+
+### Ung thư dạ dày
+
+Đột biến soma trong gen APC có thể liên quan đến sự phát triển của một tỷ lệ nhỏ bệnh ung thư dạ dày.
+
+### Bệnh lý thần kinh
+
+Rosenberg và cộng sự. phát hiện ra rằng: APC chỉ đạo sự tập hợp khớp thần kinh cholinergic giữa các tế bào thần kinh. Đây là một phát hiện có ý nghĩa đối với bệnh thần kinh như bệnh Alzheimer, mất thính giác do tuổi tác và đối với một số dạng động kinh và tâm thần phân liệt.
+
+### Các bệnh khác
+
+- Tăng sản thượng thận dạng nốt nguyên phát
+- Các bệnh ung thư khác
+
+## Xét nghiệm gen APC cho ung thư đại trực tràng
+
+Xét nghiệm máu này có thể tìm thấy một biến thể của gen APC khiến một số người có nhiều khả năng phát triển FAP (đa polyp tuyến gia đình).
+
+### Các trường hợp nên xét nghiệm di truyền
+
+- Có hơn 10 polyp đại tràng
+- Mắc polyp ruột kết và các loại khối u khác
+- Bạn là người gốc Do Thái Ashkenazi. Gia đình bạn có tiền sử bị ung thư ruột kết hoặc polyp có thể trở thành ung thư.
+
+### Ý nghĩa của xét nghiệm
+
+Thử nghiệm di truyền biến thể APC không kiểm tra xem bạn có bị ung thư hoặc polyp hay không. Nó chỉ tìm kiếm một biến thể cụ thể trong gen APC có thể khiến bạn gặp rủi ro. Bác sĩ có thể đề cập đến kết quả xét nghiệm “dương tính” hoặc “âm tính”. Những từ đó có nghĩa khác với bạn nghĩ.
+
+### Kết quả xét nghiệm “dương tính”
+
+Có nghĩa là bạn có gen APC bị trục trặc. Điều đó khiến bạn có nhiều khả năng mắc FAP hơn những người không có. Nhưng nó không có nghĩa là bạn chắc chắn sẽ mắc phải. Nếu bạn đã bị ung thư ruột kết hoặc polyp, nó có thể ảnh hưởng đến tần suất cần đi kiểm tra.
+
+### Kết quả “âm tính”
+
+Có nghĩa là bạn không có biến thể gen đó. Hãy nhớ rằng thử nghiệm không kiểm tra mọi vấn đề có thể liên quan đến gen này. Thử nghiệm này cũng không xem xét các vấn đề gen khác có liên quan đến ung thư ruột kết di truyền trong các gia đình. Nó chỉ tìm kiếm biến thể gen APC.
+
+### Phải làm gì nếu kết quả là “dương tính”?
+
+Nếu phát hiện ra rằng bạn có biến thể gen APC, bác sĩ có thể sẽ đề nghị bạn đi nội soi hàng năm. Đây là một xét nghiệm cho phép bác sĩ kiểm tra ruột để tìm ung thư hoặc các polyp có thể trở thành ung thư.
+
+Nếu bạn đã bị ung thư ruột kết hoặc polyp trước đó, bác sĩ có thể đề nghị với bạn về phương pháp cắt bỏ.
+
+**Gen APC** tham gia nhiều quá trình tín hiệu và gắn kết tế bào trong cơ thể. Các đột biến gen APC sẽ gây rối loạn trong việc tổng hợp protein APC. Đó là nguyên nhân dẫn đến nhiều vấn đề sức khỏe, đặc biệt là ung thư đại trực tràng. Xét nghiệm gen APC có thể giúp chúng ta phát hiện những biến đổi gen, có nguy cơ gây ra tình trạng ung thư này.

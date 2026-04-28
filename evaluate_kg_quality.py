@@ -49,8 +49,7 @@ PREDEFINED_SCHEMA_TYPES = {_normalize_entity_type_label(t) for t in ENTITY_TYPES
 # Đường dẫn GraphML mặc định: KG trong medical_rag_v2. Ghi đè bằng KG_EVAL_GRAPHML_PATH nếu cần.
 _GRAPHML_DEFAULT = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
-    "medical_rag",
-    "medical_rag_v2",
+    "medical_rag_v5",
     "graph_chunk_entity_relation.graphml",
 )
 GRAPHML_PATH = os.environ.get("KG_EVAL_GRAPHML_PATH", _GRAPHML_DEFAULT)

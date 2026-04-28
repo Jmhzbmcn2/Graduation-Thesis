@@ -1,0 +1,174 @@
+# SOURCE_URL: https://youmed.vn/tin-tuc/thieu-mau-nao/
+
+# Thiếu máu não: Nguyên nhân, triệu chứng và cách điều trị
+
+Nội dung bài viết
+
+**Ngày nay, đột quỵ là nguyên nhân phổ biến gây thương tật cao, thậm chí là tử vong cho bệnh nhân. Đột quỵ ảnh hưởng nhiều tới chất lượng cuộc sống người bệnh. Trong đó, đột quỵ do thiếu máu não rất thường gặp. Bài viết sau đây của Bác sĩ Lê Anh Thư cung cấp những thông tin cơ bản giúp cho người nhà và bệnh nhân hiểu rõ vấn đề thiếu máu não.**
+
+## Tổng quan về tình trạng thiếu máu não
+
+### Định nghĩa
+
+Thiếu máu não là tình trạng tắc nghẽn động mạch làm hạn chế việc cung cấp máu giàu oxy đến não, dẫn đến tổn thương mô não.
+
+Thiếu máu não không chỉ dẫn đến tổn thương tế bào não mà còn dẫn đến chết tế bào não. Thiếu máu não có hai dạng chính gồm:1
+
+- Cơn thiếu máu cục bộ thoáng qua (TIA): là khi thiếu máu não gây mất chức năng não tạm thời.
+- Đột quỵ do thiếu máu não: còn được gọi là nhồi máu não. Xảy ra khi một mạch máu bị tắc và mất chức năng não vĩnh viễn do mô não bị chết (hoại tử). Đột quỵ do thiếu máu não là dạng đột quỵ phổ biến nhất.
+
+### Phân loại
+
+Thiếu máu não có thể được phân loại thành một số loại khác nhau theo nguyên nhân. Chúng bao gồm:1
+
+- Huyết khối: Loại thiếu máu cục bộ này thường là do cục máu đông hình thành tại chỗ gây ra.
+- Tắc mạch: Thường do cục máu đông có thể hình thành trong tim hoặc động mạch. Sau đó di chuyển đến động mạch khác (thường nhỏ hơn), gây ra tắc nghẽn ở động mạch đích.
+- Giảm tưới máu: Loại này là do thiếu nguồn cung cấp máu tổng thể. Nhồi máu cơ tim, mất máu nghiêm trọng do chấn thương hoặc phẫu thuật có thể làm giảm lưu lượng máu tổng thể lên não.
+
+Thiếu máu cục bộ có thể ảnh hưởng đến một vùng nhỏ của não. Hoặc nó có thể ảnh hưởng đến một vùng lớn, thậm chí toàn bộ não:1
+
+- Thiếu máu cục bộ khu trú được giới hạn trong một khu vực cụ thể của não. Nó thường xảy ra khi một cục máu đông đã làm tắc nghẽn động mạch trong não..
+- Thiếu máu toàn bộ ảnh hưởng đến một vùng não rộng hơn. Thường xảy ra khi lượng máu cung cấp cho não bị giảm mạnh hoặc ngừng lại. Điều này thường do tim ngừng đập.
+
+### Sinh lý bệnh học1
+
+Thiếu máu não theo nghĩa rộng của nó có thể là khu trú hoặc đa ổ. Gây ra bởi sự đóng đột ngột hoặc giảm đường kính rõ rệt của động mạch cung cấp một vùng não, có thể là của các động mạch đã ăn mòn hoặc bình thường trước đây (tức là động mạch chủ, thân trên động mạch chủ hoặc động mạch nội sọ). Thiếu máu não có thể thường xuyên được kích hoạt do thiếu nguồn cung cấp máu não toàn bộ, trong nhiều nguyên nhân cụ thể hơn là do rối loạn chức năng huyết động gây ra giảm huyết áp đột ngột.
+
+Mô não thiếu máu ngừng hoạt động trong vài giây và bị hoại tử ngay sau 5 phút sau khi thiếu hoàn toàn cung cấp oxy và glucose, so với 20 – 40 phút ở các bộ phận khác của cơ thể. Một số khu vực đặc biệt dễ bị thiếu máu cục bộ, một hiện tượng được gọi là tổn thương có chọn lọc. Những khu vực này bao gồm các vùng biên giới động mạch, các tế bào hình chóp trong vùng CA1 đồi hải mã và các tế bào Purkinje tiểu não. Khu vực biên giới động mạch còn được gọi là khu vực đầu nguồn; một vị trí phổ biến là lồi cầu não trên, là khu vực giữa các động mạch não trước và giữa, rất dễ bị giảm áp lực tưới máu não.
+
+Lý do cho sự dễ bị tổn thương chọn lọc của các loại tế bào thần kinh cụ thể chưa được hiểu hoàn toàn; nhưng được cho là do sự biến đổi trong biểu hiện của các thụ thể dẫn truyền thần kinh glutamate kích thích trên tế bào thần kinh.
+
+Các biến chứng lâu dài của thiếu máu não là do tổn thương não vĩnh viễn không thể hồi phục được, cuối cùng dẫn đến hoại tử. Sự nhạy cảm của tế bào thần kinh đối với thiếu máu cục bộ bao gồm nhiều yếu tố: não có tỷ lệ trao đổi chất cơ bản cao và tín hiệu tế bào cao kích hoạt các con đường như chết tế bào thần kinh do glutamate, gây ra tổn thương do thiếu máu cục bộ dopamine, giải phóng gốc tự do, độc tính kẽm và giải phóng các enzym dẫn đến apoptosis kết hợp và hoại tử dị hóa.
+
+## Nguyên nhân thiếu máu não
+
+Huyết khối thường là nguồn gốc của sự tắc nghẽn dẫn đến thiếu máu não. Bình thường, chức năng của não cần được cung cấp đầy đủ máu giàu oxy. Máu này được cung cấp thông qua hai bộ mạch máu chính được gọi là động mạch cảnh trong và hệ thống cơ đốt sống (bao gồm hai động mạch đốt sống và động mạch nền). Có nhiều yếu tố liên quan đến huyết khối:1 2
+
+### Xơ vữa động mạch
+
+Xơ vữa động mạch: sự tích tụ của mảng bám hoặc chất béo tích tụ trong động mạch, có thể khiến các lối đi bị thu hẹp và dễ bị các vật cản làm hạn chế lưu lượng máu. Các yếu tố nguy cơ liên quan:3 4
+
+- Tiền sử gia đình mắc bệnh tim.
+- Tăng lipid máu (tăng chất béo trong máu).
+- Tăng huyết áp.
+- Lối sống thụ động.
+- Béo phì.
+- Tuổi lớn hơn.
+- Hút thuốc.
+- Bệnh đái tháo đường.
+
+### Bệnh lý tim mạch
+
+- Thiếu máu não cũng do nhồi máu cơ tim: Cơn đau tim không được điều trị có thể làm chậm lưu lượng máu cho đến khi hình thành cục máu đông, ngăn máu đến não.
+- Những người bị dị tật tim bẩm sinh ảnh hưởng đến sự hình thành và kết nối của các động mạch. Có thể dễ bị các cục máu đông dẫn đến thiếu máu não.
+
+### Một số nguyên nhân khác
+
+- Bất cứ điều gì gây chèn ép các mạch máu đều có thể dẫn đến thiếu oxy đến não. Bao gồm cả khối u.
+- Thiếu máu hồng cầu hình liềm. Liên quan đến thiếu hồng cầu và những tế bào tồn tại không phẳng, có dạng như hình liềm. Do đó có xu hướng dễ đông máu hơn.
+- Một số bệnh nhiễm trùng nặng, vỡ mạch máu hoặc chấn thương làm mất nhiều máu có thể dẫn đến tụt huyết áp và giảm lưu lượng máu lên não.
+
+## Triệu chứng
+
+Các triệu chứng của thiếu máu não tương tự như đột quỵ và khác nhau tùy thuộc vào phần não bị ảnh hưởng bởi tình trạng thiếu oxy, cũng như thời gian thiếu oxy kéo dài. Các triệu chứng sau đây có thể chỉ kéo dài trong thời gian ngắn hoặc có thể kéo dài. Một số triệu chứng và dấu hiệu phổ biến là:1 5
+
+- Lú lẫn.
+- Khó khăn trong việc phối hợp động tác.
+- Cảm thấy khó hiểu những gì người khác đang nói.
+- Chóng mặt.
+- Không có khả năng hoặc khó cử động cơ mặt.
+- Nói lắp.
+- Đột ngột đau đầu dữ dội.
+- Mất ý thức.
+- Các vấn đề về thị lực.
+- Nôn.
+- Yếu một bên hoặc cả hai bên của cơ thể.
+
+## Thiếu máu não có nguy hiểm không?
+
+Thiếu máu cục bộ não đại diện cho một cấp cứu y tế. Nếu không được điều trị, nó có thể dẫn đến nhồi máu não hoặc bệnh não thiếu oxy-thiếu máu cục bộ toàn thể, có thể dẫn đến** tử vong hoặc tàn tật vĩnh viễn**.
+
+Tùy thuộc vào thời gian thiếu máu cục bộ não, có thể có rối loạn chức năng não nhẹ, rối loạn chức năng kéo dài với tổn thương não vĩnh viễn, có hoặc không có các triệu chứng và tàn tật vĩnh viễn.1
+
+Kết cục của bệnh nhân sau khi thiếu máu não có thể từ không có ảnh hưởng vĩnh viễn (cơn thiếu máu não thoáng qua-TIA) đến tàn tật vĩnh viễn đến tử vong. Mức độ suy giảm nghiêm trọng có liên quan đến tình trạng chức năng của bệnh nhân trước biến cố thiếu máu cục bộ. Ví dụ, bệnh nhân bị suy giảm nhận thức nhẹ hoặc sa sút trí tuệ có mức suy giảm nhận thức tương đối lớn hơn sau đột quỵ do thiếu máu cục bộ, cho thấy khả năng chịu đựng của tế bào thần kinh thấp hơn đối với bệnh thiếu máu cục bộ. Nó cũng liên quan đến tuổi của bệnh nhân.1
+
+Vì vậy cần đi khám ngay khi có các triệu chứng nghi ngờ thiếu máu não.
+
+## Chẩn đoán
+
+Đánh giá và chẩn đoán nhanh chóng là nền tảng để điều trị thành công bệnh thiếu máu não. Một người có các triệu chứng của thiếu máu não cần được bác sĩ thăm khám ngay lập tức. Nhằm loại trừ các bệnh lý khác có dấu hiệu tương tự và xác định bệnh thiếu máu não. Để bắt đầu điều trị thích hợp, giảm khả năng đột quỵ và tổn thương thêm các mô não.
+
+Chẩn đoán thiếu máu não sẽ bắt đầu bằng việc bác sĩ tìm ra các triệu chứng của một người và thực hiện khám sức khỏe, bao gồm kiểm tra nhịp thở và tuần hoàn, cũng như tìm hiểu tiền sử gia đình. Dựa trên các triệu chứng và phát hiện thể chất của một người, nhóm y tế sau đó có thể sẽ yêu cầu các xét nghiệm hình ảnh cụ thể, cho phép họ nhìn vào bên trong cơ thể và hình dung các động mạch và não để xác nhận chứng thiếu máu cục bộ não, để tìm hiểu xem liệu đột quỵ đã xảy ra hay chưa, và tìm ra vị trí tắc nghẽn.6
+
+### Xét nghiệm máu
+
+Một số xét nghiệm máu sau đây thường được chỉ định:6
+
+- Xét nghiệm glucose huyết thanh. Thực hiện nếu một người có vẻ bối rối và nói ngọng để loại trừ các vấn đề về đường huyết có triệu chứng tương tự.
+- Các chất điện giải trong huyết thanh có thể được kiểm tra. Vì những bất thường có thể dẫn đến các triệu chứng thần kinh dễ nhầm lẫn với thiếu máu não.
+- Nồng độ BUN và creatinin huyết thanh. Có thể loại trừ suy thận, điều này sẽ làm thay đổi việc điều trị thiếu máu não.
+- Men tim được đánh giá để xem liệu một người có bị đau tim hay không.
+- Điện tâm đồ (ECG) có thể được yêu cầu để kiểm tra nhịp tim bất thường.
+- Công thức máu.
+- Xét nghiệm thời gian prothrombin (với INR) đo tốc độ đông máu.
+
+### Xét nghiệm hình ảnh
+
+Các xét nghiệm hình ảnh có khả năng được thực hiện để hình dung sự tắc nghẽn trong động mạch. Các xét nghiệm hình ảnh phổ biến có thể được yêu cầu:6
+
+- Siêu âm, sử dụng sóng âm thanh để tạo ra hình ảnh. Đây là một cách không xâm lấn để xem các động mạch. Hình ảnh này có thể tiết lộ liệu có tắc nghẽn hoặc cục máu đông hay không.
+- Siêu âm tim sử dụng sóng âm thanh để tạo ra hình ảnh của tim.
+- Chụp CT scanner sọ não có thể hình dung ra xuất huyết hoặc khối u não, hoặc vùng thiếu máu hoặc mô não hoại tử.
+- MRA (chụp mạch cộng hưởng từ) và CTA. Cho phép bác sĩ kiểm tra các mạch máu với góc nhìn chính xác.
+- Chụp mạch máu não (DSA) tạo ra những hình ảnh chi tiết nhất về các mạch máu của não.
+- Chụp cắt lớp vi tính phát xạ photon đơn lẻ (SPECT). Có thể hiển thị các vùng não đang bị thiếu oxy.
+- Chụp CT hoặc MRI não có thể được sử dụng để xác định liệu đột quỵ đã xảy ra hay chưa.
+
+## Điều trị
+
+Có một số lựa chọn điều trị cho một người bị thiếu máu não. Mục tiêu của điều trị là giải quyết sự hạn chế trong động mạch và khôi phục lưu lượng máu thích hợp. Do đó làm giảm nguy cơ đột quỵ.
+
+Bất cứ khi nào có thể, bác sĩ phẫu thuật thần kinh sẽ đề nghị điều trị bảo tồn. Điều này sẽ giải quyết các động mạch bị thu hẹp bằng thuốc và thay đổi lối sống. Thuốc để kiểm soát huyết áp cao, giảm cholesterol và/hoặc làm loãng máu có thể được kê đơn để điều trị chứng thiếu máu não. Yêu cầu bỏ thuốc lá, tham gia vào một thói quen tập thể dục, thay đổi thói quen ăn uống kém và kiểm soát căng thẳng.1
+
+### Thuốc
+
+Các bác sĩ sử dụng một số loại thuốc để kiểm soát các yếu tố dẫn đến thiếu máu não và giảm nguy cơ một người bị đột quỵ sau TIA. Các loại thuốc để giải quyết tình trạng đông máu thường được kê đơn:1
+
+- Thuốc chống ngưng tập tiểu cầu. Những loại thuốc này làm cho các tiểu cầu ít có khả năng kết dính với nhau và hình thành cục máu đông. Aspirin là loại thuốc ít tốn kém nhất và phổ biến nhất trong số các loại thuốc chống tiểu cầu này. Các loại thuốc chống tiểu cầu khác có thể được kê đơn hoặc kết hợp.
+- Thuốc kháng đông. Các loại thuốc này nhắm vào một số protein nhất định ảnh hưởng đến quá trình đông máu.
+
+### Phẫu thuật1
+
+Một số yếu tố ảnh hưởng đến việc điều trị tốt nhất cho người bị thiếu máu não hoặc người đang bị đột quỵ do thiếu máu cục bộ. Phẫu thuật đôi khi được thực hiện trên cơ sở khẩn cấp. Nếu một người bị thiếu máu não bị tắc nghẽn hoàn toàn hoặc các động mạch bị thu hẹp nghiêm trọng, có thể cần phải phẫu thuật để tránh đột quỵ.
+
+Phẫu thuật bắc cầu mạch máu, hoặc tái thông mạch máu não, cung cấp nguồn cung cấp máu mới có thể giúp ngăn ngừa đột quỵ và TIA (cơn thiếu máu não thoáng qua).
+
+- Thuyên tắc mạch.
+- Đặt stent chuyển dòng.
+
+Cắt đốt cơ học.
+
+## Cách phòng ngừa
+
+Các yếu tố nguy cơ của thiếu máu não bao gồm bệnh tim, bao gồm các tình trạng tim như rung nhĩ, tiểu đường, béo phì, tăng huyết áp, xơ vữa động mạch/tăng lipid máu và tiền sử đột quỵ. Các yếu tố nguy cơ về hành vi bao gồm ít hoạt động thể chất, ngủ kém, béo phì, uống rượu, hút thuốc lá. Bệnh hồng cầu hình liềm và các rối loạn huyết học khác, đặc biệt là tình trạng tăng đông máu, cũng có thể làm tăng nguy cơ đột quỵ do thiếu máu cục bộ. Giảm thiểu nguy cơ đột quỵ bằng chế độ ăn uống lành mạnh, tập thể dục và tuân thủ thuốc.1
+
+Statin và chất làm loãng máu đã được chứng minh là làm giảm nguy cơ đột quỵ do thiếu máu cục bộ.7 8
+
+Trên đây là những thông tin về tình trạng **thiếu máu não**. Hi vọng bài viết đã cung cấp cho bạn đọc những thông tin hữu ích. Từ đó có những cách xử trí phù hợp khi nghi ngờ mắc bệnh.
+
+### Câu hỏi thường gặp
+
+#### Điều trị/Xử lý thiếu máu não tại nhà có được không?
+
+
+Không tự ý điều trị/xử lý tại nhà mà không có sự hướng dẫn của bác sĩ chuyên khoa.
+
+#### Khi nào cần gặp bác sĩ?
+
+
+Khi có các triệu chứng nghi ngờ thiếu máu não, người thân nên đưa bệnh nhân tới cơ sở y tế gần nhất để được thăm khám, chẩn đoán và có hướng xử trí phù hợp.
+
+#### Bệnh thiếu máu não có chữa khỏi được không?
+
+
+Bệnh thiếu máu não là tình trạng tắc nghẽn động mạch làm hạn chế việc cung cấp máu giàu oxy đến não, dẫn đến tổn thương mô não. Loại bỏ các nguyên nhân và yếu tố nguy cơ có thể làm giảm mức độ nghiêm trọng và tiến triển của bệnh chứ không hoàn toàn chữa khỏi bệnh.

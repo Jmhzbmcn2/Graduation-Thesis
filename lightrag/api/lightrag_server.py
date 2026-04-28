@@ -1078,6 +1078,31 @@ def create_app(args):
     )
 
     # Initialize RAG with unified configuration
+    # -------------------------------------------------------------------------
+    # CHUNKING MODE — controlled by CHUNKING_MODE env var (no core changes)
+    #   CHUNKING_MODE=semantic  → use SemanticMarkdownChunker (Vietnamese medical)
+    #   CHUNKING_MODE=token     → use default chunking_by_token_size (LightRAG built-in)
+    #   (unset / anything else) → token (safe default)
+    # -------------------------------------------------------------------------
+    chunking_mode = os.getenv("CHUNKING_MODE", "token").strip().lower()
+    _custom_chunking_func = None
+    if chunking_mode == "semantic":
+        try:
+            from lightrag.chunking_semantic import semantic_markdown_chunker
+            _custom_chunking_func = semantic_markdown_chunker
+            logger.info(
+                "CHUNKING_MODE=semantic: SemanticMarkdownChunker activated. "
+                f"Max tokens: {os.getenv('SEMANTIC_CHUNK_MAX_TOKENS', '1800')}, "
+                f"Overlap: {os.getenv('SEMANTIC_CHUNK_OVERLAP_TOKENS', '150')}"
+            )
+        except ImportError as e:
+            logger.error(
+                f"CHUNKING_MODE=semantic requested but import failed: {e}. "
+                "Falling back to default token chunking."
+            )
+    else:
+        logger.info(f"CHUNKING_MODE={chunking_mode!r}: using default token-based chunking")
+
     try:
         rag = LightRAG(
             working_dir=args.working_dir,
@@ -1112,6 +1137,8 @@ def create_app(args):
                 "entity_types": args.entity_types,
             },
             ollama_server_infos=ollama_server_infos,
+            # Semantic chunking: None = use LightRAG default (chunking_by_token_size)
+            **({"chunking_func": _custom_chunking_func} if _custom_chunking_func else {}),
         )
     except Exception as e:
         logger.error(f"Failed to initialize LightRAG: {e}")

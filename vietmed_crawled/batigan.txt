@@ -1,0 +1,133 @@
+# SOURCE_URL: https://youmed.vn/tin-tuc/batigan/
+
+# Batigan là thuốc gì? Công dụng, cách dùng và lưu ý khi dùng
+
+Nội dung bài viết
+
+**Batigan thuộc nhóm thuốc kháng virus. Bạn có biết công dụng, cách dùng cụ thể của thuốc ra sao và cần lưu ý gì khi sử dụng? Hãy cùng Dược sĩ Trần Việt Linh tìm hiểu về sản phẩm Batigan qua bài viết sau nhé! **
+
+*Thành phần hoạt chất:* Tenofovir disoproxil fumarat.
+
+*Thuốc chứa thành phần tương tự:* Tenfovix, Tenifo, Edar, Tenofovir…
+
+## Batigan là thuốc gì?
+
+Batigan là thuốc dùng để điều trị HIV và viêm gan B được sản xuất bởi công ty cổ phần Dược phẩm Phương Đông. Thuốc được bào chế dưới dạng viên nén bao phim. Sản phẩm có nhiều quy cách đóng gói khác nhau: Hộp 2 vỉ, 3 vỉ, 6 vỉ, 10 vỉ x 10 viên; Chai 30 viên, 60 viên, 100 viên.
+
+## Thành phần và công dụng của thành phần có trong Batigan
+
+Mỗi viên nén bao phim chứa:
+
+- Tenofovir disoproxil fumarat: 300 mg.
+- Tá dược vừa đủ 1 viên.
+
+Tenofovir disoproxil fumarat là muối của tenofovir disoproxil được hấp thu nhanh và chuyển thành tenofovir sau đó thành tenofovir diphosphat do quá trình phosphoryl hoá trong tế bào. Chất này có khả năng ức chế enzym phiên mã ngược của virus HIV type I (HIV-1) và ức chế enzyme DNA polymerase của virus viêm gan B. Tenofovir diphosphat có khả năng tranh chấp với cơ chất tự nhiên là deoxyadenosin 5’-triphosphat, sau khi gắn vào DNA sẽ ngăn cản kéo dài chuỗi DNA.1
+
+## Chỉ định của Batigan
+
+### Nhiễm HIV-11
+
+Người lớn trên 18 tuổi: Dùng phối hợp với các thuốc kháng retrovirus khác để điều trị HIV-1.
+
+Batigan cũng được chỉ định cho trẻ vị thành niên từ 12 – 18 tuổi bị nhiễm HIV-1, có đề kháng NRTI hoặc không thể dùng được các thuốc lựa chọn ưu tiên (first line) do độc tính.
+
+### Nhiễm viêm gan B1
+
+Viêm gan B mạn tính ở người lớn trên 18 tuổi:
+
+- Có chức năng gan còn bù, bằng chứng về sự nhân lên của virus, tăng nồng độ ALT huyết thanh và các biểu hiện viêm hoặc xơ hoá.
+- Có bằng chứng về virus viêm gan B kháng lamivudin.
+- Bệnh gan mất bù.
+
+Viêm gan B mạn tính ở trẻ vị thành niên 12 – 18 tuổi: Có chức năng gan còn bù, có bằng chứng về bệnh miễn dịch – có sự nhân lên của virus, tăng nồng độ ALT huyết thanh và có biểu hiện viêm hoặc xơ hoá.
+
+## Cách dùng và liều dùng của Batigan
+
+### Cách dùng
+
+Batigan uống một lần duy nhất trong ngày và nên được uống cùng bữa ăn với một cốc nước đun sôi để nguội. Thuốc phải được uống đúng giờ và các lần uống phải cách đều nhau.
+
+### Liều dùng cho từng đối tượng1
+
+#### Người lớn
+
+Nhiễm HIV-1: 300 mg ngày 1 lần, phải dùng kết hợp với thuốc kháng retrovirus khác.
+
+Viêm gan B mạn tính: Liều khuyến cáo 300 mg ngày 1 lần. Thời gian ngừng thuốc tối ưu hiện nay vẫn chưa rõ.
+
+#### Trẻ em
+
+Nhiễm HIV-1:
+
+- Trẻ vị thành niên từ 12 -18 tuổi và nặng từ 35 kg trở lên: Liều khuyến cáo là 1 viên/lần mỗi ngày vào bữa ăn.
+- Trẻ em từ 2 – 12 tuổi: Không khuyến cáo sử dụng chế phẩm này vì dạng bào chế viên nén bao phim không chia liều.
+- Trẻ em dưới 2 tuổi: Tính an toàn và hiệu quả của thuốc chưa được chứng minh.
+
+Viêm gan B mạn tính:
+
+- Trẻ vị thành niên từ 12 – 18 tuổi và nặng từ 35 kg trở lên: Liều khuyên dùng là 1 viên/lần mỗi ngày. Thời gian điều trị tối ưu hiện nay chưa rõ.
+- Trẻ em từ 2 – 12 tuổi: Tính an toàn và hiệu quả của Batigan chưa được xác định.
+
+Cần giảm liều trên bệnh nhân suy thận, không cần hiệu chỉnh liều trên bệnh nhân suy gan.
+
+## Tác dụng không mong muốn của Batigan
+
+- Rất thường gặp: Giảm nồng độ phosphate máu, chóng mặt, tiêu chảy, buồn nôn, phát ban, suy nhược toàn thân.
+- Thường gặp: Giảm bạch cầu trung tính, đau bụng, khó tiêu, giảm cảm giác thèm ăn, chỉ số ALT, AST và glucose niệu tăng, toàn thân mệt mỏi.
+- Ít gặp: Hạ kali máu, viêm tụy, tiêu cơ vân, yếu cơ, tăng creatinin, bệnh thận.
+- Hiếm gặp: Nhiễm toan lactic, viêm gan, gan nhiễm mỡ, bệnh nhuyễn xương, đau cơ, suy thận, hoại tử ống thận cấp, viêm thận,…
+
+## Tương tác thuốc
+
+- Tenofovir không được dùng chung với adefovir dipivoxil.
+- Tenofovir làm giảm nồng độ atazanavir sulfat và lamivudin trong huyết tương.
+- Tenofovir làm tăng nồng độ didanosin trong huyết tương.
+- Dùng đồng thời tenofovir và indinavir: Tăng nồng độ tenofovir, giảm nồng độ indinavir trong huyết tương.
+- Dùng đồng thời tenofovir với lopinavir và ritonavir: Tăng nồng độ tenofovir, giảm nồng độ lopinavir và ritonavir trong huyết tương.
+- Khi dùng đồng thời tenofovir với các thuốc thải trừ chủ yếu qua thận sẽ làm tăng nồng độ trong huyết thanh của tenofovir do tranh chấp đường đào thải.
+- Các thuốc làm giảm chức năng thận có thể làm tăng nồng độ của tenofovir huyết thanh.
+
+## Đối tượng chống chỉ định dùng Batigan
+
+Chống chỉ định với đối tượng mẫn cảm với bất kỳ thành phần nào của thuốc.
+
+### Phụ nữ có thai và mẹ cho con bú có sử dụng được Batigan?
+
+- Phụ nữ có thai: Dữ liệu nghiên cứu trên phụ nữ có thai cho thấy không có độc tính và dị tật trên thai nhi hay trẻ sơ sinh. Các nghiên cứu trên động vật cũng cho thấy không có dấu hiệu độc tính trên sinh sản. Do đó, việc sử dụng Batigan trong thời kỳ mang thai có thể được xem xét.
+12 - Phụ nữ cho con bú: Batigan được chứng minh có khả năng bài tiết vào sữa mẹ. Hiện không có thông tin đầy đủ về ảnh hưởng của Batigan với trẻ em và trẻ sơ sinh. Do đó, không nên sử dụng thuốc trong thời gian cho con bú. Phụ nữ nhiễm HIV và HBV không được cho con bú sữa mẹ để tránh lây truyền HIV và HBV.
+1
+
+### Đối tượng thận trọng khi dùng Batigan
+
+Cần thận trọng trên bệnh nhân suy thận, người cao tuổi, suy giảm miễn dịch, bệnh nhân loãng xương, gãy xương.
+
+Thuốc có chứa tá dược lactose nên khuyến cáo không nên dùng thuốc này cho bệnh nhân mắc các rối loạn di truyền hiếm gặp về không dung nạp galactose, thiếu hụt Lapp lactase trầm trọng hoặc kém hấp thu glucose – galactose.
+
+## Xử lý khi quá liều Batigan
+
+Khi xảy ra quá liều, bệnh nhân cần phải được giám sát các dấu hiệu bất thường để tìm bằng chứng độc tính của tenofovir.
+
+Bệnh nhân nên ngưng sử dụng thuốc và hỏi ý kiến của bác sĩ điều trị.
+
+## Trường hợp quên liều Batigan
+
+Nếu bệnh nhân quên 1 liều Batigan trong vòng 12 giờ, thì cần uống 1 viên ngay sau khi nhớ ra và tiếp tục dùng liều mới như bình thường. Nếu bệnh nhân quên uống 1 liều trên 12 giờ và liều quên gần với thời điểm uống liều tiếp theo, bệnh nhân nên bỏ qua liều này và tiếp tục lịch trình dùng thuốc như thông thường.
+
+Nếu bệnh nhân bị nôn mửa trong vòng 1 giờ sau khi uống thuốc thì nên uống ngày 1 liều khác thay thế. Nếu bệnh nhân bị nôn tại thời điểm nhiều hơn 1 giờ sau khi uống thuốc thì không cần uống thêm 1 liều nữa.
+
+## Lưu ý khi sử dụng thuốc
+
+- Thuốc bán theo đơn, chỉ dùng khi có sự chỉ dẫn của bác sĩ.
+- Thông báo ngay cho bác sĩ hoặc dược sĩ khi gặp phải những tác dụng không mong muốn.
+- Thuốc có hạn dùng 36 tháng kể từ ngày sản xuất. Không dùng thuốc khi thuốc đã hết hạn sử dụng, biến màu, biến chất.
+- Đọc kỹ hướng dẫn sử dụng trước khi dùng.
+
+## Batigan có giá bao nhiêu?
+
+Hiện nay sản phẩm Batigan có giá khoảng 530.000 đồng với hộp 2 vỉ x 10 viên. Giá cả này chỉ mang tính chất tham khảo, giá sản phẩm sẽ thay đổi tùy theo cơ sở bán và phân phối.
+
+## Cách bảo quản
+
+Bảo quản nơi khô ráo, dưới 30°C và tránh ánh sáng. Để xa tầm tay của trẻ em.
+
+Hy vọng qua bài viết trên, những thắc mắc của bạn về sản phẩm **Batigan** đã được giải đáp. Những thông tin trên đây chỉ mang tính chất tham khảo. Để biết thêm thông tin chi tiết về sản phẩm, bạn có thể liên hệ bác sĩ hoặc dược sĩ để được tư vấn.

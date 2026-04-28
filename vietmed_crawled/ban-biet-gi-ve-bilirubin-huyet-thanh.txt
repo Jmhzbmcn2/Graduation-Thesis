@@ -1,0 +1,130 @@
+# SOURCE_URL: https://youmed.vn/tin-tuc/ban-biet-gi-ve-bilirubin-huyet-thanh/
+
+# Bilirubin là gì? Tại sao cần xét nghiệm bilirubin huyết thanh?
+
+Nội dung bài viết
+
+**Trong xét nghiệm máu thường có chỉ số bilirubin. Bạn có từng thắc mắc bilirubin là gì, tại sao cần xét nghiệm bilirubin huyết thanh? Bài viết dưới đây của bác sĩ Đoàn Thị Hoài Trang sẽ giúp bạn trả lời những vấn đề trên.**
+
+## Bilirubin là gì?
+
+Đây là sản phẩm dị hóa của quá trình chuyển hóa heme. Trong đó, bilirubin ở trạng thái không liên hợp sẽ gây độc cho nhiều tế bào. Cơ thể có các cơ chế sinh lý bảo vệ chống độc tính của bilirubin bao gồm liên kết với albumin huyết tương, hấp thu, chuyển hóa và bài tiết ra ngoài qua mật, thận.
+
+Nhờ các cơ chế bảo vệ này, tác dụng có hại của bilirubin không liên hợp chỉ giới hạn ở trẻ sơ sinh có bilirubin không liên hợp tăng cao và đối tượng bị rối loạn di truyền liên quan đến liên hợp bilirubin.
+
+Tổng lượng bilirubin trung bình ở nam giới cao hơn so với nữ giới.
+
+## Quá trình sản xuất
+
+Bilirubin được hình thành do sự phân hủy của heme có trong hemoglobin, myoglobin, cytochromes, catalase, peroxidase và tryptophan pyrrolase.
+
+80% bilirubin sản xuất hằng ngày (250 đến 400 mg ở người trưởng thành) có nguồn gốc hemoglobin.
+
+20% còn lại có nguồn gốc từ các hemoprotein khác và nhóm nhỏ nhân heme tự do.
+
+Nồng độ bilirubin tăng liên quan đến các vấn đề bệnh lý (như tan máu, rối loạn đông máu, thiếu máu hồng cầu to…).
+
+Bilirubin được tạo ra bởi sự phân hủy nhân heme qua trung gian bởi hai nhóm enzyme:
+
+- Heme oxygenase.
+- Biliverdin reductase.
+
+Heme oxygenase mở vòng porphyrin của heme bằng cách xúc tác quá trình oxy hóa.
+
+Tạo biliverdin, màu xanh lá, sau đó bị khử bởi biliverdin reductase thành bilirubin IX-alpha, màu vàng cam.
+
+Sắt được giải phóng trong quá trình này. Cầu nối carbon bị oxy hóa được đào thải dưới dạng carbon monoxide (CO). Đo lượng CO nội tại đã được sử dụng để định lượng bilirubin.
+
+## Bilirubin liên hợp là gì?
+
+Là dạng bilirubin liên kết với albumin trong huyết tương. Bilirubin chủ yếu liên kết với albumin trong huyết tương, ngoài ra có liên kết với lipoprotein.
+
+Albumin liên kết giữ bilirubin trong không gian mạch máu, do đó ngăn chặn sự lắng đọng của nó ở các mô ngoài cơ thể, đặc biệt ở não và giảm thiểu quá trình lọc cầu thận.
+
+*Xem thêm*: Xét nghiệm bilirubin giúp chẩn đoán bệnh lý như thế nào?
+
+## Bilirubin không liên hợp
+
+Dạng bilirubin tự do không liên hợp trong huyết thanh. Chỉ một phần nhỏ bilirubin lưu hành ở trạng thái tự do không liên kết. Bilirubin không liên hợp có thể gây độc cho não khi nồng độ của nó vượt quá albumin.
+
+Một số chất có thể liên kết với albumin tại cùng vị trí với bilirubin. Ví dụ: sulfonamid, warfarin, thuốc chống viêm và thuốc cản quang. Các tác nhân này có thể thay thế bilirubin liên kết với albumin. Chúng dẫn đến bệnh não do lắng đọng bilirubin ở trẻ sơ sinh dù không làm thay đổi tổng nồng độ bilirubin trong huyết thanh.
+
+Nhiều hợp chất khác như axit béo liên kết tại một vị trí albumin khác nhau. Nhưng trong một số trường hợp, nó có thể làm giảm sự liên kết của albumin đối với bilirubin.
+
+Albumin liên kết của bilirubin thường có thể chuyển về dạng không liên hợp. Tuy nhiên, liên kết có thể bền vững, không thể chuyển thành dạng không liên hợp, xảy ra khi tăng bilirubin liên hợp kéo dài (ví dụ, trong tắc nghẽn đường mật). Phần bilirubin liên kết với albumin không được tách thành bilirubin tự do bởi gan hoặc thận. Điều này có thể dẫn đến tăng bilirubin máu kéo dài sau khi nội soi hoặc phẫu thuật giảm tắc nghẽn đường mật.
+
+## Quá trình chuyển hóa
+
+Bilirubin rất ít hòa tan trong nước ở pH sinh lý, có liên quan đến tất cả các tác dụng độc hại của nó.
+
+### Quá trình chuyển hóa diễn ra theo 3 giai đoạn
+
+- Trước khi tới gan, bilirubin chưa được liên hợp.
+- Tại gan, bilirubin kết hợp với glucuronid nhờ enzym glucuronyl transferase tạo ra bilirubin liên hợp có thể hòa tan trong nước.
+- Khi ra khỏi gan tiến đến ruột già, bilirubin liên hợp lại được chuyển hóa thành dạng chưa liên hợp. Sau đó được đào thải ra khỏi cơ thể.
+
+Chuyển đổi bilirubin IX-alpha thành dạng hòa tan trong nước bằng cách cắt đứt các liên kết hydro, đào thải ra ngoài nhờ gan và thận. Quá trình chuyển đổi này nhờ enzym glucuronyl transferase. Bilirubin glucuronide tan trong nước và dễ dàng bài tiết qua mật. Bilirubin được bài tiết chủ yếu qua mật người bình thường dưới dạng diglucuronide. Dạng không liên hợp chỉ chiếm 1 – 4% sắc tố trong mật bình thường.
+
+Ước tính, 20% bilirubin liên hợp sẽ được tái hấp thu vào máu. Trong khi 80% được thải trừ trong đường mật rồi vào ruột. Ở ruột, bilirubin được chuyển hóa thành urobilinogen, stercobilin và được thải trừ qua phân.
+
+Chỉ một phần rất nhỏ urobilinogen có ở đường tiêu hoá sẽ được tái hấp thu vào hệ thống tĩnh mạch cửa để thực hiện tiếp chu trình gan, ruột. Có thể thấy urobilinogen trong nước tiểu (urobilinogen không gắn với protein).
+
+**Quá trình trị liệu bằng ánh sáng** (chiếu đèn) giúp làm giảm nồng độ bilirubin trong huyết thanh ở trẻ sơ sinh bị tăng bilirubin nặng. Điều này nhờ sản xuất các chất đồng phân tử. Các chất này thiếu liên kết hydro và được bài tiết trực tiếp vào mật không cần chuyển hóa thêm.
+
+## Sự hấp thu và lưu trữ bilirubin bởi các tế bào gan
+
+Trong gan, phức hợp albumin-bilirubin sẽ phân tách, tạo bilirubin không liên hợp. Bilirubin được đưa vào gan bằng quá trình khuếch tán thuận, không tiêu tốn năng lượng.
+
+Khiếm khuyết trong các chất trung gian ở từng giai đoạn vận chuyển bilirubin có thể dẫn đến tăng bilirubin máu.
+
+### Quá trình hấp thu bilirubin bị suy yếu ở một số bệnh:
+
+- Bệnh nhân mắc hội chứng Gilbert (tăng bilirubin không liên hợp do sản xuất quá mức bilirubin). Bị ức chế bởi một số loại thuốc (ví dụ, rifampin, axit flavaspidic).
+- Sự tái hấp thu của bilirubin liên hợp và không liên hợp bị phá vỡ hội chứng Rotor. Nguyên nhân là do đột biến – rối loạn di truyền, dẫn đến mất chức năng.
+- Ở những bệnh nhân bị xơ gan, một phần bilirubin được sản xuất trong lá lách có thể đi qua gan. Hơn nữa, lớp nội mô thường bị suy yếu, tạo ra một rào cản giữa huyết tương và tế bào gan. Do đó, nồng độ bilirubin không kết hợp trong huyết thanh thường tăng trong tình trạng này.
+
+## Sự kết hợp của bilirubin
+
+Glucuronid hóa bilirubin, một lượng lớn các hợp chất nội sinh (ví dụ, hormone steroid, hormone tuyến giáp, catecholamine), và một loạt các chất nền ngoại sinh (ví dụ như thuốc, chất độc, chất gây ung thư) của các enzyme, được gọi là uridine-diphosphoglucuronate glucuronosyltransferase (UGT).
+
+Enzyme quá trình glucuronide là một trong những cơ chế giải độc quan trọng nhất của cơ thể. Trong số các đồng phân khác nhau của họ enzyme UGT, UGT1A1 rất quan trọng về mặt sinh lý trong quá trình glucuronide hóa bilirubin. UGT1A1 là một protein nội tại của mạng lưới nội chất. Do đó, axit glucuronic chất nền uridine diphosphate glucuronic (UDPGA) phải vào không gian lưới nội chất để liên hợp.
+
+Bilirubin diglucuronide là sắc tố chiếm ưu thế trong mật, chiếm hơn 80%. Tuy nhiên, ở những đối tượng giảm hoạt động của bilirubin-UGT, tỉ lệ bilirubin diglucuronide giảm và bilirubin monoglucuronide có thể chiếm hơn 30% các chất liên hợp được bài tiết qua mật.
+
+## Sự bài tiết của bilirubin liên hợp
+
+Bilirubin liên hợp được bài tiết qua màng ống mật của tế bào gan, vận chuyển tích cực ngược chiều gradient nồng độ. Sự tái hấp thu của bilirubin liên hợp bởi các tế bào gan được trung gian bởi các chất vận chuyển anion hữu cơ bề mặt.
+
+Tăng cường lưu lượng mật (ví dụ bằng cách truyền muối mật) hoặc điều trị bằng phenobarbital làm tăng khả năng bài tiết bilirubin tối đa. Mặt khác, sự bài tiết của bilirubin liên hợp bị suy yếu trong một số tình trạng mắc phải (ví dụ, viêm gan do rượu hoặc virus, ứ mật của thai kỳ) và các rối loạn di truyền. Nó cũng có thể được gây ra bởi nhiều loại thuốc (ví dụ, steroid được alkyl hóa, chlorpromazine).
+
+## Sự thoái hóa của bilirubin trong đường tiêu hóa
+
+Sắc tố mật xuất hiện trong mật chủ yếu là ở dạng liên hợp (hơn 98%). Bilirubin liên hợp hòa tan trong nước và không được hấp thụ qua màng lipid của biểu mô ruột non. Trong khi bilirubin không liên hợp được tái hấp thu một phần ở đường tiêu hóa. Lượng bilirubin quá mức ở trẻ sơ sinh bị tắc nghẽn đường ruột trên, chậm đi phân su hoặc nhát ăn. Điều này có thể làm tăng mức độ và thời gian vàng da sơ sinh.
+
+Bilirubin giảm bởi các enzyme của vi khuẩn trong ruột kết thành một loạt các phân tử, được gọi là urobilinogens. Hai urobilinoids chính được tìm thấy trong phân, urobilinogen và stercobilinogen. Dạng này không màu và chuyển sang màu vàng cam sau khi oxy hóa môi trường ngoài. Trong tắc nghẽn đường mật hoàn toàn hoặc ứ mật nghiêm trọng (ví dụ, trong giai đoạn đầu của viêm gan virus cấp tính), phân có thể có mất màu giống đất sét bạc màu. Urobilinogen và các dẫn xuất của chúng được hấp thu một phần từ ruột. Cuối cùng, chúng được bài tiết qua nước tiểu và phân.
+
+Các vi sinh vật đường ruột ảnh hưởng đến nồng độ trong bilirubin huyết thanh. Sự có mặt vi khuẩn *Clostridium perfringens* dẫn đến xuất hiện sản xuất urobilinoid trong phân kèm theo sự giảm một phần nồng độ bilirubin huyết thanh. Việc sử dụng một số loại kháng sinh kéo dài có thể dẫn đến sự gia tăng nồng độ bilirubin huyết thanh.
+
+## Bệnh nhân có nồng độ bilirubin bất thường có thể có nguy cơ đặc biệt
+
+Nồng độ bilirubin liên hợp tăng cao (do ứ mật), thận chịu trách nhiệm 50 – 90% bài tiết bilirubin liên hợp. Tuy nhiên, mật vẫn là con đường bài tiết chính.
+
+Urobilinogen được sản xuất nhờ sự phân hủy bilirubin của vi khuẩn bài tiết qua mật vào ruột. Nó được hấp thu một phần trong ruột và trải qua tuần hoàn gan. Phần không được gan hấp thu vào đường lưu thông chung và được bài tiết một phần qua nước tiểu.
+
+### Sự bài tiết urobilinogen trong nước tiểu có thể tăng lên trong các tình huống sau:
+
+- Sản xuất bilirubin quá mức. Ví dụ, trong trường hợp tan máu.
+- Tế bào gan hoạt động không hiệu quả trong việc tái hấp thu urobilinogen. Ví dụ, ở bệnh nhân xơ gan hoặc ở một số giai đoạn của viêm gan.
+- Phơi nhiễm quá mức của bilirubin với vi khuẩn đường ruột. Ví dụ: táo bón hoặc sự phát triển quá mức của vi khuẩn.
+
+Ngược lại, sự bài tiết urobilinogen trong nước tiểu có thể bị giảm trong tắc nghẽn đường mật gần hoàn thành (ví dụ ung thư biểu mô tuyến tụy) hoặc ứ mật nghiêm trọng (ví dụ, trong giai đoạn đầu của viêm gan virus).
+
+Các xét nghiệm lâm sàng tiêu chuẩn cho urobilinogen không phân biệt mức độ urobilinogen trong nước tiểu bình thường hay thấp. Hơn nữa, sự bài tiết urobilinogen có thể giảm, bình thường hoặc tăng ở bệnh nhân viêm gan. Vì vậy, các xét nghiệm urobilinogen trong nước tiểu thường không hữu ích trong chẩn đoán phân biệt các bệnh gan.
+
+Ở trẻ sơ sinh, nồng độ bilirubin trong huyết thanh tăng cao rõ rệt có thể dẫn đến tổn thương não, bất thường thần kinh, bệnh não nghiêm trọng hoặc tổn thương thần kinh vĩnh viễn (kernicterus) đến tử vong.
+
+## Tác dụng có lợi
+
+Mặc dù nồng độ bilirubin trong huyết thanh như là một dấu hiệu của bệnh gan và độc tính trực tiếp của bilirubin. Tuy nhiên, nhiều nghiên cứu cho thấy, ở nồng độ sinh lý trong huyết thanh, bilirubin có tác dụng chống oxy hóa. Tác dụng này có liên quan giảm nguy cơ mắc bệnh mạch vành, giảm tyỉ lệ tử vong do ung thư. Ngoài ra, biliverdin (và bilirubin), các sản phẩm khác của phân hủy hemeoxygenase qua trung gian (cụ thể là sắt và CO) cũng có thể có vai trò sinh lý ở gan.
+
+**Bilirubin huyết thanh** là một xét nghiệm thường quy trong chẩn đoán và tìm kiếm các nguyên nhân gây ra vàng da hay các bệnh liên quan đến gan mật. Dù không phải chỉ số đặc trưng về một tình trạng bệnh, nhưng xét nghiệm này vẫn có nhiều lợi ích trong việc phân biệt và theo dõi một số tình trạng của bệnh nhân. Ngoài tác dụng có hại, bilirubin cũng liên quan đến một số tác dụng chống oxy hóa và có vai trò sinh lý ở gan.

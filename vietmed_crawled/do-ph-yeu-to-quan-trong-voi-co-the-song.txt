@@ -1,0 +1,98 @@
+# SOURCE_URL: https://youmed.vn/tin-tuc/do-ph-yeu-to-quan-trong-voi-co-the-song/
+
+# Độ pH: Yếu tố quan trọng với cơ thể sống
+
+Nội dung bài viết
+
+**Trong cơ thể con người luôn xảy ra nhiều phản ứng hóa học liên tục, không ngừng. Mỗi phản ứng có một môi trường thuận lợi riêng để xảy ra. Một trong những điều kiện đầu tiên phải xét tới đó là độ pH. Độ pH là đại lượng biểu thị tính axit hay bazơ của môi trường phản ứng. Trong bài viết này, chúng ta cùng Bác sĩ Nguyễn Lâm Giang tìm hiểu độ pH là gì và ảnh hưởng của nó lên cơ thể. Từ đó tạo được thói quan chăm sóc sức khỏe tốt để cân bằng độ pH cơ thể.**
+
+## Độ pH là gì?
+
+- PH là từ viết tắt thuật ngữ “pondus hydrogenii” (là độ hoạt động của hydro) trong tiếng Latinh.
+- Về mặt hóa học, độ pH là chỉ số đo độ hoạt động (hoạt độ) của các ion H₃O⁺ (H+) trong dung dịch. Trong hệ dung dịch nước, hoạt độ của ion hydro được quyết định bởi hằng số điện ly của nước (Kw) = 1,008 × 10−14 ở 25°C) và tương tác với các ion khác có trong dung dịch. Nếu lượng ion H+ trong dung dịch nhiều, hoạt động mạnh thì dung dịch đó mang tính axit. Ngược lại nếu lượng ion H+ thấp thì dung dịch đó có tính bazơ. Trường hợp lượng hydro (H+) cân bằng với lượng hydroxit (OH-) thì dung dịch đó trung tính. Độ pH trung tính khi đó xấp xỉ 7.
+- Mặc dù pH không có đơn vị đo nhưng nó không phải là thang đo ngẫu nhiên. Số đo sinh ra từ định nghĩa dựa trên độ hoạt động của các ion hydro trong dung dịch.
+- Công thức để tính pH là: pH = -lg[H+]. Ví dụ như pH= 8,2 thì sẽ có độ hoạt động [H+] (nồng độ) là 10
+−8.2mol/L. Như vậy pH = 5 có tính axit cao gấp 10 lần pH = 6 và gấp 100 lần so với pH = 7.
+
+## Độ pH trong cơ thể người
+
+Mỗi môi trường có một nồng **độ pH** nhất định, trong cơ thể người cũng vậy.
+
+Nồng độ pH trong cơ thể người nằm trong khoảng 7,3 đến 7,4. Từ lúc vừa mới sinh, cơ thể người đã mang tính kiềm. Độ pH 7,3 – 7,4 là nồng độ tốt nhất để các tế bào trong cơ thể hoạt động bình thường. Nhưng do chế độ ăn uống không khoa học, ô nhiễm môi trường, thực phẩm bẩn… nên cơ thể chúng ta mất đi tính kiềm tự nhiên vốn có mà chuyển sang tính axit. Lượng axit dư thừa trong cơ thể là nguyên nhân hàng đầu gây ra các bệnh mãn tính. Phổ biến như ung thư, tiểu đường, các bệnh về dạ dày, đường ruột.
+
+Ngoài ra, còn tùy đặc điểm hoạt động của từng cơ quan mà cơ thể sẽ điều chỉnh độ pH tại đó cho thích hợp. Ví dụ, pH trong dạ dày cần tính axit cao để tiêu hóa thức ăn. Nhưng xuống tới ruột non thì lại cần pH kiềm để tiêu hóa và hấp thu chất dinh dưỡng.
+
+
+## Tác dụng của độ pH trong cơ thể
+
+**Độ pH** ở các cơ quan khác nhau trong cơ thể là không giống nhau. pH là một trong những yếu tố vô cùng quan trọng ảnh hưởng đến sức khỏe của con người.
+
+Độ pH của cơ thể có khả năng ảnh hưởng đến mọi tế bào trong cơ thể. pH của máu có tính kiềm. Bộ não, hệ tuần hoàn, thần kinh, hệ tiêu hoá… làm việc tốt ở mức độ pH thích hợp. Khi pH của cơ thể bị quá axit, cơ thể dễ bị bệnh. Ví dụ như bệnh tim mạch, lão hoá sớm, các vấn đề về thần kinh, dị ứng, ung thư. Tốt hơn hết ăn khoảng 60 – 80% thực phẩm tạo kiềm, khoảng 20 – 40% thực phẩm tạo axit. Nếu duy trì được chế độ ăn này thì pH của cơ thể hơi kiềm. Đó là điều kiện để có sức khoẻ tốt.
+
+## Đo lường độ pH trên cơ thể
+
+Chỉ số pH của dạ dày là từ 1,6 đến 2,4. Trong khi đó, chỉ số pH của máu chỉ đạt 7,32 – 7,44. Chỉ số pH của nước bọt cũng chỉ đạt xấp xỉ mức kiềm 6,4 – 6,8; dịch ngoại bào 7,35 – 7,45. pH dịch nội bào 6,9 – 7,2. pH ruột 6,6 – 7,6. pH nước tiểu 6, pH dịch mật 5 – 6.
+
+### Kiểm tra độ pH của cơ thể với giấy thử pH
+
+Thời gian tốt nhất để kiểm tra độ pH là khoảng 1 giờ trước bữa ăn hoặc 2 giờ sau bữa ăn.
+
+Kiểm tra pH nước bọt bằng giấy quỳ thử pH. Đơn giản chỉ cần làm ướt một mảnh giấy quỳ thử pH bằng nước bọt. pH của nước bọt tối ưu khoảng 6,4 – 6,8 phản ánh máu và cho chúng ta biết vấn đề của bản thân. Nước bọt có tính axit hơn máu, nếu độ pH thấp hơn 6,4 là chứng tỏ dự trữ kiềm đủ. Sau khi ăn, các pH nước bọt sẽ tăng lên 7,5 hoặc hơn (hơi kiềm). Nếu chệch khỏi pH nước bọt lý tưởng trong một thời gian dài dễ bị bệnh. Nước bọt trong khoảng pH từ 6,5 đến 7,5 tất cả các ngày tức là cơ thể đang khoẻ mạnh.
+
+Nếu pH nước bọt vẫn quá thấp, chế độ ăn uống nên tập trung vào trái cây, rau và nước khoáng. Đồng thời hạn chế các chất tạo axit mạnh như bột ngọt, bột mì và thịt đỏ.
+
+### Thử pH nước tiểu
+
+**Độ pH** của nước tiểu cho biết khả năng của cơ thể nhằm duy trì độ pH thích hợp của máu. Độ pH của nước tiểu cho thấy nỗ lực của cơ thể nhờ các cơ quan thận, tuyến thượng thận, phổi và tuyến sinh dục để điều chỉnh pH qua muối và hormone. Vì thận lọc ra các muối đệm để điều chỉnh pH. pH lý tưởng trong khoảng từ 6,5 đến 7,0 vào buổi tối trước khi ăn tối.
+
+Xét nghiệm nước tiểu để thấy được cơ thể đang bài tiết axit. Thông qua đó hấp thụ các khoáng chất đặc biệt là canxi, magie, natri và kali. Các khoáng chất này hoạt động như bộ đệm. Bộ đệm là những chất giúp cơ thể duy trì sự cân bằng axit và kiềm. Khi cơ thể quá kiềm hoặc quá axit, nó phải bài tiết quá mức. Nước tiểu là phương pháp cơ thể sử dụng để loại bỏ sự dư thừa axit hoặc kiềm. Nếu hệ thống điều hoà của cơ thể quá tải, cơ thể bị nhiễm độc.
+
+## Một số vấn đề cần lưu ý
+
+### Rối loạn axit – bazơ
+
+Một số tình trạng làm rối loạn sự cân bằng **độ pH** trong cơ thể:
+
+- Bệnh tiểu đường axit xeton (sản sinh quá nhiều hợp chất axit xeton do không cung cấp đủ lượng đường glucose trong máu hoặc mỡ dự trữ năng lượng gây nên thiếu insulin).
+- Tích luỹ axit lactic trong cơ thể do tập thể dục quá mức hoặc do bệnh tật gây ra.
+- Chứng tăng ure huyết do thận bị hỏng hoặc làm việc kém.
+- Ngoài nhiễm axit còn có tình trạng nhiễm kiềm trong trao đổi chất do:
+- Do nhiễm axit cacbonat trong cơ thể.
+- Mất nước do bị u bướu hoặc lạm dụng thuốc lợi tiểu.
+- Thiếu hụt kali.
+
+
+### Sản sinh axit và viêm loét dạ dày
+
+Thông thường, axit – bazơ được giữ ở mức cân bằng trong dạ dày khi tiêu hoá thức ăn. Dạ dày sản sinh ra axit clohydric gọi là axit tiêu hoá. Tuy nhiên, có nhiều nhân tố gây sản sinh axit quá mức trong dạ dày. Ví dụ như: stress, rượu, thuốc lá, nhiễm vi khuẩn dạ dày Helicobacter pylori, một số chất gây kích thích quá mức như gia vị cay chua hay chất cafein (cà phê, trà, nước uống có ga hoặc chứa cafein). Và khi axit cao quá mức có thể dẫn đến một số bệnh tiêu hóa. Thường là: chứng ợ nóng, viêm loét dạ dày, trào ngược axit lên thực quản.
+
+Điều trị việc tăng axit dạ dày bao gồm:
+
+- Giảm độ axit, sử dụng chất gây ức chế tiết axit trong dạ dày.
+- Kháng sinh để tiêu diệt vi khuẩn Helicobacter pylori.
+- Tránh dùng rượu, gia vị cay chua, hút thuốc, những đồ ăn có chứa nhiều chất béo và cafein.
+- Đa dạng hóa bữa ăn.
+- Giảm stress bằng cách tập thể dục, thư giãn, tập yoga hay bất cứ phương pháp nào mà bạn cho rằng chúng có ích trong việc làm giảm stress và lo lắng.
+
+## Làm thế nào để cân bằng độ pH cơ thể?
+
+### Ăn nhiều rau củ quả, trái cây
+
+Vì sao các chuyên gia y tế khuyên chúng ta nên ăn nhiều rau củ quả? Bởi tự thân những loại thực phẩm này đã mang sẵn tính kiềm. Ăn nhiều rau xanh sẽ giúp trung hòa lượng axit dư thừa trong cơ thể. Rau xanh, trái cây còn bổ sung nhiều vitamin cần thiết để cơ thể khỏe mạnh. Một số loại thực phẩm giàu tính kiềm có thể dễ dàng tìm được như:
+
+- Cải bó xôi (rau bina, rau chân vịt). Trong cải bó xôi có rất nhiều chất diệp lục giúp kiềm hóa cơ thể hiệu quả.
+- Ớt chuông. Ớt chuông cũng có tính kiềm rất cao. Ăn ớt chuông thường xuyên sẽ giúp kiềm hóa cơ thể, tăng cường miễn dịch, giảm nguy cơ mắc bệnh tim mạch, tiểu đường, ung thư…
+- Cần tây: tính kiềm trong cần tây cũng dồi dào và có chất coumarin và chất phtalic. Chúng giúp giảm nguy cơ ung thư và giảm hàm lượng cholesterol xấu trong cơ thể.
+- Bơ: quả bơ vừa dễ ăn lại mang tính kiềm mạnh giúp trung hòa axit trong dạ dày. Ăn bơ còn giúp ngăn chặn quá trình oxy hóa, giảm nguy cơ mắc nhiều loại bệnh nguy hiểm khác.
+
+
+### Suy nghĩ tích cực, lạc quan
+
+- Khi suy nghĩ tiêu cực, lo lắng, stress, cơ thể cũng tự tiết ra axit có hại cho sức khỏe. Vì vậy, để giữ được tính kiềm trong cơ thể, giúp cơ thể khỏe mạnh, ngoài chế độ ăn uống khoa học, mỗi người cũng nên duy trì suy nghĩ tích cực, lạc quan, yêu đời.
+- Ngoài ra, theo các nghiên cứu, suy nghĩ lạc quan, cười nhiều còn giúp giảm căng thẳng, cải thiện và tăng cường hoạt động của các tế bào miễn dịch chuyên săn lùng và tiêu diệt các tế bào ung bướu và tế bào nhiễm virus.
+
+### Uống đủ nước
+
+Nước có vai trò đặc biệt quan trọng đối với cơ thể. Đối với cơ thể thừa axit do nhiều nguyên nhân thì việc uống nước lọc, nước sạch thôi là chưa đủ. Nên bổ sung nước tốt cho sức khỏe, giàu tính kiềm để cân bằng lại tính axit. Tuy nhiên, chọn nước có tính kiềm phải là các loại nước có tính kiềm tự nhiên. Tránh nước được bổ sung kiềm nhân tạo có hại cho sức khỏe. Tác dụng của nước điện giải ion kiềm giúp trung hòa lượng axit dư thừa trong cơ thể, loại bỏ các gốc tự do có hại.
+
+Cơ thể con người cần môi trường pH thích hợp để các cơ quan hoạt động. Mỗi cơ quan có một độ pH tối ưu khác nhau. Cần tránh các lối sống không lành mạnh, rượu bia, thuốc lá… Bổ sung rau xanh, sống thoải mái, uống đủ nước giúp cơ thể cân bằng **độ pH**.
