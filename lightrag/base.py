@@ -154,6 +154,21 @@ class QueryParam:
     """Global cap on total edges after merging all per-anchor pools in focused mode.
     Prevents context explosion when top_k is large."""
 
+    focused_anchor_top_k: int = 5
+    """Max entities per branch per keyword during anchor discovery in focused mode.
+    Branch 1 (BM25) returns up to this many; Branch 2 (Semantic) returns up to this
+    many non-overlapping entities. KLTN True Hybrid Anchor Search."""
+
+    focused_anchor_semantic_threshold: float = 0.7
+    """Minimum cosine similarity for Branch 2 (semantic) to accept an entity.
+    Only entities with cosine >= threshold against name-only vectors are included.
+    KLTN True Hybrid Anchor Search."""
+
+    focused_chunk_top_k: int = 5
+    """Max chunks kept after reranking for focused mode.
+    Applied AFTER merging chunks from all 3 sources (vector + entity + relation).
+    Tighter than chunk_top_k because focused mode prioritizes precision over recall."""
+
     top_k: int = int(os.getenv("TOP_K", str(DEFAULT_TOP_K)))
     """Number of top items to retrieve. Represents entities in 'local' mode and relationships in 'global' mode."""
 

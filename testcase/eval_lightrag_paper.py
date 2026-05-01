@@ -24,8 +24,8 @@ JUDGE_API_KEY  = os.environ.get("EVAL_LLM_BINDING_API_KEY", "sk-123456")
 TEST_LIMIT = 300  # Limit to 20 cases per comparison
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-INPUT_FILE   = os.path.join(_SCRIPT_DIR, "eval_ragas_focused.xlsx")
-OUTPUT_FILE  = os.path.join(_SCRIPT_DIR, "eval_lightrag_paper_results_focused_vs_hybrid_mix.xlsx")
+INPUT_FILE   = os.path.join(_SCRIPT_DIR, "focused_hyper_param.xlsx")
+OUTPUT_FILE  = os.path.join(_SCRIPT_DIR, "llm_as_judge_focused_vs_hybrid_mix.xlsx")
 
 # Comparisons to run: (sheet_A, label_A, sheet_B, label_B)
 COMPARISONS = [

@@ -200,6 +200,25 @@ class QueryRequest(BaseModel):
         description="Global cap on total edges after merging all per-anchor pools in focused mode. Default: 30.",
     )
 
+    focused_anchor_top_k: Optional[int] = Field(
+        default=None,
+        ge=1,
+        description="Max entities per branch (BM25 / Semantic) per keyword in focused anchor discovery. Default: 5.",
+    )
+
+    focused_anchor_semantic_threshold: Optional[float] = Field(
+        default=None,
+        ge=0.0,
+        le=1.0,
+        description="Min cosine similarity for the semantic branch in focused anchor discovery. Default: 0.7.",
+    )
+
+    focused_chunk_top_k: Optional[int] = Field(
+        default=None,
+        ge=1,
+        description="Max chunks kept after reranking for focused mode (overrides chunk_top_k when mode=focused). Default: 5.",
+    )
+
     @field_validator("query", mode="after")
     @classmethod
     def query_strip_after(cls, query: str) -> str:

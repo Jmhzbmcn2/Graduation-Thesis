@@ -26,13 +26,13 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from dotenv import load_dotenv
 load_dotenv()
 
-WORKING_DIR = os.path.join("medical_rag", "medical_rag_v2")
+WORKING_DIR = "medical_rag_v6"
 VDB_ENTITIES_PATH = os.path.join(WORKING_DIR, "vdb_entities.json")
 OUTPUT_PATH = os.path.join(WORKING_DIR, "vdb_entities_name_only.json")
 
 # Embedding config — uses the same Ollama model as LightRAG
 OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
-EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "bge-m3")
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "embeddinggemma:300m")
 BATCH_SIZE = 64  # Số lượng tên gửi cho Ollama mỗi lần
 
 

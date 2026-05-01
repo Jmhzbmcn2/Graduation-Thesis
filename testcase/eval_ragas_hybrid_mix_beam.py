@@ -45,17 +45,18 @@ _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_FILE  = os.path.join(_SCRIPT_DIR, "300_case_random.csv")
 OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "focused_hyper_param.xlsx")
 
-# RAGAS LLM Judge — OpenRouter (Qwen3-30B)
-EVAL_LLM_MODEL = os.getenv("EVAL_LLM_MODEL", "qwen/qwen3-30b-a3b-instruct-2507")
-EVAL_LLM_API_KEY = os.getenv("OPENROUTER_API_KEY", os.getenv("LLM_BINDING_API_KEY", "EMPTY"))
-EVAL_LLM_HOST = os.getenv("EVAL_LLM_BINDING_HOST", "https://openrouter.ai/api/v1")
+# RAGAS LLM Judge — Local vLLM (OpenAI-compatible)
+# Ưu tiên EVAL_LLM_MODEL/EVAL_LLM_BINDING_HOST từ .env; fallback về LLM_MODEL/LLM_BINDING_HOST
+EVAL_LLM_MODEL = os.getenv("EVAL_LLM_MODEL", os.getenv("LLM_MODEL", "Qwen/Qwen2.5-14B-Instruct-AWQ"))
+EVAL_LLM_API_KEY = os.getenv("LLM_BINDING_API_KEY", "EMPTY")
+EVAL_LLM_HOST = os.getenv("EVAL_LLM_BINDING_HOST", os.getenv("LLM_BINDING_HOST", "http://localhost:8000/v1"))
 
 # RAGAS Embedding — Ollama local
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "embeddinggemma:300m")
 EMBEDDING_HOST  = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
 
 # Số test case (None = tất cả, 3 = 3 câu đầu tiên)
-TEST_LIMIT = 40
+TEST_LIMIT = 300
 
 # Giới hạn độ dài context để tránh vượt token limit của LLM Judge
 MAX_CONTEXT_CHARS = None
@@ -96,13 +97,19 @@ BEAM_ENABLE_ANCHOR_RERANK = True  # Bật rerank ở bước anchor entity selec
 # • focused_edge_threshold: ngưỡng cosine tối thiểu giữa query và edge
 # • focused_alpha/beta: trọng số joint scoring Score(e) = α·Sim(Q,A) + β·Sim(Q,e)
 # • focused_max_edges: tổng số cạnh tối đa sau khi gộp pool
-FOCUSED_TOP_K = 10                  # Số anchor nodes (Giảm từ 10 -> 5)
-FOCUSED_EDGE_QUOTA = 10             # Max edges per anchor (Giảm từ 10 -> 5)
-FOCUSED_EDGE_THRESHOLD = 0.3       # Min semantic score (Giữ nguyên 0.3 để kéo Recall)
-FOCUSED_ALPHA = 0.3                # Weight anchor score 
-FOCUSED_BETA = 0.7                 # Weight edge semantic score 
-FOCUSED_MAX_EDGES = 30             # Global cap (Giảm từ 50 -> 30)
-FOCUSED_CHUNK_TOP_K = 10            # Direct vector chunks (Giảm từ 10 -> 5)
+# • focused_anchor_top_k: K per-branch per-keyword (True Hybrid Anchor)
+# • focused_anchor_semantic_threshold: ngưỡng cosine Branch 2 (Semantic)
+# • focused_chunk_top_k: số chunks giữ lại sau rerank (override chunk_top_k)
+FOCUSED_TOP_K = 15                          # Số anchor nodes
+FOCUSED_EDGE_QUOTA = 10                     # Max edges per anchor
+FOCUSED_EDGE_THRESHOLD = 0.3               # Min semantic score
+FOCUSED_ALPHA = 0.3                        # Weight anchor score
+FOCUSED_BETA = 0.7                         # Weight edge semantic score
+FOCUSED_MAX_EDGES = 50                     # Global cap edges
+FOCUSED_CHUNK_TOP_K = 10                   # chunk_top_k cho vector retrieval
+FOCUSED_ANCHOR_TOP_K = 10                   # K per-branch per-keyword (BM25 & Semantic)
+FOCUSED_ANCHOR_SEMANTIC_THRESHOLD = 0.6    # Ngưỡng cosine Branch 2 (Semantic)
+FOCUSED_CHUNK_TOP_K_RERANK = 10             # Top-K chunks sau rerank (precision mode)
 
 # Các mode khác dùng top_k mặc định
 DEFAULT_TOP_K = 10
@@ -314,7 +321,12 @@ def query_lightrag_with_timing(question: str, mode: str, retries: int = 3):
             "focused_alpha": FOCUSED_ALPHA,
             "focused_beta": FOCUSED_BETA,
             "focused_max_edges": FOCUSED_MAX_EDGES,
-            "enable_rerank": False,
+            # True Hybrid Anchor (KLTN) — BM25 ∪ Semantic per-keyword
+            "focused_anchor_top_k": FOCUSED_ANCHOR_TOP_K,
+            "focused_anchor_semantic_threshold": FOCUSED_ANCHOR_SEMANTIC_THRESHOLD,
+            # Rerank top-K chunks (KLTN Phần 2): override chunk_top_k sau rerank
+            "focused_chunk_top_k": FOCUSED_CHUNK_TOP_K_RERANK,
+            "enable_rerank": True,   # Bật rerank để focused_chunk_top_k có hiệu lực
             "include_context": True,  # Server trả context luôn
         }
     else:
@@ -724,6 +736,8 @@ def main():
                 print(f"      BEAM params: beam_width={BEAM_BEAM_WIDTH}, max_depth={BEAM_MAX_DEPTH}, chunk_top_k={BEAM_CHUNK_TOP_K}")
             elif mode == "focused":
                 print(f"      FOCUSED params: top_k={FOCUSED_TOP_K}, quota={FOCUSED_EDGE_QUOTA}, threshold={FOCUSED_EDGE_THRESHOLD}, α={FOCUSED_ALPHA}, β={FOCUSED_BETA}, max_edges={FOCUSED_MAX_EDGES}")
+                print(f"      ANCHOR  params: anchor_top_k={FOCUSED_ANCHOR_TOP_K}, sem_threshold={FOCUSED_ANCHOR_SEMANTIC_THRESHOLD}")
+                print(f"      CHUNK   params: chunk_top_k={FOCUSED_CHUNK_TOP_K}, rerank_top_k={FOCUSED_CHUNK_TOP_K_RERANK}, enable_rerank=True")
 
             print(f"      Answer: {answer[:80]}...")
             print(f"      Input tokens: {metrics['input_tokens']}")

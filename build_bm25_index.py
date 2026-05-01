@@ -26,8 +26,8 @@ def main():
     parser = argparse.ArgumentParser(description="Build BM25 index for Beam Search Hybrid Retrieval")
     parser.add_argument(
         "--working-dir",
-        default="./medical_rag/medical_rag_v2",
-        help="Path to the LightRAG working directory (default: ./medical_rag/medical_rag_v2)",
+        default="./medical_rag_v6",
+        help="Path to the LightRAG working directory (default: ./medical_rag_v6)",
     )
     args = parser.parse_args()
 

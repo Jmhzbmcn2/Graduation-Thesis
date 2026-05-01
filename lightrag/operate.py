@@ -4306,35 +4306,155 @@ async def _perform_kg_search(
 
         return beam_result
 
-    elif query_param.mode in ["focused", "ivf_focused"]:
+    elif query_param.mode == "focused":
         # === Focused Mode: 1-hop semantic edge scoring + global search ===
-        # Local: VDB anchor retrieval → 1-hop edge expansion → semantic scoring → quota filtering
+        # KLTN True Hybrid Anchor + parallel gather of independent tasks.
+        # Local: TrueHybrid anchor → 1-hop edge expansion → semantic scoring → quota filtering
         # Global: hl_keywords → relationship VDB search (same as hybrid/mix)
-        # Combined via round-robin merge for balanced local precision + global coverage
+        # Vector Chunks: chunks_vdb cosine search (same as mix)
+        # The 3 tasks above are independent → run via asyncio.gather (saves ~200ms vs serial)
 
-        # Step 1: Get anchor nodes with cosine scores (local, no edge retrieval)
+        async def _focused_local_pipeline():
+            """anchor discovery + 1-hop edge scoring (sequential nội bộ)."""
+            if len(ll_keywords) == 0:
+                return [], []
+            anchor_node_datas, anchor_scores = await _get_anchor_nodes(
+                ll_keywords,
+                knowledge_graph_inst,
+                entities_vdb,
+                query_param,
+                global_config=global_config,
+                text_chunks_db=text_chunks_db,
+            )
+            if anchor_node_datas and query_embedding is not None:
+                return await _focused_1hop_edge_scoring(
+                    anchor_node_datas,
+                    anchor_scores,
+                    query_embedding,
+                    knowledge_graph_inst,
+                    relationships_vdb,
+                    query_param,
+                )
+            if query_embedding is None and anchor_node_datas:
+                logger.warning(
+                    "Focused mode: no query_embedding available, "
+                    "skipping semantic edge scoring"
+                )
+            return anchor_node_datas, []
+
+        async def _focused_global_pipeline():
+            if len(hl_keywords) == 0:
+                return [], []
+            return await _get_edge_data(
+                hl_keywords,
+                knowledge_graph_inst,
+                relationships_vdb,
+                query_param,
+            )
+
+        async def _focused_chunk_pipeline():
+            if not chunks_vdb:
+                return []
+            return await _get_vector_context(
+                query, chunks_vdb, query_param, query_embedding
+            )
+
+        (
+            (local_entities, local_relations),
+            (global_relations, global_entities),
+            vector_chunks_focused,
+        ) = await asyncio.gather(
+            _focused_local_pipeline(),
+            _focused_global_pipeline(),
+            _focused_chunk_pipeline(),
+        )
+
+        # Track vector chunks for source metadata
+        for i, chunk in enumerate(vector_chunks_focused):
+            chunk_id = chunk.get("chunk_id") or chunk.get("id")
+            if chunk_id:
+                chunk_tracking[chunk_id] = {
+                    "source": "C",
+                    "frequency": 1,
+                    "order": i + 1,
+                }
+
+        # Replace shared vector_chunks with focused-specific result
+        vector_chunks = vector_chunks_focused
+
+        # Round-robin merge local + global (same strategy as hybrid/mix)
+        final_entities = []
+        seen_entities = set()
+        max_len = max(len(local_entities), len(global_entities))
+        for i in range(max_len):
+            if i < len(local_entities):
+                entity = local_entities[i]
+                entity_name = entity.get("entity_name")
+                if entity_name and entity_name not in seen_entities:
+                    final_entities.append(entity)
+                    seen_entities.add(entity_name)
+            if i < len(global_entities):
+                entity = global_entities[i]
+                entity_name = entity.get("entity_name")
+                if entity_name and entity_name not in seen_entities:
+                    final_entities.append(entity)
+                    seen_entities.add(entity_name)
+
+        final_relations = []
+        seen_relations = set()
+        max_len = max(len(local_relations), len(global_relations))
+        for i in range(max_len):
+            if i < len(local_relations):
+                relation = local_relations[i]
+                rel_key = (
+                    tuple(sorted(relation["src_tgt"]))
+                    if "src_tgt" in relation
+                    else tuple(sorted([relation.get("src_id"), relation.get("tgt_id")]))
+                )
+                if rel_key not in seen_relations:
+                    final_relations.append(relation)
+                    seen_relations.add(rel_key)
+            if i < len(global_relations):
+                relation = global_relations[i]
+                rel_key = (
+                    tuple(sorted(relation["src_tgt"]))
+                    if "src_tgt" in relation
+                    else tuple(sorted([relation.get("src_id"), relation.get("tgt_id")]))
+                )
+                if rel_key not in seen_relations:
+                    final_relations.append(relation)
+                    seen_relations.add(rel_key)
+
+        logger.info(
+            f"Focused search results (parallel): {len(final_entities)} entities "
+            f"(local:{len(local_entities)}, global:{len(global_entities)}), "
+            f"{len(final_relations)} relations "
+            f"(local:{len(local_relations)}, global:{len(global_relations)}), "
+            f"{len(vector_chunks)} vector chunks"
+        )
+
+        return {
+            "final_entities": final_entities,
+            "final_relations": final_relations,
+            "vector_chunks": vector_chunks,
+            "chunk_tracking": chunk_tracking,
+            "query_embedding": query_embedding,
+        }
+
+    elif query_param.mode == "ivf_focused":
+        # === Legacy IVF Focused Mode (no refactor) ===
+        # Step 1: Get anchor nodes via IVF index
         if len(ll_keywords) > 0:
-            if query_param.mode == "ivf_focused":
-                anchor_node_datas, anchor_scores = await _get_anchor_nodes_ivf(
-                    ll_keywords,
-                    knowledge_graph_inst,
-                    entities_vdb,
-                    query_param,
-                    query_embedding=query_embedding,
-                    global_config=global_config,
-                )
-            else:
-                anchor_node_datas, anchor_scores = await _get_anchor_nodes(
-                    ll_keywords,
-                    knowledge_graph_inst,
-                    entities_vdb,
-                    query_param,
-                    global_config=global_config,
-                    text_chunks_db=text_chunks_db,
-                )
+            anchor_node_datas, anchor_scores = await _get_anchor_nodes_ivf(
+                ll_keywords,
+                knowledge_graph_inst,
+                entities_vdb,
+                query_param,
+                query_embedding=query_embedding,
+                global_config=global_config,
+            )
 
             if anchor_node_datas and query_embedding is not None:
-                # Step 2-5: Per-anchor quota + semantic edge scoring
                 local_entities, local_relations = await _focused_1hop_edge_scoring(
                     anchor_node_datas,
                     anchor_scores,
@@ -4346,13 +4466,8 @@ async def _perform_kg_search(
             else:
                 local_entities = anchor_node_datas
                 local_relations = []
-                if query_embedding is None:
-                    logger.warning(
-                        "Focused mode: no query_embedding available, "
-                        "skipping semantic edge scoring"
-                    )
 
-        # Step 5b: Global search from hl_keywords (relationship patterns)
+        # Step 5b: Global search
         if len(hl_keywords) > 0:
             global_relations, global_entities = await _get_edge_data(
                 hl_keywords,
@@ -4735,10 +4850,14 @@ async def _merge_all_chunks(
     if chunk_tracking is None:
         chunk_tracking = {}
 
-    # Get chunks from entities
-    entity_chunks = []
-    if filtered_entities and text_chunks_db:
-        entity_chunks = await _find_related_text_unit_from_entities(
+    # Phần 3.3 (KLTN): Run entity + relation chunk lookups in PARALLEL.
+    # The original code passed entity_chunks to relation lookup just for dedup;
+    # we drop that dependency and rely on the round-robin merge below (which
+    # already dedups by chunk_id) to keep results unique.
+    async def _entity_chunks_task():
+        if not (filtered_entities and text_chunks_db):
+            return []
+        return await _find_related_text_unit_from_entities(
             filtered_entities,
             query_param,
             text_chunks_db,
@@ -4749,19 +4868,23 @@ async def _merge_all_chunks(
             query_embedding=query_embedding,
         )
 
-    # Get chunks from relations
-    relation_chunks = []
-    if filtered_relations and text_chunks_db:
-        relation_chunks = await _find_related_text_unit_from_relations(
+    async def _relation_chunks_task():
+        if not (filtered_relations and text_chunks_db):
+            return []
+        return await _find_related_text_unit_from_relations(
             filtered_relations,
             query_param,
             text_chunks_db,
-            entity_chunks,  # For deduplication
+            [],  # no upstream dedup; merge step below handles dedup
             query,
             chunks_vdb,
             chunk_tracking=chunk_tracking,
             query_embedding=query_embedding,
         )
+
+    entity_chunks, relation_chunks = await asyncio.gather(
+        _entity_chunks_task(), _relation_chunks_task()
+    )
 
     # Round-robin merge chunks from different sources with deduplication
     merged_chunks = []
@@ -4904,15 +5027,30 @@ async def _build_context_str(
         f"Token allocation - Total: {max_total_tokens}, SysPrompt: {sys_prompt_tokens}, Query: {query_tokens}, KG: {kg_context_tokens}, Buffer: {buffer_tokens}, Available for chunks: {available_chunk_tokens}"
     )
 
-    # Apply token truncation to chunks using the dynamic limit
-    truncated_chunks = await process_chunks_unified(
-        query=query,
-        unique_chunks=merged_chunks,
-        query_param=query_param,
-        global_config=global_config,
-        source_type=query_param.mode,
-        chunk_token_limit=available_chunk_tokens,  # Pass dynamic limit
-    )
+    # Apply token truncation to chunks using the dynamic limit.
+    # Phần 2 (KLTN): Focused mode override chunk_top_k to focused_chunk_top_k (default 5)
+    # so the rerank step inside process_chunks_unified keeps only the top-K most-relevant
+    # chunks across ALL sources (vector + entity + relation).
+    _orig_chunk_top_k = query_param.chunk_top_k
+    if query_param.mode == "focused":
+        focused_top_k = getattr(query_param, "focused_chunk_top_k", None)
+        if focused_top_k is not None and focused_top_k > 0:
+            query_param.chunk_top_k = focused_top_k
+            logger.info(
+                f"[focused] Override chunk_top_k: {_orig_chunk_top_k} → {focused_top_k} "
+                "(rerank tightened for precision)"
+            )
+    try:
+        truncated_chunks = await process_chunks_unified(
+            query=query,
+            unique_chunks=merged_chunks,
+            query_param=query_param,
+            global_config=global_config,
+            source_type=query_param.mode,
+            chunk_token_limit=available_chunk_tokens,  # Pass dynamic limit
+        )
+    finally:
+        query_param.chunk_top_k = _orig_chunk_top_k
 
     # Generate reference list from truncated chunks using the new common function
     reference_list, truncated_chunks = generate_reference_list_from_chunks(
@@ -5385,213 +5523,184 @@ async def _get_anchor_nodes(
     text_chunks_db=None,
 ) -> tuple[list[dict], dict[str, float]]:
     """
-    Retrieve anchor nodes using Cascade Lexical-Semantic Retrieval.
+    Retrieve anchor nodes using True Parallel Hybrid Search (KLTN).
 
-    Architecture (Dual-VectorDB & Cascade Filter):
-        Stage 1 (Lexical Filter): BM25 trên entity_name → Top N candidates.
-        Stage 2 (Semantic Re-ranking): Cosine similarity giữa Vector(query)
-            và Vector(entity_name) từ DB phụ (name-only) → Top K anchors.
-        Fallback: Nếu BM25 hoặc Name-only DB không khả dụng, sử dụng
-            phương pháp VDB gốc (Vector Search trên Name+Description).
+    Architecture (Branch 1 ∪ Branch 2, per-keyword):
+        For each keyword in kw_list (split from ll_keywords by ','):
+            Branch 1 (BM25 lexical):    Top K entities by BM25 score
+            Branch 2 (Semantic VDB):    Top K entities cosine ≥ threshold
+                                        on name-only vectors, excluding Branch 1
+        Pool merge: dedup with max(score) across keywords → cap to top_k
+
+    Score normalization:
+        Both branches expose cosine similarity (computed against name-only
+        vectors). BM25 entities have their cosine looked up from name_only_vdb
+        for downstream `joint_score = α × anchor + β × edge` consistency.
+
+    Fallback strategy:
+        - name_only_vdb missing  → call entities_vdb.query() (VDB gốc)
+        - bm25 missing           → run semantic-only branch
+        - BM25 hit not in name_only_vdb (drift) → skip, log warning
 
     Returns:
         tuple: (node_datas, anchor_scores)
             - node_datas: list of node data dicts with entity_name, rank, etc.
-            - anchor_scores: dict mapping entity_name to cosine similarity score
+            - anchor_scores: dict mapping entity_name → cosine score [0, 1]
     """
-    CASCADE_BM25_PER_KW = 20  # Số ứng viên BM25 cho MỖI keyword
-
-    # ─── Bước 1: Tách chuỗi keywords thành mảng riêng lẻ ───
+    # ─── Bước 1: Tách chuỗi keywords ───
     kw_list = [k.strip() for k in query.split(",") if len(k.strip()) > 1]
     if not kw_list:
-        kw_list = [query]  # Fallback: dùng nguyên chuỗi nếu không tách được
+        kw_list = [query]
+
+    K = query_param.focused_anchor_top_k
+    threshold = query_param.focused_anchor_semantic_threshold
 
     logger.info(
-        f"Focused anchor query (Cascade RR): {len(kw_list)} keywords: "
-        f"{kw_list} (top_k:{query_param.top_k}, "
-        f"cosine:{entities_vdb.cosine_better_than_threshold})"
+        f"Focused anchor query (TrueHybrid): {len(kw_list)} keywords: "
+        f"{kw_list} (top_k:{query_param.top_k}, K_per_branch:{K}, "
+        f"sem_threshold:{threshold})"
     )
 
-    # ─── Try Cascade Retrieval ───
-    cascade_results = None
+    # ─── Bước 2: Resolve artifacts (BM25 + name_only_vdb) ───
+    from lightrag.bm25_storage import get_bm25_storage_from_config
 
-    try:
-        # Stage 1: BM25 Per-Keyword Lexical Filter (Round-Robin thu thập)
-        from lightrag.bm25_storage import get_bm25_storage_from_config
-
-        bm25_storage = None
-        if global_config and text_chunks_db:
+    bm25_storage = None
+    if global_config and text_chunks_db:
+        try:
             bm25_storage = get_bm25_storage_from_config(
                 global_config, text_chunks_db.workspace
             )
+        except Exception as e:
+            logger.warning(f"BM25 load failed: {e}")
+            bm25_storage = None
 
-        if bm25_storage:
-            # Thu thập ứng viên BM25 cho TỪNG keyword, gộp lại bỏ trùng
-            bm25_pool = {}  # entity_name → max bm25_score
-            for kw in kw_list:
-                kw_candidates = bm25_storage.query_entities(
-                    kw, top_k=CASCADE_BM25_PER_KW
-                )
-                for c in kw_candidates:
-                    ename = c["entity_name"]
-                    bm25_pool[ename] = max(
-                        bm25_pool.get(ename, 0.0), c["bm25_score"]
-                    )
+    working_dir = (
+        global_config.get("working_dir", ".") if global_config else "."
+    )
+    name_only_vdb_path = os.path.join(working_dir, "vdb_entities_name_only.json")
+    name_only_available = os.path.exists(name_only_vdb_path)
 
-            candidate_names = list(bm25_pool.keys())
-
-            if candidate_names:
-                logger.info(
-                    f"Cascade Stage 1 (BM25 RR): {len(candidate_names)} unique "
-                    f"candidates from {len(kw_list)} keywords "
-                    f"({CASCADE_BM25_PER_KW} per kw)"
-                )
-
-                # Stage 2: Multi-Vector Semantic Re-ranking on Name-only vectors
-                import json as _json
-                import base64 as _base64
-                import zlib as _zlib
-
-                working_dir = global_config.get("working_dir", ".")
-                name_only_vdb_path = os.path.join(
-                    working_dir, "vdb_entities_name_only.json"
-                )
-
-                if os.path.exists(name_only_vdb_path):
-                    # Load Name-only DB (cached in module-level dict)
-                    if not hasattr(_get_anchor_nodes, "_name_vdb_cache"):
-                        _get_anchor_nodes._name_vdb_cache = {}
-
-                    if name_only_vdb_path not in _get_anchor_nodes._name_vdb_cache:
-                        logger.info(
-                            f"Loading Name-only VDB from {name_only_vdb_path}..."
-                        )
-                        with open(name_only_vdb_path, "r", encoding="utf-8") as f:
-                            name_vdb_data = _json.load(f)
-
-                        items = name_vdb_data.get("data", [])
-                        name_vector_map = {}
-                        for item in items:
-                            ename = item.get("entity_name", "")
-                            vec_encoded = item.get("vector", "")
-                            if ename and vec_encoded:
-                                decoded = _base64.b64decode(vec_encoded)
-                                decompressed = _zlib.decompress(decoded)
-                                vec = np.frombuffer(
-                                    decompressed, dtype=np.float16
-                                ).astype(np.float32)
-                                name_vector_map[ename] = vec
-
-                        _get_anchor_nodes._name_vdb_cache[
-                            name_only_vdb_path
-                        ] = name_vector_map
-                        logger.info(
-                            f"Name-only VDB cached: {len(name_vector_map)} vectors"
-                        )
-
-                    name_vector_map = _get_anchor_nodes._name_vdb_cache[
-                        name_only_vdb_path
-                    ]
-
-                    # ─── Bước 3: Batch Embedding cho tất cả keywords (1 API call) ───
-                    kw_embs = await entities_vdb.embedding_func(
-                        kw_list, _priority=5
-                    )
-
-                    # ─── Bước 4: Chấm điểm cục bộ theo từng keyword ───
-                    # Tính cosine similarity helper
-                    def _cosine_sim(vec_a, vec_b):
-                        dot = np.dot(vec_a, vec_b)
-                        norm_a = np.linalg.norm(vec_a)
-                        norm_b = np.linalg.norm(vec_b)
-                        if norm_a > 0 and norm_b > 0:
-                            return float(dot / (norm_a * norm_b))
-                        return 0.0
-
-                    # Tạo bảng xếp hạng riêng cho TỪNG keyword
-                    kw_rankings = []  # list of list[(entity_name, cosine_score)]
-                    for kw_idx, kw_vec in enumerate(kw_embs):
-                        kw_scores = []
-                        for cname in candidate_names:
-                            if cname in name_vector_map:
-                                sim = _cosine_sim(kw_vec, name_vector_map[cname])
-                                kw_scores.append((cname, sim))
-                        kw_scores.sort(key=lambda x: x[1], reverse=True)
-                        kw_rankings.append(kw_scores)
-
-                    # ─── Bước 5: Bốc luân phiên Round-Robin ───
-                    top_k = query_param.top_k
-                    cascade_results = []
-                    selected = set()
-
-                    max_depth = max(
-                        (len(r) for r in kw_rankings), default=0
-                    )
-                    for rank_idx in range(max_depth):
-                        if len(cascade_results) >= top_k:
-                            break
-                        for kw_idx, ranking in enumerate(kw_rankings):
-                            if len(cascade_results) >= top_k:
-                                break
-                            if rank_idx < len(ranking):
-                                cname, score = ranking[rank_idx]
-                                if cname not in selected:
-                                    selected.add(cname)
-                                    cascade_results.append((cname, score))
-
-                    # Log kết quả Round-Robin với keyword nguồn
-                    rr_log_parts = []
-                    for cname, score in cascade_results[:5]:
-                        # Tìm keyword nào bốc ra entity này
-                        src_kw = "?"
-                        for kw_idx, ranking in enumerate(kw_rankings):
-                            for rname, _ in ranking:
-                                if rname == cname:
-                                    src_kw = kw_list[kw_idx]
-                                    break
-                            if src_kw != "?":
-                                break
-                        rr_log_parts.append(f"{cname}={score:.3f}[{src_kw}]")
-
-                    logger.info(
-                        f"Cascade Stage 2 (RR Name-only): "
-                        f"{len(candidate_names)} candidates × {len(kw_list)} keywords "
-                        f"→ top {len(cascade_results)} selected. "
-                        f"Anchors: {', '.join(rr_log_parts)}"
-                    )
-                else:
-                    logger.warning(
-                        f"Name-only VDB not found at {name_only_vdb_path}. "
-                        "Run scripts/build_name_only_vdb.py first. "
-                        "Falling back to default VDB search."
-                    )
-            else:
-                logger.debug(
-                    "BM25 returned 0 candidates — falling back to default VDB search"
-                )
-        else:
-            logger.debug(
-                "BM25 index not available — falling back to default VDB search"
-            )
-    except Exception as e:
-        logger.warning(
-            f"Cascade retrieval failed: {e}. Falling back to default VDB search."
+    # ─── FALLBACK: name_only_vdb missing → VDB gốc ───
+    if not name_only_available:
+        logger.error(
+            f"name_only_vdb not found at {name_only_vdb_path} — "
+            "fallback to entities_vdb.query() (Name+Description). "
+            "Run scripts/build_name_only_vdb.py để bật True Hybrid Anchor."
+        )
+        return await _vdb_fallback_anchor_lookup(
+            query, knowledge_graph_inst, entities_vdb, query_param
         )
 
-    # ─── Build results from cascade or fallback to original VDB ───
-    if cascade_results:
-        # Cascade succeeded: build node_datas from graph
-        node_ids = [name for name, _ in cascade_results]
-        score_map = {name: score for name, score in cascade_results}
-    else:
-        # Fallback: original VDB search (Name+Description vectors)
-        results = await entities_vdb.query(query, top_k=query_param.top_k)
-        if not results:
-            return [], {}
-        node_ids = [r["entity_name"] for r in results]
-        score_map = {r["entity_name"]: r.get("distance", 0.0) for r in results}
+    # ─── Bước 3: Load + cache name_only_vdb (.npy fast path) ───
+    name_list, name_to_idx, name_matrix_normed = _load_name_only_vdb(
+        working_dir, name_only_vdb_path
+    )
 
-    # Batch fetch node data and degrees concurrently
+    if name_matrix_normed is None or len(name_list) == 0:
+        logger.error(
+            "name_only_vdb empty — fallback to entities_vdb.query()"
+        )
+        return await _vdb_fallback_anchor_lookup(
+            query, knowledge_graph_inst, entities_vdb, query_param
+        )
+
+    # ─── Bước 4: Batch embed all keywords (1 API call) ───
+    try:
+        kw_embs = await entities_vdb.embedding_func(kw_list, _priority=5)
+    except Exception as e:
+        logger.error(f"Keyword embedding failed: {e} — fallback VDB gốc")
+        return await _vdb_fallback_anchor_lookup(
+            query, knowledge_graph_inst, entities_vdb, query_param
+        )
+
+    kw_embs = np.asarray(kw_embs, dtype=np.float32)
+    # Normalize keyword vectors
+    kw_norms = np.linalg.norm(kw_embs, axis=1, keepdims=True)
+    kw_embs_normed = kw_embs / np.maximum(kw_norms, 1e-10)
+
+    # ─── Bước 5: Per-keyword 2-branch search ───
+    anchor_pool: dict[str, float] = {}     # entity_name → best cosine
+    anchor_sources: dict[str, str] = {}    # entity_name → "bm25" | "semantic" | "both"
+    bm25_drift_count = 0
+
+    for kw_idx, kw in enumerate(kw_list):
+        kw_vec = kw_embs_normed[kw_idx]
+        this_kw_bm25_names: set[str] = set()
+
+        # ── Branch 1: BM25 (exact match) ──
+        if bm25_storage is not None:
+            try:
+                bm25_hits = bm25_storage.query_entities(kw, top_k=K)
+            except Exception as e:
+                logger.warning(f"BM25 query failed for kw='{kw}': {e}")
+                bm25_hits = []
+
+            for hit in bm25_hits:
+                name = hit["entity_name"]
+                # Invariant: BM25 và name_only_vdb cùng nguồn vdb_entities.json
+                if name not in name_to_idx:
+                    bm25_drift_count += 1
+                    continue
+                this_kw_bm25_names.add(name)
+                # Cosine thực tế từ name_only_vdb
+                score = float(kw_vec @ name_matrix_normed[name_to_idx[name]])
+                if score > anchor_pool.get(name, -1.0):
+                    anchor_pool[name] = score
+                # Source tracking
+                if name in anchor_sources:
+                    anchor_sources[name] = "both" if anchor_sources[name] != "bm25" else "bm25"
+                else:
+                    anchor_sources[name] = "bm25"
+
+        # ── Branch 2: Semantic search (name-only matrix multiply) ──
+        all_sims = name_matrix_normed @ kw_vec  # [N] cosine scores
+        # Lấy top-(K + some buffer) trước để filter Branch 1 + threshold
+        top_n = min(K * 4 + len(this_kw_bm25_names), len(all_sims))
+        top_indices = np.argpartition(-all_sims, top_n - 1)[:top_n]
+        top_indices = top_indices[np.argsort(-all_sims[top_indices])]
+
+        count = 0
+        for idx in top_indices:
+            if count >= K:
+                break
+            sim = float(all_sims[idx])
+            if sim < threshold:
+                break  # sorted desc, all remaining below threshold
+            name = name_list[idx]
+            if name in this_kw_bm25_names:
+                # Đã có từ Branch 1 → đánh dấu both, không tính vào quota
+                anchor_sources[name] = "both"
+                continue
+            if sim > anchor_pool.get(name, -1.0):
+                anchor_pool[name] = sim
+            anchor_sources.setdefault(name, "semantic")
+            count += 1
+
+    if bm25_drift_count > 0:
+        logger.warning(
+            f"BM25 returned {bm25_drift_count} entities missing from name_only_vdb "
+            "(drift). Run scripts/build_name_only_vdb.py to refresh."
+        )
+
+    # ─── Bước 6: Sort + cap top_k ───
+    sorted_anchors = sorted(anchor_pool.items(), key=lambda x: x[1], reverse=True)
+    final = sorted_anchors[: query_param.top_k]
+
+    if not final:
+        logger.warning("Focused anchor (TrueHybrid): pool empty → fallback VDB gốc")
+        return await _vdb_fallback_anchor_lookup(
+            query, knowledge_graph_inst, entities_vdb, query_param
+        )
+
+    node_ids = [name for name, _ in final]
+    score_map = {name: score for name, score in final}
+
+    # Source breakdown for logging
+    src_counts = {"bm25": 0, "semantic": 0, "both": 0}
+    for name in node_ids:
+        src_counts[anchor_sources.get(name, "semantic")] += 1
+
+    # ─── Bước 7: Batch graph fetch ───
     nodes_dict, degrees_dict = await asyncio.gather(
         knowledge_graph_inst.get_nodes_batch(node_ids),
         knowledge_graph_inst.node_degrees_batch(node_ids),
@@ -5603,9 +5712,8 @@ async def _get_anchor_nodes(
     if not all(n is not None for n in node_datas):
         logger.warning("Some anchor nodes are missing, maybe the storage is damaged")
 
-    # Build anchor_scores and node_datas
-    anchor_scores = {}
-    built_node_datas = []
+    anchor_scores: dict[str, float] = {}
+    built_node_datas: list[dict] = []
     for nid, n, d in zip(node_ids, node_datas, node_degrees):
         if n is not None:
             built_node_datas.append(
@@ -5618,13 +5726,166 @@ async def _get_anchor_nodes(
             )
             anchor_scores[nid] = score_map.get(nid, 0.0)
 
-    mode_label = "Cascade" if cascade_results else "VDB-fallback"
+    top_log = ", ".join(
+        f"{name}={anchor_scores[name]:.3f}[{anchor_sources.get(name, '?')}]"
+        for name in node_ids[:5]
+    )
     logger.info(
-        f"Focused anchors ({mode_label}): {len(built_node_datas)} nodes retrieved, "
-        f"scores: {', '.join(f'{name}={score:.3f}' for name, score in list(anchor_scores.items())[:5])}"
+        f"Focused anchors (TrueHybrid): {len(built_node_datas)} nodes "
+        f"(BM25:{src_counts['bm25']}, Semantic:{src_counts['semantic']}, "
+        f"Both:{src_counts['both']}). Top: {top_log}"
     )
 
     return built_node_datas, anchor_scores
+
+
+# ─── name_only_vdb cache ────────────────────────────────────────────────
+# Module-level cache: working_dir → (name_list, name_to_idx, name_matrix_normed)
+_name_only_vdb_cache: dict[str, tuple[list, dict, np.ndarray]] = {}
+
+
+def _load_name_only_vdb(
+    working_dir: str, name_only_vdb_path: str
+) -> tuple[list[str], dict[str, int], np.ndarray | None]:
+    """Load name_only_vdb with .npy fast-path cache.
+
+    Returns (name_list, name_to_idx, name_matrix_normed).
+    name_matrix_normed is L2-normalized rows (cosine via dot product).
+    """
+    cache_key = working_dir
+    if cache_key in _name_only_vdb_cache:
+        return _name_only_vdb_cache[cache_key]
+
+    matrix_path = os.path.join(working_dir, "name_matrix_normed.npy")
+    list_path = os.path.join(working_dir, "name_list.json")
+    idx_path = os.path.join(working_dir, "name_to_idx.json")
+
+    # Fast path: load binary cache (mmap matrix to avoid RAM bloat)
+    if all(os.path.exists(p) for p in (matrix_path, list_path, idx_path)):
+        try:
+            name_matrix_normed = np.load(matrix_path, mmap_mode="r")
+            with open(list_path, "r", encoding="utf-8") as f:
+                name_list = json.load(f)
+            with open(idx_path, "r", encoding="utf-8") as f:
+                name_to_idx = json.load(f)
+            logger.info(
+                f"[name_only_vdb] Fast-loaded .npy cache: "
+                f"{len(name_list)} vectors (mmap)"
+            )
+            _name_only_vdb_cache[cache_key] = (
+                name_list,
+                name_to_idx,
+                name_matrix_normed,
+            )
+            return _name_only_vdb_cache[cache_key]
+        except Exception as e:
+            logger.warning(
+                f"[name_only_vdb] .npy cache load failed: {e} — rebuild from JSON"
+            )
+
+    # Slow path: parse JSON+base64+zlib then save .npy cache
+    import base64 as _base64
+    import zlib as _zlib
+
+    logger.info(f"[name_only_vdb] Parsing JSON: {name_only_vdb_path}")
+    t0 = time.perf_counter()
+
+    try:
+        with open(name_only_vdb_path, "r", encoding="utf-8") as f:
+            name_vdb_data = json.load(f)
+    except Exception as e:
+        logger.error(f"[name_only_vdb] JSON load failed: {e}")
+        return [], {}, None
+
+    items = name_vdb_data.get("data", [])
+    name_list: list[str] = []
+    vectors: list[np.ndarray] = []
+
+    for item in items:
+        ename = item.get("entity_name", "")
+        vec_encoded = item.get("vector", "")
+        if ename and vec_encoded:
+            try:
+                decoded = _base64.b64decode(vec_encoded)
+                decompressed = _zlib.decompress(decoded)
+                vec = np.frombuffer(decompressed, dtype=np.float16).astype(
+                    np.float32
+                )
+                name_list.append(ename)
+                vectors.append(vec)
+            except Exception:
+                continue
+
+    if not vectors:
+        logger.error("[name_only_vdb] No valid vectors decoded")
+        return [], {}, None
+
+    name_matrix = np.stack(vectors, axis=0)
+    norms = np.linalg.norm(name_matrix, axis=1, keepdims=True)
+    name_matrix_normed = name_matrix / np.maximum(norms, 1e-10)
+    name_matrix_normed = name_matrix_normed.astype(np.float32)
+    name_to_idx = {n: i for i, n in enumerate(name_list)}
+
+    elapsed = time.perf_counter() - t0
+    logger.info(
+        f"[name_only_vdb] Parsed in {elapsed:.1f}s: {len(name_list)} vectors, "
+        f"matrix shape {name_matrix_normed.shape}"
+    )
+
+    # Save .npy cache for fast load next time
+    try:
+        np.save(matrix_path, name_matrix_normed)
+        with open(list_path, "w", encoding="utf-8") as f:
+            json.dump(name_list, f, ensure_ascii=False)
+        with open(idx_path, "w", encoding="utf-8") as f:
+            json.dump(name_to_idx, f, ensure_ascii=False)
+        logger.info(
+            f"[name_only_vdb] Saved .npy cache (next load will be ~instant via mmap)"
+        )
+    except Exception as e:
+        logger.warning(f"[name_only_vdb] Cache save failed (non-fatal): {e}")
+
+    _name_only_vdb_cache[cache_key] = (name_list, name_to_idx, name_matrix_normed)
+    return _name_only_vdb_cache[cache_key]
+
+
+async def _vdb_fallback_anchor_lookup(
+    query: str,
+    knowledge_graph_inst: BaseGraphStorage,
+    entities_vdb: BaseVectorStorage,
+    query_param: QueryParam,
+) -> tuple[list[dict], dict[str, float]]:
+    """Fallback when name_only_vdb is missing: original entities_vdb search."""
+    results = await entities_vdb.query(query, top_k=query_param.top_k)
+    if not results:
+        return [], {}
+    node_ids = [r["entity_name"] for r in results]
+    score_map = {r["entity_name"]: r.get("distance", 0.0) for r in results}
+
+    nodes_dict, degrees_dict = await asyncio.gather(
+        knowledge_graph_inst.get_nodes_batch(node_ids),
+        knowledge_graph_inst.node_degrees_batch(node_ids),
+    )
+
+    anchor_scores: dict[str, float] = {}
+    built: list[dict] = []
+    for nid in node_ids:
+        n = nodes_dict.get(nid)
+        if n is not None:
+            built.append(
+                {
+                    **n,
+                    "entity_name": nid,
+                    "rank": degrees_dict.get(nid, 0),
+                    "created_at": n.get("created_at"),
+                }
+            )
+            anchor_scores[nid] = score_map.get(nid, 0.0)
+
+    logger.info(
+        f"Focused anchors (VDB fallback): {len(built)} nodes retrieved"
+    )
+    return built, anchor_scores
 
 
 async def _get_anchor_nodes_ivf(
