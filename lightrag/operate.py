@@ -5554,11 +5554,12 @@ async def _get_anchor_nodes(
 
     K = query_param.focused_anchor_top_k
     threshold = query_param.focused_anchor_semantic_threshold
+    both_bonus = query_param.focused_both_bonus
 
     logger.info(
         f"Focused anchor query (TrueHybrid): {len(kw_list)} keywords: "
         f"{kw_list} (top_k:{query_param.top_k}, K_per_branch:{K}, "
-        f"sem_threshold:{threshold})"
+        f"sem_threshold:{threshold}, both_bonus:{both_bonus})"
     )
 
     # ─── Bước 2: Resolve artifacts (BM25 + name_only_vdb) ───
@@ -5669,7 +5670,12 @@ async def _get_anchor_nodes(
             name = name_list[idx]
             if name in this_kw_bm25_names:
                 # Đã có từ Branch 1 → đánh dấu both, không tính vào quota
+                # Bonus: reward consensus between BM25 + semantic (KLTN)
                 anchor_sources[name] = "both"
+                if both_bonus > 0:
+                    anchor_pool[name] = min(
+                        anchor_pool.get(name, 0.0) + both_bonus, 1.0
+                    )
                 continue
             if sim > anchor_pool.get(name, -1.0):
                 anchor_pool[name] = sim
@@ -6737,6 +6743,7 @@ async def naive_query(
         logger.error("Tokenizer not found in global configuration.")
         return QueryResult(content=PROMPTS["fail_response"])
 
+    _t0 = time.perf_counter()
     chunks = await _get_vector_context(query, chunks_vdb, query_param, None)
 
     if chunks is None or len(chunks) == 0:
@@ -6846,6 +6853,7 @@ async def naive_query(
         text_chunks_str=text_units_str,
         reference_list_str=reference_list_str,
     )
+    _t1 = time.perf_counter()  # end of retrieval
 
     if query_param.only_need_context and not query_param.only_need_prompt:
         return QueryResult(content=context_content, raw_data=raw_data)
@@ -6918,6 +6926,29 @@ async def naive_query(
             )
 
     # Return unified result based on actual response type
+    _t2 = time.perf_counter()  # end of generation
+    retrieval_ms = (_t1 - _t0) * 1000
+    generation_ms = (_t2 - _t1) * 1000
+    total_ms = (_t2 - _t0) * 1000
+
+    # Inject timing, context_text, token_counts into metadata (mirrors kg_query)
+    if "metadata" not in raw_data:
+        raw_data["metadata"] = {}
+    raw_data["metadata"]["timing"] = {
+        "keyword_extraction_ms": 0.0,
+        "graph_search_ms": 0.0,
+        "rerank_ms": 0.0,
+        "retrieval_ms": round(retrieval_ms, 2),
+        "generation_ms": round(generation_ms, 2),
+        "total_ms": round(total_ms, 2),
+    }
+    raw_data["metadata"]["context_text"] = context_content
+    if isinstance(response, str):
+        raw_data["metadata"]["token_counts"] = {
+            "input_tokens": len(tokenizer.encode(query + sys_prompt)),
+            "output_tokens": len(tokenizer.encode(response)),
+        }
+
     if isinstance(response, str):
         # Non-streaming response (string)
         if len(response) > len(sys_prompt):

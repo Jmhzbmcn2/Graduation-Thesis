@@ -164,6 +164,12 @@ class QueryParam:
     Only entities with cosine >= threshold against name-only vectors are included.
     KLTN True Hybrid Anchor Search."""
 
+    focused_both_bonus: float = 0.1
+    """Score bonus for anchor entities found by BOTH BM25 and semantic search.
+    Rewards consensus between two independent retrieval signals.
+    Applied as: anchor_score = min(cosine + both_bonus, 1.0).
+    Set to 0.0 to disable (no-op). KLTN True Hybrid Anchor Search."""
+
     focused_chunk_top_k: int = 5
     """Max chunks kept after reranking for focused mode.
     Applied AFTER merging chunks from all 3 sources (vector + entity + relation).

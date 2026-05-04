@@ -43,7 +43,7 @@ LIGHTRAG_URL = "http://localhost:9621"
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_FILE  = os.path.join(_SCRIPT_DIR, "300_case_random.csv")
-OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "focused_hyper_param.xlsx")
+OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "4_modes.xlsx")
 
 # RAGAS LLM Judge — Local vLLM (OpenAI-compatible)
 # Ưu tiên EVAL_LLM_MODEL/EVAL_LLM_BINDING_HOST từ .env; fallback về LLM_MODEL/LLM_BINDING_HOST
@@ -56,7 +56,7 @@ EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "embeddinggemma:300m")
 EMBEDDING_HOST  = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
 
 # Số test case (None = tất cả, 3 = 3 câu đầu tiên)
-TEST_LIMIT = 300
+TEST_LIMIT = 30
 
 # Giới hạn độ dài context để tránh vượt token limit của LLM Judge
 MAX_CONTEXT_CHARS = None
@@ -67,8 +67,8 @@ MAX_CONTEXT_CHARS = None
 BEAM_MAX_CONTEXT_CHARS = None  # None = không giới hạn (giống các mode khác)
 
 # Modes cần đánh giá
-# MODES = ["hybrid", "mix", "beam", "focused"]
-MODES = ["hybrid","mix","focused"]  # chạy riêng 1 mode
+MODES = ["naive", "hybrid", "mix", "focused"]
+# MODES = ["hybrid","mix","focused"]  # chạy riêng 1 mode
 # MODES = ["focused"]
 # MODES = ["focused"]
 
@@ -109,6 +109,7 @@ FOCUSED_MAX_EDGES = 50                     # Global cap edges
 FOCUSED_CHUNK_TOP_K = 10                   # chunk_top_k cho vector retrieval
 FOCUSED_ANCHOR_TOP_K = 10                   # K per-branch per-keyword (BM25 & Semantic)
 FOCUSED_ANCHOR_SEMANTIC_THRESHOLD = 0.6    # Ngưỡng cosine Branch 2 (Semantic)
+FOCUSED_BOTH_BONUS = 0.1                   # Bonus for entities found by BOTH BM25 + semantic
 FOCUSED_CHUNK_TOP_K_RERANK = 10             # Top-K chunks sau rerank (precision mode)
 
 # Các mode khác dùng top_k mặc định
@@ -324,6 +325,7 @@ def query_lightrag_with_timing(question: str, mode: str, retries: int = 3):
             # True Hybrid Anchor (KLTN) — BM25 ∪ Semantic per-keyword
             "focused_anchor_top_k": FOCUSED_ANCHOR_TOP_K,
             "focused_anchor_semantic_threshold": FOCUSED_ANCHOR_SEMANTIC_THRESHOLD,
+            "focused_both_bonus": FOCUSED_BOTH_BONUS,
             # Rerank top-K chunks (KLTN Phần 2): override chunk_top_k sau rerank
             "focused_chunk_top_k": FOCUSED_CHUNK_TOP_K_RERANK,
             "enable_rerank": True,   # Bật rerank để focused_chunk_top_k có hiệu lực
@@ -376,7 +378,6 @@ def query_lightrag_with_timing(question: str, mode: str, retries: int = 3):
             # Context từ cùng response (không cần call thêm)
             full_context = resp_json.get("context", "")
             if full_context:
-                full_context = extract_chunks_from_context(full_context)
                 max_chars = BEAM_MAX_CONTEXT_CHARS if mode == "beam" else MAX_CONTEXT_CHARS
                 full_context = truncate_context(full_context, max_chars)
             contexts = [full_context] if full_context else ["No context retrieved"]
@@ -736,7 +737,7 @@ def main():
                 print(f"      BEAM params: beam_width={BEAM_BEAM_WIDTH}, max_depth={BEAM_MAX_DEPTH}, chunk_top_k={BEAM_CHUNK_TOP_K}")
             elif mode == "focused":
                 print(f"      FOCUSED params: top_k={FOCUSED_TOP_K}, quota={FOCUSED_EDGE_QUOTA}, threshold={FOCUSED_EDGE_THRESHOLD}, α={FOCUSED_ALPHA}, β={FOCUSED_BETA}, max_edges={FOCUSED_MAX_EDGES}")
-                print(f"      ANCHOR  params: anchor_top_k={FOCUSED_ANCHOR_TOP_K}, sem_threshold={FOCUSED_ANCHOR_SEMANTIC_THRESHOLD}")
+                print(f"      ANCHOR  params: anchor_top_k={FOCUSED_ANCHOR_TOP_K}, sem_threshold={FOCUSED_ANCHOR_SEMANTIC_THRESHOLD}, both_bonus={FOCUSED_BOTH_BONUS}")
                 print(f"      CHUNK   params: chunk_top_k={FOCUSED_CHUNK_TOP_K}, rerank_top_k={FOCUSED_CHUNK_TOP_K_RERANK}, enable_rerank=True")
 
             print(f"      Answer: {answer[:80]}...")

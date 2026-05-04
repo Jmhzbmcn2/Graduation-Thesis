@@ -24,7 +24,7 @@ tmux send-keys -t $SESSION_NAME:0 'ollama serve' C-m
 # [ACTIVE] Qwen2.5-14B-Instruct-AWQ (chat, 32K context, ~10GB VRAM)
 tmux new-window -t $SESSION_NAME -n 'vLLM'
 tmux send-keys -t $SESSION_NAME:1 'source $HOME/miniconda/bin/activate lightrag' C-m
-tmux send-keys -t $SESSION_NAME:1 'vllm serve Qwen/Qwen2.5-14B-Instruct-AWQ --dtype auto --max-model-len 32768 --port 8000 --gpu-memory-utilization 0.80' C-m
+tmux send-keys -t $SESSION_NAME:1 'vllm serve Qwen/Qwen2.5-14B-Instruct-AWQ --dtype auto --max-model-len 32768 --port 8000 --gpu-memory-utilization 0.75' C-m
 # [BACKUP] Qwen2.5-32B-Instruct-AWQ (chat, 20K context, ~22GB — cần Ollama CPU)
 # tmux send-keys -t $SESSION_NAME:1 'vllm serve Qwen/Qwen2.5-32B-Instruct-AWQ --dtype auto --max-model-len 20480 --port 8000 --gpu-memory-utilization 0.94' C-m
 # (Nếu dùng 32B: đổi ollama serve → CUDA_VISIBLE_DEVICES="" ollama serve)
@@ -37,7 +37,7 @@ tmux send-keys -t $SESSION_NAME:2 'cd /home/Graduation-Thesis && ENABLE_LLM_CACH
 # Cửa sổ 3: Reranker (GPU) — Qwen3-Reranker-0.6B
 tmux new-window -t $SESSION_NAME -n 'Reranker'
 tmux send-keys -t $SESSION_NAME:3 'source $HOME/miniconda/bin/activate lightrag' C-m
-tmux send-keys -t $SESSION_NAME:3 'cd /home/Graduation-Thesis && RERANKER_BATCH_SIZE=16 python scripts/rerank_server.py' C-m
+tmux send-keys -t $SESSION_NAME:3 'cd /home/Graduation-Thesis && RERANKER_BATCH_SIZE=4 python scripts/rerank_server.py' C-m
 
 # WebUI — đã build production, được serve trực tiếp từ LightRAG API tại /webui
 # Không cần Vite dev server nữa. Nếu cần rebuild WebUI:
@@ -49,7 +49,7 @@ echo "✅ Đã khởi động toàn bộ dịch vụ trong tmux session '$SESSIO
 echo "   [0] Ollama Embedding ($OLLAMA_EMBED_MODEL) -> http://localhost:11434"
 echo "   [1] vLLM Qwen2.5-14B-Instruct-AWQ         -> http://localhost:8000  (32K context, 80% GPU)"
 echo "   [2] LightRAG API + WebUI                   -> http://localhost:9621/webui/"
-echo "   [3] Reranker Qwen3-Reranker-0.6B           -> http://localhost:7997  (batch=16)"
+echo "   [3] Reranker Qwen3-Reranker-0.6B           -> http://localhost:7997  (batch=4)"
 echo ""
 echo "👉 Để kiểm tra log, chạy: tmux attach -t $SESSION_NAME"
 echo "   Ctrl+B rồi số [0/1/2/3] để chuyển cửa sổ"

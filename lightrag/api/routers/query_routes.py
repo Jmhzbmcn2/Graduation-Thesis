@@ -213,6 +213,13 @@ class QueryRequest(BaseModel):
         description="Min cosine similarity for the semantic branch in focused anchor discovery. Default: 0.7.",
     )
 
+    focused_both_bonus: Optional[float] = Field(
+        default=None,
+        ge=0.0,
+        le=1.0,
+        description="Score bonus for anchor entities found by BOTH BM25 and semantic search. Rewards consensus. Default: 0.1.",
+    )
+
     focused_chunk_top_k: Optional[int] = Field(
         default=None,
         ge=1,
