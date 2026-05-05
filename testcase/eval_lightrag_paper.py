@@ -21,16 +21,19 @@ JUDGE_MODEL    = os.environ.get("EVAL_LLM_MODEL",        "Qwen/Qwen2.5-14B-Instr
 JUDGE_BASE_URL = os.environ.get("EVAL_LLM_BINDING_HOST", "http://localhost:8000/v1")
 JUDGE_API_KEY  = os.environ.get("EVAL_LLM_BINDING_API_KEY", "sk-123456")
 
-TEST_LIMIT = 300  # Limit to 20 cases per comparison
+TEST_LIMIT = 300  # Number of questions per comparison
+NUM_RUNS   = 2    # Runs per comparison (different seeds → reduces position bias)
+RUN_SEEDS  = [42, 99]  # One seed per run
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-INPUT_FILE   = os.path.join(_SCRIPT_DIR, "focused_hyper_param.xlsx")
-OUTPUT_FILE  = os.path.join(_SCRIPT_DIR, "llm_as_judge_focused_vs_hybrid_mix.xlsx")
+INPUT_FILE   = os.path.join(_SCRIPT_DIR, "hybrid_mix_focused - have_rel.xlsx")
+OUTPUT_FILE  = os.path.join(_SCRIPT_DIR, "llm_judge_focused_have_rel_vs_hybrid_mix_naive.xlsx")
 
 # Comparisons to run: (sheet_A, label_A, sheet_B, label_B)
 COMPARISONS = [
     ("Focused", "Focused", "Hybrid", "Hybrid"),
     ("Focused", "Focused", "Mix",    "Mix"),
+    ("Focused", "Focused", "Naive",  "Naive"),
 ]
 
 # Prompt
@@ -176,17 +179,19 @@ def run_single_comparison(
     df_b: pd.DataFrame,
     label_a: str,
     label_b: str,
+    seed: int = 42,
+    run_id: int = 1,
 ) -> tuple[list, list]:
-    """Run one comparison between df_a (label_a) and df_b (label_b).
+    """Run one comparison pass between df_a (label_a) and df_b (label_b).
 
     Returns (results, summary_rows).
     """
     n = min(len(df_a), len(df_b), TEST_LIMIT)
     print(f"\n{'─' * 70}")
-    print(f"🔬 Comparison: {label_a} vs {label_b}  ({n} questions)")
+    print(f"🔬 Run {run_id}/{NUM_RUNS}  |  {label_a} vs {label_b}  ({n} questions, seed={seed})")
     print(f"{'─' * 70}")
 
-    random.seed(42)
+    random.seed(seed)
     results = []
     swap_count = 0
     start_time = time.time()
@@ -224,6 +229,7 @@ def run_single_comparison(
             overall_winner = map_winner(overall_raw, swapped, label_a, label_b)
 
             results.append({
+                "run":                 run_id,
                 "question":            question,
                 "swapped":             swapped,
                 "comp_raw":            comp_raw,    "comp_winner":    comp_winner,
@@ -241,7 +247,7 @@ def run_single_comparison(
             print(f"   ✅ Comp: {comp_winner} | Div: {div_winner} | Emp: {emp_winner} | Dir: {dir_winner} | Overall: {overall_winner}")
         else:
             results.append({
-                "question": question, "swapped": swapped,
+                "run": run_id, "question": question, "swapped": swapped,
                 "comp_raw":    "Error", "comp_winner":    "Error", "comp_explanation":    "Failed to evaluate",
                 "div_raw":     "Error", "div_winner":     "Error", "div_explanation":     "Failed to evaluate",
                 "emp_raw":     "Error", "emp_winner":     "Error", "emp_explanation":     "Failed to evaluate",
@@ -255,16 +261,6 @@ def run_single_comparison(
     elapsed = time.time() - start_time
     results_df = pd.DataFrame(results)
 
-    # ── Print per-comparison summary ─────────────────────────────────────
-    print(f"\n{'=' * 70}")
-    print(f"📊 SUMMARY: {label_a} vs {label_b}")
-    print(f"{'=' * 70}")
-    print(f"Total evaluated : {len(results_df)}")
-    print(f"Swapped         : {swap_count}/{len(results_df)} ({swap_count/max(len(results_df),1)*100:.0f}%)")
-    print(f"Elapsed         : {elapsed:.1f}s ({elapsed/max(len(results_df),1):.1f}s/question)")
-    print(f"\n{'Metric':<20} | {label_a+' Wins':<16} | {label_b+' Wins':<16} | {'Unclear':<10}")
-    print("-" * 70)
-
     metrics = [
         ("comp_winner",    "Comprehensiveness"),
         ("div_winner",     "Diversity"),
@@ -272,6 +268,13 @@ def run_single_comparison(
         ("dir_winner",     "Directness"),
         ("overall_winner", "Overall"),
     ]
+
+    # ── Print per-run summary ─────────────────────────────────────────────
+    print(f"\n{'=' * 70}")
+    print(f"📋 Run {run_id} Summary: {label_a} vs {label_b}")
+    print(f"   Total: {len(results_df)} | Swapped: {swap_count} | Elapsed: {elapsed:.1f}s")
+    print(f"{'Metric':<20} | {label_a+' Wins':<16} | {label_b+' Wins':<16} | {'Unclear':<10}")
+    print("-" * 70)
 
     summary_rows = []
     for col, name in metrics:
@@ -283,15 +286,73 @@ def run_single_comparison(
 
         print(f"{name:<20} | {a_wins:<16} | {b_wins:<16} | {unclear:<10}")
         summary_rows.append({
-            "Metric":              name,
-            f"{label_a}_Wins":    a_wins,
-            f"{label_b}_Wins":    b_wins,
-            "Unclear":            unclear,
+            "Metric":                 name,
+            f"{label_a}_Wins":       a_wins,
+            f"{label_b}_Wins":       b_wins,
+            "Unclear":               unclear,
             f"{label_a}_Win_Rate_%": a_rate,
         })
 
-    print(f"\n{'=' * 70}")
+    print(f"{'=' * 70}")
     return results, summary_rows
+
+
+def run_comparison_averaged(
+    client: OpenAI,
+    df_a: pd.DataFrame,
+    df_b: pd.DataFrame,
+    label_a: str,
+    label_b: str,
+) -> tuple[list, list]:
+    """Run NUM_RUNS passes and return (all_results, averaged_summary).
+
+    all_results contains every individual judgment row (with 'run' column).
+    averaged_summary pools wins across all runs for a bias-reduced win rate.
+    """
+    all_results: list[dict] = []
+
+    for run_idx, seed in enumerate(RUN_SEEDS, start=1):
+        results, _ = run_single_comparison(
+            client, df_a, df_b, label_a, label_b,
+            seed=seed, run_id=run_idx,
+        )
+        all_results.extend(results)
+
+    all_df = pd.DataFrame(all_results)
+
+    metrics = [
+        ("comp_winner",    "Comprehensiveness"),
+        ("div_winner",     "Diversity"),
+        ("emp_winner",     "Empowerment"),
+        ("dir_winner",     "Directness"),
+        ("overall_winner", "Overall"),
+    ]
+
+    print(f"\n{'=' * 70}")
+    print(f"📊 AVERAGED SUMMARY ({NUM_RUNS} runs × {TEST_LIMIT} Qs = {len(all_df)} judgments): {label_a} vs {label_b}")
+    print(f"{'Metric':<20} | {label_a+' Wins':<16} | {label_b+' Wins':<16} | {'Unclear':<10} | {label_a+' Win%':<12}")
+    print("-" * 75)
+
+    avg_summary: list[dict] = []
+    for col, name in metrics:
+        a_wins      = int((all_df[col] == label_a).sum())
+        b_wins      = int((all_df[col] == label_b).sum())
+        unclear     = int(len(all_df) - a_wins - b_wins)
+        total_valid = a_wins + b_wins
+        a_rate      = round(a_wins / total_valid * 100, 1) if total_valid > 0 else 0
+
+        print(f"{name:<20} | {a_wins:<16} | {b_wins:<16} | {unclear:<10} | {a_rate:<12}")
+        avg_summary.append({
+            "Metric":                   name,
+            f"{label_a}_Wins":         a_wins,
+            f"{label_b}_Wins":         b_wins,
+            "Unclear":                  unclear,
+            "Total_Judgments":          a_wins + b_wins + unclear,
+            f"{label_a}_Win_Rate_%":   a_rate,
+        })
+
+    print(f"{'=' * 70}")
+    return all_results, avg_summary
 
 
 def run_evaluation():
@@ -300,7 +361,7 @@ def run_evaluation():
 
     print("=" * 70)
     print("📊 RAG Evaluation - LightRAG Paper Metrics")
-    print("   Focused vs Hybrid  |  Focused vs Mix")
+    print("   Focused vs Hybrid  |  Focused vs Mix  |  Focused vs Naive")
     print(f"   LLM Judge: {JUDGE_MODEL} @ {JUDGE_BASE_URL}")
     print("=" * 70)
 
@@ -315,7 +376,7 @@ def run_evaluation():
         print(f"Lỗi đọc file {INPUT_FILE}: {e}")
         return
 
-    required = {"Hybrid", "Mix", "Focused"}
+    required = {"Hybrid", "Mix", "Focused", "Naive"}
     missing  = required - set(all_sheets.keys())
     if missing:
         print(f"Lỗi: Không tìm thấy sheet(s): {missing}")
@@ -324,43 +385,62 @@ def run_evaluation():
     df_hybrid  = all_sheets["Hybrid"].head(TEST_LIMIT).copy()
     df_mix     = all_sheets["Mix"].head(TEST_LIMIT).copy()
     df_focused = all_sheets["Focused"].head(TEST_LIMIT).copy()
+    df_naive   = all_sheets["Naive"].head(TEST_LIMIT).copy()
 
     print(f"   Focused : {len(df_focused)} rows")
     print(f"   Hybrid  : {len(df_hybrid)} rows")
     print(f"   Mix     : {len(df_mix)} rows")
+    print(f"   Naive   : {len(df_naive)} rows")
 
     client = OpenAI(api_key=JUDGE_API_KEY, base_url=JUDGE_BASE_URL)
 
-    # ── Run both comparisons ─────────────────────────────────────────────
-    fh_results, fh_summary = run_single_comparison(
+    # ── Run all three comparisons (each NUM_RUNS times) ──────────────────
+    fh_results, fh_avg = run_comparison_averaged(
         client, df_focused, df_hybrid, "Focused", "Hybrid"
     )
-    fm_results, fm_summary = run_single_comparison(
+    fm_results, fm_avg = run_comparison_averaged(
         client, df_focused, df_mix, "Focused", "Mix"
+    )
+    fn_results, fn_avg = run_comparison_averaged(
+        client, df_focused, df_naive, "Focused", "Naive"
     )
 
     # ── Save results ─────────────────────────────────────────────────────
     with pd.ExcelWriter(OUTPUT_FILE, engine='openpyxl') as writer:
         # Focused vs Hybrid
-        pd.DataFrame(fh_summary).to_excel(writer, sheet_name='Summary_Focused_vs_Hybrid', index=False)
-        pd.DataFrame(fh_results).to_excel(writer, sheet_name='Detail_Focused_vs_Hybrid',  index=False)
+        pd.DataFrame(fh_avg).to_excel(    writer, sheet_name='AvgSummary_F_vs_Hybrid',  index=False)
+        pd.DataFrame(fh_results).to_excel(writer, sheet_name='AllDetail_F_vs_Hybrid',   index=False)
+        for rid in range(1, NUM_RUNS + 1):
+            run_df = pd.DataFrame([r for r in fh_results if r["run"] == rid])
+            run_df.to_excel(writer, sheet_name=f'Run{rid}_Detail_F_vs_Hybrid', index=False)
 
         # Focused vs Mix
-        pd.DataFrame(fm_summary).to_excel(writer, sheet_name='Summary_Focused_vs_Mix',    index=False)
-        pd.DataFrame(fm_results).to_excel(writer, sheet_name='Detail_Focused_vs_Mix',     index=False)
+        pd.DataFrame(fm_avg).to_excel(    writer, sheet_name='AvgSummary_F_vs_Mix',     index=False)
+        pd.DataFrame(fm_results).to_excel(writer, sheet_name='AllDetail_F_vs_Mix',      index=False)
+        for rid in range(1, NUM_RUNS + 1):
+            run_df = pd.DataFrame([r for r in fm_results if r["run"] == rid])
+            run_df.to_excel(writer, sheet_name=f'Run{rid}_Detail_F_vs_Mix', index=False)
+
+        # Focused vs Naive
+        pd.DataFrame(fn_avg).to_excel(    writer, sheet_name='AvgSummary_F_vs_Naive',   index=False)
+        pd.DataFrame(fn_results).to_excel(writer, sheet_name='AllDetail_F_vs_Naive',    index=False)
+        for rid in range(1, NUM_RUNS + 1):
+            run_df = pd.DataFrame([r for r in fn_results if r["run"] == rid])
+            run_df.to_excel(writer, sheet_name=f'Run{rid}_Detail_F_vs_Naive', index=False)
 
         # Original data side-by-side
-        n = min(len(df_focused), len(df_hybrid), len(df_mixed := df_mix), TEST_LIMIT)
+        n = min(len(df_focused), len(df_hybrid), len(df_mix), len(df_naive), TEST_LIMIT)
         df_orig = pd.DataFrame({
-            "question":        df_focused["user_input"].values[:n],
+            "question":         df_focused["user_input"].values[:n],
             "focused_response": df_focused["response"].values[:n],
             "hybrid_response":  df_hybrid["response"].values[:n],
             "mix_response":     df_mix["response"].values[:n],
+            "naive_response":   df_naive["response"].values[:n],
         })
         df_orig.to_excel(writer, sheet_name='Original_Data', index=False)
 
     print(f"\n💾 Results saved to: {OUTPUT_FILE}")
-    print(f"\n✅ Evaluation complete!")
+    print(f"\n✅ Evaluation complete! ({NUM_RUNS} runs × 3 comparisons = {NUM_RUNS * 3} passes total)")
 
 
 if __name__ == "__main__":

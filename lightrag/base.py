@@ -170,7 +170,7 @@ class QueryParam:
     Applied as: anchor_score = min(cosine + both_bonus, 1.0).
     Set to 0.0 to disable (no-op). KLTN True Hybrid Anchor Search."""
 
-    focused_chunk_top_k: int = 5
+    focused_chunk_top_k: int = 10
     """Max chunks kept after reranking for focused mode.
     Applied AFTER merging chunks from all 3 sources (vector + entity + relation).
     Tighter than chunk_top_k because focused mode prioritizes precision over recall."""

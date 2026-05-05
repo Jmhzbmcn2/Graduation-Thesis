@@ -42,8 +42,8 @@ warnings.filterwarnings("ignore", message=".*token usage.*", category=UserWarnin
 LIGHTRAG_URL = "http://localhost:9621"
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-INPUT_FILE  = os.path.join(_SCRIPT_DIR, "300_case_random.csv")
-OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "4_modes.xlsx")
+INPUT_FILE  = os.path.join(_SCRIPT_DIR, "500-random-sample-of-test-data.csv")
+OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_focused_chunk_only.xlsx")
 
 # RAGAS LLM Judge — Local vLLM (OpenAI-compatible)
 # Ưu tiên EVAL_LLM_MODEL/EVAL_LLM_BINDING_HOST từ .env; fallback về LLM_MODEL/LLM_BINDING_HOST
@@ -56,7 +56,7 @@ EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "embeddinggemma:300m")
 EMBEDDING_HOST  = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
 
 # Số test case (None = tất cả, 3 = 3 câu đầu tiên)
-TEST_LIMIT = 30
+TEST_LIMIT = 300
 
 # Giới hạn độ dài context để tránh vượt token limit của LLM Judge
 MAX_CONTEXT_CHARS = None
@@ -67,13 +67,13 @@ MAX_CONTEXT_CHARS = None
 BEAM_MAX_CONTEXT_CHARS = None  # None = không giới hạn (giống các mode khác)
 
 # Modes cần đánh giá
-MODES = ["naive", "hybrid", "mix", "focused"]
+# MODES = ["naive", "hybrid", "mix"]
 # MODES = ["hybrid","mix","focused"]  # chạy riêng 1 mode
-# MODES = ["focused"]
+MODES = ["focused"]
 # MODES = ["focused"]
 
 # Batch size cho RAGAS
-EVAL_BATCH_SIZE = 100
+EVAL_BATCH_SIZE = 500
 
 # ======================== CẤU HÌNH MODE-SPECIFIC ========================
 # Beam search tối ưu: Narrow + Deep + Rerank

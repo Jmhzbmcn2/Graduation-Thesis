@@ -20,8 +20,8 @@ warnings.filterwarnings("ignore", message=".*token usage.*", category=UserWarnin
 LIGHTRAG_URL = "http://localhost:9621"
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-INPUT_FILE  = os.path.join(_SCRIPT_DIR, "300_case_random.csv")
-OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_focused_chunk_only.xlsx")
+INPUT_FILE  = os.path.join(_SCRIPT_DIR, "500-random-sample-of-test-data.csv")
+OUTPUT_FILE = os.path.join(_SCRIPT_DIR, "eval_focused_have_entity_relationship.xlsx")
 
 EVAL_LLM_MODEL = os.getenv("EVAL_LLM_MODEL", os.getenv("LLM_MODEL", "Qwen/Qwen2.5-14B-Instruct-AWQ"))
 EVAL_LLM_API_KEY = os.getenv("LLM_BINDING_API_KEY", "EMPTY")
@@ -30,7 +30,7 @@ EVAL_LLM_HOST = os.getenv("EVAL_LLM_BINDING_HOST", os.getenv("LLM_BINDING_HOST",
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "embeddinggemma:300m")
 EMBEDDING_HOST  = os.getenv("EMBEDDING_BINDING_HOST", "http://localhost:11434")
 
-TEST_LIMIT = 30
+TEST_LIMIT = 300
 MAX_CONTEXT_CHARS = None
 
 MODES = ["focused"]
@@ -52,8 +52,8 @@ FOCUSED_CHUNK_TOP_K_RERANK = 10             # Top-K chunks sau rerank (tăng lê
 # ======================== TOGGLE CONTEXT ========================
 # True  → truyền entities/relations vào context LLM
 # False → để trống (chỉ dùng chunks, như hiện tại)
-INCLUDE_ENTITIES  = False
-INCLUDE_RELATIONS = False
+INCLUDE_ENTITIES  = True
+INCLUDE_RELATIONS = True
 # ================================================================
 
 # ===========================================================
