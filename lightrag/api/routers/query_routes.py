@@ -226,6 +226,16 @@ class QueryRequest(BaseModel):
         description="Max chunks kept after reranking for focused mode (overrides chunk_top_k when mode=focused). Default: 5.",
     )
 
+    focused_use_lexical_anchors: Optional[bool] = Field(
+        default=None,
+        description="Enable BM25/lexical entity anchor discovery in focused mode. Set false for ablation: w/o lexical anchors.",
+    )
+
+    focused_use_directed_filtering: Optional[bool] = Field(
+        default=None,
+        description="Enable semantic edge thresholding and per-anchor quota in focused mode. Set false for ablation: w/o directed filtering.",
+    )
+
     @field_validator("query", mode="after")
     @classmethod
     def query_strip_after(cls, query: str) -> str:

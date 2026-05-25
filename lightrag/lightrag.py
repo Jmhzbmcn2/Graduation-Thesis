@@ -2588,25 +2588,13 @@ class LightRAG:
         """
         global_config = asdict(self)
 
-        # Create a copy of param to avoid modifying the original
-        data_param = QueryParam(
-            mode=param.mode,
+        # Create a copy of param to avoid modifying the original while preserving
+        # mode-specific knobs such as focused ablation settings.
+        data_param = replace(
+            param,
             only_need_context=True,  # Skip LLM generation, only get context and data
             only_need_prompt=False,
-            response_type=param.response_type,
             stream=False,  # Data retrieval doesn't need streaming
-            top_k=param.top_k,
-            chunk_top_k=param.chunk_top_k,
-            max_entity_tokens=param.max_entity_tokens,
-            max_relation_tokens=param.max_relation_tokens,
-            max_total_tokens=param.max_total_tokens,
-            hl_keywords=param.hl_keywords,
-            ll_keywords=param.ll_keywords,
-            conversation_history=param.conversation_history,
-            history_turns=param.history_turns,
-            model_func=param.model_func,
-            user_prompt=param.user_prompt,
-            enable_rerank=param.enable_rerank,
         )
 
         query_result = None

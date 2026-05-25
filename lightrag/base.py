@@ -175,6 +175,14 @@ class QueryParam:
     Applied AFTER merging chunks from all 3 sources (vector + entity + relation).
     Tighter than chunk_top_k because focused mode prioritizes precision over recall."""
 
+    focused_use_lexical_anchors: bool = True
+    """Enable BM25/lexical entity anchor discovery in focused mode.
+    Set False for ablation: w/o lexical anchors."""
+
+    focused_use_directed_filtering: bool = True
+    """Enable focused semantic edge thresholding and per-anchor quota.
+    Set False for ablation: w/o directed filtering."""
+
     top_k: int = int(os.getenv("TOP_K", str(DEFAULT_TOP_K)))
     """Number of top items to retrieve. Represents entities in 'local' mode and relationships in 'global' mode."""
 

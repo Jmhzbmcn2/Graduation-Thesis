@@ -4066,8 +4066,6 @@ async def _beam_search_graph(
     # which caused only ~4 relations to survive (vs ~69 for hybrid).
     # Keeping all collected_relations restores relation coverage without adding
     # noise, because they were already scored and pruned during beam traversal.
-    retained_entity_names = {e["entity_name"] for e in final_entities}
-
     final_relations = []
     for edge_key, info in collected_relations.items():
         src, tgt = info["src_tgt"]
@@ -5555,18 +5553,20 @@ async def _get_anchor_nodes(
     K = query_param.focused_anchor_top_k
     threshold = query_param.focused_anchor_semantic_threshold
     both_bonus = query_param.focused_both_bonus
+    use_lexical_anchors = getattr(query_param, "focused_use_lexical_anchors", True)
 
     logger.info(
         f"Focused anchor query (TrueHybrid): {len(kw_list)} keywords: "
         f"{kw_list} (top_k:{query_param.top_k}, K_per_branch:{K}, "
-        f"sem_threshold:{threshold}, both_bonus:{both_bonus})"
+        f"sem_threshold:{threshold}, both_bonus:{both_bonus}, "
+        f"lexical_anchors:{use_lexical_anchors})"
     )
 
     # ─── Bước 2: Resolve artifacts (BM25 + name_only_vdb) ───
     from lightrag.bm25_storage import get_bm25_storage_from_config
 
     bm25_storage = None
-    if global_config and text_chunks_db:
+    if use_lexical_anchors and global_config and text_chunks_db:
         try:
             bm25_storage = get_bm25_storage_from_config(
                 global_config, text_chunks_db.workspace
@@ -5574,6 +5574,8 @@ async def _get_anchor_nodes(
         except Exception as e:
             logger.warning(f"BM25 load failed: {e}")
             bm25_storage = None
+    elif not use_lexical_anchors:
+        logger.info("Focused anchor ablation: lexical/BM25 anchor branch disabled")
 
     working_dir = (
         global_config.get("working_dir", ".") if global_config else "."
@@ -5846,7 +5848,7 @@ def _load_name_only_vdb(
         with open(idx_path, "w", encoding="utf-8") as f:
             json.dump(name_to_idx, f, ensure_ascii=False)
         logger.info(
-            f"[name_only_vdb] Saved .npy cache (next load will be ~instant via mmap)"
+            "[name_only_vdb] Saved .npy cache (next load will be ~instant via mmap)"
         )
     except Exception as e:
         logger.warning(f"[name_only_vdb] Cache save failed (non-fatal): {e}")
@@ -6032,6 +6034,9 @@ async def _focused_1hop_edge_scoring(
     alpha = query_param.focused_alpha
     beta = query_param.focused_beta
     max_edges = query_param.focused_max_edges
+    use_directed_filtering = getattr(
+        query_param, "focused_use_directed_filtering", True
+    )
 
     # ─── Step 1: Fetch all 1-hop edges per anchor (single batch call) ───
     batch_edges_dict = await knowledge_graph_inst.get_nodes_edges_batch(anchor_names)
@@ -6040,6 +6045,7 @@ async def _focused_1hop_edge_scoring(
     all_edges = []
     seen_edges = set()
     anchor_to_edges: dict[str, list[tuple[str, str]]] = {name: [] for name in anchor_names}
+    edge_first_anchor: dict[tuple[str, str], str] = {}
 
     for anchor_name in anchor_names:
         this_edges = batch_edges_dict.get(anchor_name, [])
@@ -6049,6 +6055,7 @@ async def _focused_1hop_edge_scoring(
             anchor_to_edges[anchor_name].append(sorted_edge)
             if sorted_edge not in seen_edges:
                 seen_edges.add(sorted_edge)
+                edge_first_anchor[sorted_edge] = anchor_name
                 all_edges.append(sorted_edge)
 
     total_raw_edges = len(all_edges)
@@ -6072,12 +6079,59 @@ async def _focused_1hop_edge_scoring(
         edge_to_rel_ids[edge] = [fwd_id, rev_id]
         all_rel_ids.extend([fwd_id, rev_id])
 
-    # Fetch edge properties and edge vectors in parallel
+    # Fetch edge properties and edge vectors in parallel when semantic filtering is enabled.
     edge_pairs_dicts = [{"src": e[0], "tgt": e[1]} for e in all_edges]
-    edge_vectors_raw, edge_data_batch = await asyncio.gather(
-        relationships_vdb.get_vectors_by_ids(all_rel_ids),
-        knowledge_graph_inst.get_edges_batch(edge_pairs_dicts),
-    )
+    if use_directed_filtering:
+        edge_vectors_raw, edge_data_batch = await asyncio.gather(
+            relationships_vdb.get_vectors_by_ids(all_rel_ids),
+            knowledge_graph_inst.get_edges_batch(edge_pairs_dicts),
+        )
+    else:
+        edge_vectors_raw = {}
+        edge_data_batch = await knowledge_graph_inst.get_edges_batch(edge_pairs_dicts)
+        logger.info(
+            "Focused edge ablation: directed semantic filtering disabled "
+            "(no threshold, no per-anchor quota)"
+        )
+
+        pool = []
+        for edge in all_edges:
+            anchor_name = edge_first_anchor.get(edge)
+            anchor_score = anchor_scores.get(anchor_name, 0.0) if anchor_name else 0.0
+            edge_data = edge_data_batch.get(edge, {})
+            if "weight" not in edge_data:
+                edge_data["weight"] = 1.0
+            pool.append(
+                {
+                    "src_tgt": edge,
+                    "rank": edge_data.get("rank", 0),
+                    "joint_score": anchor_score,
+                    "edge_sim": None,
+                    "anchor_score": anchor_score,
+                    "anchor_name": anchor_name,
+                    **edge_data,
+                }
+            )
+
+        before_cap = len(pool)
+        pool = pool[:max_edges]
+        logger.info(
+            f"Focused no-directed-filter merge: {before_cap} unique edges "
+            f"-> {len(pool)} after cap (N_max={max_edges})"
+        )
+
+        anchors_with_edges = set()
+        for edge_entry in pool:
+            anchors_with_edges.add(edge_entry.get("anchor_name"))
+            src, tgt = edge_entry["src_tgt"]
+            anchors_with_edges.add(src)
+            anchors_with_edges.add(tgt)
+
+        pruned_entities = [
+            nd for nd in node_datas if nd["entity_name"] in anchors_with_edges
+        ]
+
+        return pruned_entities, pool
 
     # Resolve edge vectors: for each edge, pick whichever direction has a vector
     edge_vectors: dict[tuple[str, str], list[float]] = {}
